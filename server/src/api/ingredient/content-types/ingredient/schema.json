@@ -1,0 +1,130 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingredients",
+  "info": {
+    "singularName": "ingredient",
+    "pluralName": "ingredients",
+    "displayName": "Ingredient",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": false,
+      "unique": true
+    },
+    "Code": {
+      "type": "string",
+      "required": false,
+      "unique": true
+    },
+    "Amount": {
+      "type": "integer",
+      "required": false
+    },
+    "Water": {
+      "type": "decimal",
+      "required": false
+    },
+    "Kcal": {
+      "type": "decimal",
+      "required": false
+    },
+    "Protein_plant": {
+      "type": "decimal",
+      "required": false
+    },
+    "Protein_animal": {
+      "type": "decimal",
+      "required": false
+    },
+    "Protein_total": {
+      "type": "decimal",
+      "required": false
+    },
+    "Fat_saturated": {
+      "type": "decimal",
+      "required": false
+    },
+    "Fat_unsaturated": {
+      "type": "decimal",
+      "private": true
+    },
+    "Fat_total": {
+      "type": "decimal",
+      "required": false
+    },
+    "Cholesterol": {
+      "type": "decimal",
+      "required": false,
+      "default": 0
+    },
+    "Carbohydrates_mono": {
+      "type": "decimal"
+    },
+    "Carbohydrates_poli": {
+      "type": "decimal"
+    },
+    "Carbohydrates_total": {
+      "type": "decimal",
+      "required": false
+    },
+    "Ashes": {
+      "type": "decimal",
+      "required": false
+    },
+    "Cellulose": {
+      "type": "decimal",
+      "required": false
+    },
+    "Mineral_Na": {
+      "type": "float",
+      "required": false
+    },
+    "Mineral_K": {
+      "type": "float"
+    },
+    "Mineral_Ca": {
+      "type": "float"
+    },
+    "Mineral_Mg": {
+      "type": "decimal"
+    },
+    "Mineral_P": {
+      "type": "float"
+    },
+    "Mineral_Fe": {
+      "type": "float"
+    },
+    "Mineral_Zn": {
+      "type": "float"
+    },
+    "Mineral_Cu": {
+      "type": "float"
+    },
+    "Vitamin_RE": {
+      "type": "float"
+    },
+    "Vitamin_B1": {
+      "type": "float"
+    },
+    "Vitamin_B2": {
+      "type": "float"
+    },
+    "Vitamin_B6": {
+      "type": "float"
+    },
+    "Vitamin_PP": {
+      "type": "float"
+    },
+    "Vitamin_C": {
+      "type": "float"
+    },
+    "Vitamin_E": {
+      "type": "float"
+    }
+  }
+}

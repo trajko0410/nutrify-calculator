@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_ingredients_recipe_ingredients",
+  "info": {
+    "displayName": "Recipe_ingredient"
+  },
+  "options": {},
+  "attributes": {
+    "ingredient": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient.ingredient"
+    },
+    "Amount": {
+      "type": "float"
+    }
+  }
+}
