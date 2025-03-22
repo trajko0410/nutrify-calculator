@@ -11,8 +11,10 @@
     "strapi": "strapi"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.13.23",
     "@strapi/plugin-cloud": "5.10.4",
     "@strapi/plugin-users-permissions": "5.10.4",
+    "@strapi/provider-upload-cloudinary": "^5.11.2",
     "@strapi/strapi": "5.10.4",
     "axios": "^1.8.1",
     "better-sqlite3": "11.3.0",

@@ -125,6 +125,25 @@
     },
     "Vitamin_E": {
       "type": "float"
+    },
+    "Glycemic_index": {
+      "type": "decimal"
+    },
+    "Glycemic_load": {
+      "type": "decimal"
+    },
+    "Atherogenic_index": {
+      "type": "decimal"
+    },
+    "Ingredient_Image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

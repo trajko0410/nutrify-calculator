@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #00473C;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-BlackGreen: #013830;
+  --color-DarkGreen: #00473C;
+  --color-LightGreen: #00B011;
+  --color-CyanGreen: #D6F1A2;
+  --color-Cream: #EEEBDA;
+  --color-BlurPurple: #C1D3FF;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-Poppins: var(--font-geist-poppins);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #00473c;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Poppins", sans-serif;
+}
