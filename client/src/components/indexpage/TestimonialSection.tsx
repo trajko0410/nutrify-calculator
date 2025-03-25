@@ -2,6 +2,7 @@ import MainContainer from "../util/MainContainer"
 
 import testimonialImage1 from "../../../public/testimonial1Image.png"
 import { StaticImageData } from "next/image"
+
 import Image from "next/image"
 
 type MainTestimonialSectionProps = {
