@@ -1,9 +1,11 @@
+"use server"
+
 import MainContainer from "../util/MainContainer"
 
 import testimonialImage1 from "../../../public/testimonial1Image.png"
 import { StaticImageData } from "next/image"
 
-import Image from "next/image"
+import { ImageCustom } from "../util/ImageCustom"
 
 type MainTestimonialSectionProps = {
     title: string
@@ -26,12 +28,11 @@ const MainTestimonialSection: React.FC<MainTestimonialSectionProps> = ({
             </div>
 
             <div className="relative flex min-h-[250px] max-w-[600px] flex-1/2">
-                <Image
+                <ImageCustom
                     src={image}
                     alt={title}
-                    fill
                     className="overflow-cover flex grow rounded-2xl"
-                ></Image>
+                ></ImageCustom>
             </div>
         </div>
     )
@@ -51,13 +52,13 @@ const SecondaryTestimonialSection: React.FC<SecondaryTestimonialSection> = ({
     return (
         <div className="font-Poppins flex max-w-[840] flex-col items-center justify-center gap-5 text-black sm:flex-row lg:gap-10">
             <div className=" max-w-[180px] sm:max-w-[220px] min-w-[100] overflow-clip rounded-2xl">
-                <Image
+                <ImageCustom
                     src={image}
                     alt={"secondaryTestimonial"}
                     width={220}
                     height={220}
                     className="object-cover"
-                ></Image>
+                ></ImageCustom>
             </div>
             <div className={"flex flex-col py-5 pl-2 text-center sm:text-left"}>
                 <p className="pl-2 text-sm font-medium">{author}</p>

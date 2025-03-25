@@ -1,6 +1,8 @@
+"use server"
+
 import MainContainer from "../util/MainContainer"
 
-import Image from "next/image"
+import { ImageCustom } from "../util/ImageCustom"
 
 import whatYouGetImage2 from "../../../public/WhatYouGetSectionImage2.png"
 import whatYouGetImage1 from "../../../public/WhatYouGetSectionImage1.png"
@@ -19,10 +21,9 @@ const WhatYouGetSection = () => {
                     <div className="flex w-full flex-wrap justify-center gap-8 lg:px-3.75 pt-[130px] sm:flex-col md:flex-col lg:flex-row">
                         <div className="flex flex-col gap-8 pt-[70px] lg:max-w-[455px] lg:flex-[5.25] lg:items-end">
                             <div className="relative h-[380px] rounded-2xl lg:w-4/5 lg:max-w-[290px]">
-                                <Image
+                                <ImageCustom
                                     src={whatYouGetImage1}
                                     alt="WhatYouGetImage1"
-                                    fill
                                     className="rounded-2xl object-cover"
                                 />
                             </div>
@@ -47,7 +48,7 @@ const WhatYouGetSection = () => {
                                 <p className="font-Poppins text-sm font-normal text-white">
                                     Many apps can sync with fitness devices and
                                     other health tools, offering a more holistic
-                                    view of a patient's well-being.
+                                    view of a patient&apos;s well-being.
                                     Nutritionists can leverage this data to
                                     provide more comprehensive guidance.
                                 </p>
@@ -98,7 +99,7 @@ const WhatYouGetSection = () => {
                                 <p className="font-Poppins text-sm font-normal text-black">
                                     Users can effortlessly log meals by scanning
                                     barcodes or searching a food database.
-                                    Nutritionists gain insight into patients'
+                                    Nutritionists gain insight into patients&apos;
                                     eating habits, enabling more accurate advice
                                     and targeted interventions.
                                 </p>
@@ -117,10 +118,9 @@ const WhatYouGetSection = () => {
                                 </p>
                             </div>
                             <div className="relative h-[300px] rounded-2xl lg:w-4/5 lg:max-w-[290px]">
-                                <Image
+                                <ImageCustom
                                     src={whatYouGetImage2}
                                     alt="WhatYouGetImage2"
-                                    fill
                                     className="rounded-2xl object-cover"
                                 />
                             </div>

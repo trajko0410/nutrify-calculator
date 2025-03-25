@@ -1,8 +1,10 @@
-"use client"
-import { ArrowCircleRight } from "@phosphor-icons/react"
-import Image from "next/image"
+"use server"
+
 import React from "react"
 import MainContainer from "../util/MainContainer"
+
+import ArrowCircleRightIcon from "./util/ArrowCircleRightIcon"
+import { ImageCustom } from "../util/ImageCustom"
 
 type ExplainCardProps = {
     title: string
@@ -30,11 +32,11 @@ const ExplainCard: React.FC<ExplainCardProps> = ({
             } md:p-5`}
         >
             <div className="flex flex-col px-16 py-16 md:max-w-[500px]">
-                <h1 className="font-Poppins text-[28px] font-bold">{title}</h1>
+                <h2 className="font-Poppins text-[28px] font-bold">{title}</h2>
                 <p className="my-10">{description}</p>
                 <a href={link} className="flex items-center gap-2 font-medium">
                     {linkText}
-                    <ArrowCircleRight
+                    <ArrowCircleRightIcon
                         weight="fill"
                         size={24}
                         className="fill-BlackGreen"
@@ -42,7 +44,7 @@ const ExplainCard: React.FC<ExplainCardProps> = ({
                 </a>
             </div>
             <div className="flex w-full items-center md:max-w-1/2">
-                <Image src={image} alt="image" width={1000} height={486} />
+                <ImageCustom src={image} alt="image" width={1000} height={486} />
             </div>
         </div>
     )

@@ -1,7 +1,10 @@
+"use server"
+
 import React from "react"
 import MainContainer from "../util/MainContainer"
 import { Button } from "@mui/material"
-import Image from "next/image"
+
+import { ImageCustom } from "../util/ImageCustom"
 
 const TitleSection = () => {
     return (
@@ -25,23 +28,23 @@ const TitleSection = () => {
                             </Button>
                         </div>
                         <div className="z-10 w-full md:max-h-[620px] md:max-w-[620px]">
-                            <Image
+                            <ImageCustom
                                 alt="image"
                                 src={"/image.png"}
                                 height={1000}
                                 width={1000}
                                 className="w-full"
-                            ></Image>
+                            ></ImageCustom>
                         </div>
                     </div>
                 </MainContainer>
-                <Image
+                <ImageCustom
                     alt="image"
                     src={"/Group.svg"}
                     className="absolute right-0 bottom-0 z-0 w-full"
                     width={620}
                     height={620}
-                ></Image>
+                ></ImageCustom>
             </div>
         </>
     )

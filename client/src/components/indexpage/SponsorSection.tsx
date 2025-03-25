@@ -1,6 +1,8 @@
-import Image from "next/image"
+"use server"
+
 import React from "react"
 import Marquee from "react-fast-marquee"
+import { ImageCustom } from "../util/ImageCustom"
 
 type SponsorSectionProps = {
     logos: string[]
@@ -29,7 +31,7 @@ const SponsorSection: React.FC<SponsorSectionProps> = ({ logos }) => {
                         key={index}
                         className="flex h-20 w-40 items-center justify-center"
                     >
-                        <Image
+                        <ImageCustom
                             src={logo}
                             width={800}
                             height={100}

@@ -1,9 +1,10 @@
-"use client"
+"use server"
 import React from "react"
 import MainContainer from "../util/MainContainer"
-import { ArrowCircleRight } from "@phosphor-icons/react"
-import Image from "next/image"
 import { Button } from "@mui/material"
+
+import { ImageCustom } from "../util/ImageCustom"
+import ArrowCircleRightIcon from "./util/ArrowCircleRightIcon"
 
 type HookCardProps = {
     number: number
@@ -21,7 +22,7 @@ const HookCard: React.FC<HookCardProps> = ({ desc, image, number, title }) => {
             </div>
             <p className="py-10">{desc}</p>
             <div className="w-full rounded-xl">
-                <Image
+                <ImageCustom
                     className="w-full"
                     src={image}
                     width={314}
@@ -47,9 +48,9 @@ const HookSection: React.FC = () => {
                     <p className="z-10 mb-8">
                         Facilitate payments from users to your customers
                     </p>
-                    <div className="z-10 mb-10 flex items-center gap-4">
+                    <div className="z-10 mb-10 flex items-center gap-4 cursor-pointer">
                         See documentation
-                        <ArrowCircleRight weight="fill" size={24} />
+                        <ArrowCircleRightIcon weight="fill" size={24}  />
                     </div>
                     <div className="z-10 flex flex-wrap justify-between gap-10 md:flex-nowrap">
                         <HookCard
@@ -71,7 +72,7 @@ const HookSection: React.FC = () => {
                             image="/picture3.png"
                         />
                     </div>
-                    <Image
+                    <ImageCustom
                         className="absolute top-0 left-0 w-full"
                         src={"/shape3.png"}
                         alt="shape"
