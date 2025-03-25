@@ -11,6 +11,7 @@ type HookCardProps = {
     desc: string
     image: string
 }
+
 const HookCard: React.FC<HookCardProps> = ({ desc, image, number, title }) => {
     return (
         <div className="bg-DarkGreen flex min-w-[30%] shrink flex-col justify-between rounded-xl p-5 pb-[42px] text-white lg:p-10">

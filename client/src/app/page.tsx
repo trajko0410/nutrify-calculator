@@ -4,6 +4,7 @@ import TitleSection from "@/components/indexpage/TitleSection"
 import HookSection from "@/components/indexpage/HookSection"
 import HowWeWorkSection from "@/components/indexpage/HowWeWorkSection"
 import WhatYouGetSection from "../components/indexpage/WhatYouGetSection"
+import TestimonialSection from "@/components/indexpage/TestimonialSection"
 
 export default function Home() {
     return (
@@ -16,6 +17,7 @@ export default function Home() {
             <HookSection />
             <HowWeWorkSection />
             <WhatYouGetSection/>
+            <TestimonialSection/>
         </div>
     )
 }

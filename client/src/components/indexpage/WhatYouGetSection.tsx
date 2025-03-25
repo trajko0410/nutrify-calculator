@@ -16,7 +16,7 @@ const WhatYouGetSection = () => {
                     </h1>
                 </div>
                 <MainContainer>
-                    <div className="flex w-full flex-wrap justify-center gap-8 px-3.75 pt-[130px] sm:flex-col md:flex-col lg:flex-row">
+                    <div className="flex w-full flex-wrap justify-center gap-8 lg:px-3.75 pt-[130px] sm:flex-col md:flex-col lg:flex-row">
                         <div className="flex flex-col gap-8 pt-[70px] lg:max-w-[455px] lg:flex-[5.25] lg:items-end">
                             <div className="relative h-[380px] rounded-2xl lg:w-4/5 lg:max-w-[290px]">
                                 <Image
