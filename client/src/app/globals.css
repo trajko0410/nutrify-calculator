@@ -17,6 +17,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-Poppins: var(--font-geist-poppins);
+  --shadow-Dark: 2px 2px 20px 0px #2B33434D;
+  --shadow-Light: -6px -6px 20px 0px #FAF9F6;
+  --shadow-Combined: var(--shadow-Dark), var(--shadow-Light);
 }
 
 @media (prefers-color-scheme: dark) {
