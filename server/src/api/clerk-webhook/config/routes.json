@@ -1,0 +1,10 @@
+[
+  {
+    "method": "POST",
+    "path": "/clerk-webhook",
+    "handler": "clerk.handleClerkWebhook",
+    "config": {
+      "policies": []
+    }
+  }
+]

@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 export default ({ env }) => ({
   auth: {
     secret: env('ADMIN_JWT_SECRET'),
@@ -7,7 +9,7 @@ export default ({ env }) => ({
   },
   transfer: {
     token: {
-      salt: env('TRANSFER_TOKEN_SALT'),
+      salt: env('TRANSFER_TOKEN_SALT', crypto.randomBytes(16).toString('base64')),
     },
   },
   flags: {

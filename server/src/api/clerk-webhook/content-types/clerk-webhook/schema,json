@@ -1,0 +1,11 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clerk_webhooks",
+  "info": {
+    "name": "Clerk Webhook"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {}
+}

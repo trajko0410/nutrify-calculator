@@ -1,0 +1,81 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Cache npm dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Clean npm cache (optional but recommended)
+      run: npm cache clean --force
+
+    - name: Deploy to the server via SSH
+      env:
+        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        # Set up SSH
+        mkdir -p ~/.ssh
+        echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        
+        # SSH into the DigitalOcean droplet and perform necessary actions
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@159.89.101.46 << EOF
+          # Ensure nvm is installed
+          if [ ! -d "$HOME/.nvm" ]; then
+            echo "Installing nvm..."
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+          else
+            echo "nvm is already installed"
+          fi
+
+          # Source nvm from the correct path
+          export NVM_DIR="/root/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          
+          # Install Node.js 18 using nvm and make it the default version
+          nvm install 18
+          nvm use 18
+          node -v # Verify the correct Node.js version is being used
+          
+          # Ensure you're in the correct directory on the droplet
+          cd /var/www/strapi/server  
+          
+          # Pull the latest changes from Git
+          git pull origin main
+          
+          # Install dependencies
+          npm install
+          
+          # Build the project
+          npm run build
+          
+          # Restart the application using pm2
+          pm2 restart strapi
+        EOF
+
+    - name: Notify of success
+      run: |
+        echo "Deployment complete!"
+        echo "You can access the Strapi Admin Panel at: http://159.89.101.46:1337/admin/settings/application-infos"
