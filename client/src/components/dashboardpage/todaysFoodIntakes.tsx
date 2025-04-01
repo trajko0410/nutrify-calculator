@@ -2,7 +2,6 @@
 
 import { JSX } from "react";
 import { percentageOfTotal } from "../../utils/procentageCalculator"
-import DashboardContainer from "../util/DashboardContainer"
 import { FireSimple , Drop, Egg, BowlFood, Bread } from "@phosphor-icons/react"
 
 
@@ -33,7 +32,7 @@ const DailyInatakeSpecific: React.FC<DailyInatakeSpecificProps> = ({
                 <h3 className="text-base font-medium text-[#A0AEC0]">
                     Today&apos;s {title}
                 </h3>
-                <div className="flex flex-row items-center gap-2">
+                <div className="flex flex-row  items-center gap-2 ">
                     <p className="text-lg font-medium text-[#2D3748]">
                         {planedIntake}
                         {title === "Calories" ? "kcal" : "gr"}
@@ -55,7 +54,7 @@ const DailyInatakeSpecific: React.FC<DailyInatakeSpecificProps> = ({
                 </div>
             </div>
             <div
-                className={`h-[45px] w-[45px] rounded-lg text-sm  flex justify-center items-center ${
+                className={`h-[45px] w-[45px] min-w-[45px] rounded-lg text-sm  flex justify-center items-center ${
                     title === "Calories"
                         ? "bg-[#FF4163]"
                         : title === "Proteins"
@@ -70,17 +69,27 @@ const DailyInatakeSpecific: React.FC<DailyInatakeSpecificProps> = ({
 }
 
 type TodaysFoodIntakeProps = {
-    userId?: string
+    userName?: string;
+    totalCalories?: number;
+    totalProteins?: number;
+    totalFats?: number;
+    totalCarbohydrates?: number;
 }
 
+
+//"When I create the timeline component, I will send the current intake based on the time of day."
 const TodaysFoodInteake: React.FC<TodaysFoodIntakeProps> = ({
-    userId = "User",
+    userName = "User",
+    totalCalories = 0,
+    totalProteins = 0,
+    totalCarbohydrates=0,
+    totalFats=0
 }) => {
     return (
-        <DashboardContainer>
+        <>
             <div className="flex flex-col gap-2 text-black">
                 <h2 className="text-DarkGreen font-Poppins text-2xl font-medium">
-                    Hi, {userId}
+                    Hi, {userName}
                 </h2>
                 <p className="text-lg font-normal text-[#757575]">
                     Lorem ipsum dolor sit amet
@@ -89,26 +98,26 @@ const TodaysFoodInteake: React.FC<TodaysFoodIntakeProps> = ({
             <div className="mt-8 grid w-full grid-cols-1 flex-wrap justify-between gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <DailyInatakeSpecific
                     title={"Calories"}
-                    planedIntake={1000}
+                    planedIntake={totalCalories}
                     currentIntake={500}
                 />
                 <DailyInatakeSpecific
                     title={"Proteins"}
-                    planedIntake={500}
+                    planedIntake={totalProteins}
                     currentIntake={100}
                 />
                 <DailyInatakeSpecific
                     title={"Fats"}
-                    planedIntake={100}
+                    planedIntake={totalFats}
                     currentIntake={20}
                 />
                 <DailyInatakeSpecific
                     title={"Carbohydrates"}
-                    planedIntake={10}
+                    planedIntake={totalCarbohydrates}
                     currentIntake={7}
                 />
             </div>
-        </DashboardContainer>
+        </>
     )
 }
 
