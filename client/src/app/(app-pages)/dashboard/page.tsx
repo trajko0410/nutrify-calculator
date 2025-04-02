@@ -7,12 +7,17 @@ import React from "react"
 
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
-import { DailyPlan } from "@/app/api/mealsTest/route"
+import { DailyPlan, Meal, MealType, Training } from "@/app/api/mealsTest/route"
 
 import DashboardContainer from "../../../components/util/DashboardContainer"
 import YourNextMeal from "@/components/dashboardpage/yourNextMeal"
 import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
+import {
+    mealsSortedByTime,
+    trainingSortedByTime,
+} from "@/utils/activitySortByTime"
+import GrocerysForNextMeal from "@/components/dashboardpage/grocerysForNextMeal"
 
 const DashboardPage: React.FC = async () => {
     const { userId } = await auth()
@@ -37,7 +42,7 @@ const DashboardPage: React.FC = async () => {
     let totalFats: number = 0
     let totalCarbohydrates: number = 0
 
-    console.log(personActivitiesForId)
+    //console.log(personActivitiesForId)
 
     if (personActivitiesForId) {
         personActivitiesForId.mealPlan.forEach((entry) => {
@@ -50,6 +55,30 @@ const DashboardPage: React.FC = async () => {
         })
     }
 
+    let nextTraining: { training: Training; time: string } | null = null
+    if (personActivitiesForId?.trainingPlan) {
+        nextTraining = trainingSortedByTime(personActivitiesForId?.trainingPlan)
+    }
+
+    let nextMeal: { meal: Meal; mealType: MealType; time: string } | null = null
+    if (personActivitiesForId?.mealPlan) {
+        nextMeal = mealsSortedByTime(personActivitiesForId?.mealPlan)
+    }
+
+    const sortedActivities = [
+        ...(personActivitiesForId?.mealPlan?.map((meal) => ({
+            type: "meal",
+            ...meal,
+        })) || []),
+        ...(personActivitiesForId?.trainingPlan?.map((training) => ({
+            type: "training",
+            ...training,
+        })) || []),
+    ].sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+
+    //console.log(sortedActivities)
+    //console.log(nextMeal)
+    //console.log(nextTraining)
     //console.log(personActivitiesForId)
 
     return (
@@ -67,27 +96,24 @@ const DashboardPage: React.FC = async () => {
                     />
                     <div className="grid grid-cols-1 items-stretch gap-6 pt-6 lg:grid-cols-5 lg:grid-rows-1">
                         <div className="h-full w-full lg:col-span-3">
-                            <YourNextMeal
-                                nextMeals={personActivitiesForId?.mealPlan}
-                            />
+                            <YourNextMeal nextMealProp={nextMeal} />
                         </div>
                         <div className="h-full w-full lg:col-span-2">
-                            <YourNextTraining
-                                nextTrainings={
-                                    personActivitiesForId?.trainingPlan
-                                }
-                            />
+                            <YourNextTraining nextTrainingProp={nextTraining} />
                         </div>
                     </div>
                     <div className="pt-6">
                         <TodaysTimeline
-                            todaysActivity={personActivitiesForId ?? null}
+                            todaysActivityProps={sortedActivities}
                             totalCalories={totalCalories}
                             totalProteins={totalProteins}
                             totalCarbohydrates={totalCarbohydrates}
                             totalFats={totalFats}
                         />
                     </div>
+                    <GrocerysForNextMeal
+                        grocerysProps={nextMeal?.meal?.grocerys ?? null}
+                    />
                 </DashboardContainer>
             </div>
         </div>

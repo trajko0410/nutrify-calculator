@@ -128,7 +128,7 @@ const SingleActivityFromTimeline: React.FC<SingleActivityFromTimelineProps> = ({
                                 containerSize={24}
                             />
                             <p className="ml-2 text-sm font-medium text-[#2D3748]">
-                                {activity?.training?.caloriesBurned ?? 0}kcal
+                                -{activity?.training?.caloriesBurned ?? 0}kcal
                             </p>
                         </div>
                         <div className="flex flex-row items-center">

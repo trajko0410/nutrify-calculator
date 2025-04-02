@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 /// Only for testing since i dont have database yet
-interface GroceryItem {
+export interface GroceryItem {
     name: string
     amount: string
 }
@@ -164,7 +164,7 @@ export async function GET(): Promise<NextResponse> {
                   {
                       meal: TodaysMeals[1],
                       mealType: MealType.Lunch,
-                      time: "2025-03-31T13:00:00Z",
+                      time: "2025-04-05T13:00:00Z",
                   },
                   {
                       meal: TodaysMeals[2],
@@ -178,11 +178,11 @@ export async function GET(): Promise<NextResponse> {
             ? [
                   {
                       training: TodaysTraining[0],
-                      time: "2025-03-31T10:00:00Z",
+                      time: "2025-04-03T17:00:00Z",
                   },
                   {
                       training: TodaysTraining[1],
-                      time: "2025-04-01T16:00:00Z",
+                      time: "2025-04-03T16:00:00Z",
                   },
               ]
             : []

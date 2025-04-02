@@ -1,7 +1,6 @@
 "use client"
 
 import { Training } from "@/app/api/mealsTest/route"
-import { trainingSortedByTime } from "@/utils/activitySortByTime"
 import { useState, useEffect } from "react"
 
 //import TrainingImage from "../../../public/trainingImage.png"
@@ -12,29 +11,29 @@ import Link from "next/link"
 import { ArrowDown } from "@phosphor-icons/react"
 
 type YourNextTrainingProps = {
-    nextTrainings: { training: Training; time: string }[] | undefined | null
+    nextTrainingProp: { training: Training; time: string } | undefined | null
 }
 
 const YourNextTraining: React.FC<YourNextTrainingProps> = ({
-    nextTrainings,
+    nextTrainingProp,
 }) => {
     const [nextTraining, setNextTraining] = useState<{
-        training: Training
-        time: string
+        training: Training;
+        time: string;
     } | null>(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!nextTrainings) {
+        if (!nextTrainingProp) {
             setLoading(false)
             return
         }
-        const training = trainingSortedByTime(nextTrainings) // Use the custom sorting function
-        //console.log(training, "traning")
-
-        setNextTraining(training)
+        //console.log(nextTraining)
+        setNextTraining(nextTrainingProp)
         setLoading(false)
-    }, [nextTrainings])
+    }, [nextTrainingProp])
+
+    //console.log(training)
 
     if (loading) {
         return (
@@ -55,12 +54,12 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
     return (
         <div className="bg-White shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl p-[17px] text-black md:flex-row">
             <div
-                className={`relative h-full min-h-[200px] w-full ${nextTraining.training.image ? "overflow-hidden" : ""} rounded-xl`}
+                className={`relative h-full min-h-[200px] w-full ${nextTraining?.training?.image ? "overflow-hidden" : ""} rounded-xl`}
             >
-                {nextTraining.training.image && (
+                {nextTraining?.training?.image && (
                     <>
                         <Image
-                            src={nextTraining.training.image}
+                            src={nextTraining?.training?.image}
                             alt="image"
                             fill
                             className="absolute inset-0 h-full object-cover"
@@ -69,31 +68,31 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                     </>
                 )}
                 <div
-                    className={`font-Poppins relative flex h-full w-full flex-1 flex-col justify-between ${nextTraining.training.image ? "p-[10px]" : ""}`}
+                    className={`font-Poppins relative flex h-full w-full flex-1 flex-col justify-between ${nextTraining?.training?.image ? "p-[10px]" : ""}`}
                 >
                     <div className="flex flex-col gap-[6px]">
                         <h3
-                            className={`text-xs leading-[150%] font-medium ${nextTraining.training.image ? "text-[#A0AEC0]" : "text-[#A0AEC0]"}`}
+                            className={`text-xs leading-[150%] font-medium ${nextTraining?.training?.image ? "text-[#A0AEC0]" : "text-[#A0AEC0]"}`}
                         >
                             Your Next Meal
                         </h3>
                         <h3
-                            className={`text-lg leading-[140%] font-medium ${nextTraining.training.image ? "text-white" : "text-[#2D3748]"}`}
+                            className={`text-lg leading-[140%] font-medium ${nextTraining?.training?.image ? "text-white" : "text-[#2D3748]"}`}
                         >
-                            {nextTraining.training?.name
-                                ? nextTraining.training.name
+                            {nextTraining?.training?.name
+                                ? nextTraining?.training?.name
                                 : "Next Training"}
                         </h3>
                         <p
-                            className={`text-sm leading-[140%] font-medium ${nextTraining.training.image ? "text-[#E0E0E0]" : "text-[#A0AEC0]"}`}
+                            className={`text-sm leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#A0AEC0]"}`}
                         >
-                            {nextTraining.training.description
-                                ? nextTraining.training.description.length > 255
-                                    ? nextTraining.training.description.slice(
+                            {nextTraining?.training?.description
+                                ?   nextTraining?.training?.description.length > 255
+                                    ? nextTraining.training?.description.slice(
                                           0,
                                           120,
                                       ) + "..."
-                                    : nextTraining.training.description
+                                    : nextTraining?.training?.description
                                 : "Description of your training..."}
                         </p>
                     </div>
@@ -106,7 +105,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 containerSize={32}
                             />
                             <p
-                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining.training.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                             >
                                 -{nextTraining?.training?.caloriesBurned ?? 0}
                                 kcal
@@ -119,7 +118,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 containerSize={32}
                             />
                             <p
-                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining.training.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                             >
                                 {nextTraining?.training?.duration ?? 0} &nbsp;m
                             </p>
@@ -131,7 +130,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 containerSize={32}
                             />
                             <p
-                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining.training.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                             >
                                 {nextTraining?.training?.exercises.length ?? 0}
                                 &nbsp;Exercises
@@ -140,11 +139,11 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                     </div>
                     <div className="flex flex-row justify-between pt-6">
                         <p
-                            className={`text-lg leading-[140%] font-medium ${nextTraining.training.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                            className={`text-lg leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                         >
                             {nextTraining?.time
                                 ? new Date(
-                                      nextTraining.time,
+                                      nextTraining?.time,
                                   ).toLocaleTimeString("en-US", {
                                       hour: "2-digit",
                                       minute: "2-digit",
@@ -153,12 +152,12 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 : "No time available"}
                         </p>
                         <p
-                            className={`flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal ${nextTraining.training.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                            className={`flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                         >
                             <Link href={"/singleTraining"}>Read More</Link>
                             <ArrowDown
                                 color={
-                                    nextTraining.training.image
+                                    nextTraining?.training?.image
                                         ? "white"
                                         : "black"
                                 }

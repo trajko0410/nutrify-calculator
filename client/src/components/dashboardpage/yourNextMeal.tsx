@@ -1,7 +1,6 @@
 "use client"
 
 import { Meal, MealType } from "@/app/api/mealsTest/route"
-import { mealsSortedByTime } from "@/utils/activitySortByTime"
 import { useState, useEffect } from "react"
 import ParametarsIcon from "../util/ParametarsIcon"
 import Link from "next/link"
@@ -11,10 +10,10 @@ import Image from "next/image"
 //import slika from "../../../public/work2.png"
 
 type YourNextMealsProps = {
-    nextMeals: { meal: Meal; mealType: MealType; time: string }[] | undefined
+    nextMealProp: { meal: Meal; mealType: MealType; time: string } | undefined | null
 }
 
-const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMeals }) => {
+const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp }) => {
     const [nextMeal, setNextMeal] = useState<{
         meal: Meal
         mealType: MealType
@@ -23,16 +22,17 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMeals }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!nextMeals) {
+        if (!nextMealProp) {
             setLoading(false)
             return
         }
-        const meal = mealsSortedByTime(nextMeals) // Use the custom sorting function
         //console.log(meal, "dsfas")
 
-        setNextMeal(meal)
+        setNextMeal(nextMealProp)
         setLoading(false)
-    }, [nextMeals])
+    }, [nextMealProp])
+
+    //console.log(nextMeal)
 
     if (loading) {
         return (
