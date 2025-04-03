@@ -141,7 +141,7 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp }) => {
                             : "No time available"}
                     </p>
                     <p className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
-                        <Link href={"/singlefood"}>Read More</Link>
+                        <Link href={`/singlefood/${nextMeal?.meal.id}`}>Read More</Link>
                         <ArrowDown
                             color="black"
                             size="12"

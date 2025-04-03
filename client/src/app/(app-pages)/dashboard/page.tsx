@@ -67,11 +67,11 @@ const DashboardPage: React.FC = async () => {
 
     const sortedActivities = [
         ...(personActivitiesForId?.mealPlan?.map((meal) => ({
-            type: "meal",
+            type: "meal" as const,
             ...meal,
         })) || []),
         ...(personActivitiesForId?.trainingPlan?.map((training) => ({
-            type: "training",
+            type: "training" as const,
             ...training,
         })) || []),
     ].sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
@@ -87,22 +87,24 @@ const DashboardPage: React.FC = async () => {
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
                 <DashboardContainer>
-                    <TodaysFoodInteake
-                        userName={personActivitiesForId?.name}
-                        totalCalories={totalCalories}
-                        totalProteins={totalProteins}
-                        totalCarbohydrates={totalCarbohydrates}
-                        totalFats={totalFats}
-                    />
-                    <div className="grid grid-cols-1 items-stretch gap-6 pt-6 lg:grid-cols-5 lg:grid-rows-1">
-                        <div className="h-full w-full lg:col-span-3">
-                            <YourNextMeal nextMealProp={nextMeal} />
+                    <div className="flex flex-col gap-6">
+                        <TodaysFoodInteake
+                            userName={personActivitiesForId?.name}
+                            totalCalories={totalCalories}
+                            totalProteins={totalProteins}
+                            totalCarbohydrates={totalCarbohydrates}
+                            totalFats={totalFats}
+                        />
+                        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
+                            <div className="h-full w-full lg:col-span-3">
+                                <YourNextMeal nextMealProp={nextMeal} />
+                            </div>
+                            <div className="h-full w-full lg:col-span-2">
+                                <YourNextTraining
+                                    nextTrainingProp={nextTraining}
+                                />
+                            </div>
                         </div>
-                        <div className="h-full w-full lg:col-span-2">
-                            <YourNextTraining nextTrainingProp={nextTraining} />
-                        </div>
-                    </div>
-                    <div className="pt-6">
                         <TodaysTimeline
                             todaysActivityProps={sortedActivities}
                             totalCalories={totalCalories}
@@ -110,10 +112,8 @@ const DashboardPage: React.FC = async () => {
                             totalCarbohydrates={totalCarbohydrates}
                             totalFats={totalFats}
                         />
+                        <GrocerysForNextMeal />
                     </div>
-                    <GrocerysForNextMeal
-                        grocerysProps={nextMeal?.meal?.grocerys ?? null}
-                    />
                 </DashboardContainer>
             </div>
         </div>

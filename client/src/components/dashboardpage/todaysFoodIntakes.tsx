@@ -95,7 +95,7 @@ const TodaysFoodInteake: React.FC<TodaysFoodIntakeProps> = ({
                     Lorem ipsum dolor sit amet
                 </p>
             </div>
-            <div className="mt-8 grid w-full grid-cols-1 flex-wrap justify-between gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className=" grid w-full grid-cols-1 flex-wrap justify-between gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <DailyInatakeSpecific
                     title={"Calories"}
                     planedIntake={totalCalories}

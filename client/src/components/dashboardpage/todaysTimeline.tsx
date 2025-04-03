@@ -1,5 +1,6 @@
 "use client"
 
+
 import React, { useState, useEffect } from "react"
 import ParametarsIcon from "../util/ParametarsIcon"
 
@@ -16,8 +17,8 @@ type TodaysTimelineProps = {
 }
 
 export type ActivityType =
-    | { type: string; meal: Meal; mealType: MealType; time: string }
-    | { type: string; training: Training; time: string }
+    | { type: "meal"; meal: Meal; mealType: MealType; time: string }
+    | { type: "training"; training: Training; time: string }
 
 const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
     todaysActivityProps,
@@ -58,6 +59,7 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
             </div>
         )
     }
+
     return (
         <div className="bg-White shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
             <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
@@ -121,7 +123,7 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
                     </div>
                 </div>
             </div>
-            <div className="custom-scrollbar flex snap-x flex-row gap-x-6 overflow-x-scroll whitespace-nowrap">
+            <div className="custom-scrollbar scroll-smooth flex snap-x flex-row gap-x-6 overflow-x-scroll whitespace-nowrap">
                 {sortedTodaysActivities.map((activity, index) => (
                     <SingleActivityFromTimeline
                         key={index}
