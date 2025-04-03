@@ -3,6 +3,7 @@
 import { JSX } from "react";
 import { percentageOfTotal } from "../../utils/procentageCalculator"
 import { FireSimple , Drop, Egg, BowlFood, Bread } from "@phosphor-icons/react"
+//import { useUser } from "@clerk/nextjs";
 
 
 type DailyInatakeSpecificProps = {
@@ -24,15 +25,18 @@ const DailyInatakeSpecific: React.FC<DailyInatakeSpecificProps> = ({
       Fats: <Drop  size={24} color="white" />,
       Carbohydrates: <Bread size={24} color="white" />,
   };
+  //const { user, isSignedIn, isLoaded } = useUser()
+  //console.log(isLoaded)
+
 
 
     return (
-        <div className="bg-White shadow-Combined font-Poppins flex h-[80px] flex-1/4 flex-row items-center justify-between rounded-xl pr-[20px] pl-[20px]">
-            <div className="flex flex-col">
+        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[80px] flex-1/4 flex-row items-center justify-between rounded-xl pr-[20px] pl-[20px] py-[10px] gap-2">
+            <div className="flex flex-col gap-1 ">
                 <h3 className="text-base font-medium text-[#A0AEC0]">
                     Today&apos;s {title}
                 </h3>
-                <div className="flex flex-row  items-center gap-2 ">
+                <div className="flex flex-row  items-center gap-1 flex-wrap ">
                     <p className="text-lg font-medium text-[#2D3748]">
                         {planedIntake}
                         {title === "Calories" ? "kcal" : "gr"}

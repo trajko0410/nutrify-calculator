@@ -20,7 +20,7 @@ import {
 import GrocerysForNextMeal from "@/components/dashboardpage/grocerysForNextMeal"
 
 const DashboardPage: React.FC = async () => {
-    const { userId } = await auth()
+    const {userId} = await auth()
 
     if (!userId) {
         redirect("/login")

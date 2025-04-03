@@ -23,7 +23,7 @@ const MainTestimonialSection: React.FC<MainTestimonialSectionProps> = ({
         <div className="bg-BlackGreen flex min-h-[510px] w-full flex-row flex-wrap justify-center overflow-clip rounded-2xl bg-[url('/shape3.png')] bg-cover bg-center lg:flex-nowrap">
             <div className="font-Poppins flex max-w-[600px] flex-1/2 flex-col justify-center gap-4 p-10 font-normal">
                 <h3 className="text-4xl text-white">{title}</h3>
-                <p className="text-base">{text}</p>
+                <p className="text-base text-white">{text}</p>
                 <h4 className="text-CyanGreen text-sm font-medium">{author}</h4>
             </div>
 

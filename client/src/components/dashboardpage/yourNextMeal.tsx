@@ -36,7 +36,7 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp }) => {
 
     if (loading) {
         return (
-            <div className="bg-White shadow-Combined h-full font-Poppins flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
+            <div className="bg-[#FFFFFF] shadow-Combined h-full font-Poppins flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
                 <p>Loading...</p> {/* Loading UI */}
             </div>
         )
@@ -44,14 +44,14 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp }) => {
 
     if (!nextMeal) {
         return (
-            <div className="bg-White shadow-Combined h-full font-Poppins flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
+            <div className="bg-[#FFFFFF] shadow-Combined h-full font-Poppins flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
                 <p>No upcoming meal found.</p> {/* UI for no meals */}
             </div>
         )
     }
 
     return (
-        <div className="bg-White shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] md:flex-row-reverse">
+        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] md:flex-row-reverse">
             <div className="flex w-full items-center justify-center md:w-2/5">
                 {!nextMeal?.meal?.image ? (
                     <div className="flex h-[265px] w-full items-center justify-center rounded-xl bg-[#F5F5F5]">

@@ -37,7 +37,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
 
     if (loading) {
         return (
-            <div className="bg-White shadow-Combined font-Poppins h-full flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
+            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins h-full flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
                 <p>Loading...</p> {/* Loading UI */}
             </div>
         )
@@ -45,14 +45,14 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
 
     if (!nextTraining) {
         return (
-            <div className="bg-White shadow-Combined font-Poppins flex min-h-[200px] h-full flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
+            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[200px] h-full flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
                 <p>No upcoming training found.</p> {/* UI for no meals */}
             </div>
         )
     }
 
     return (
-        <div className="bg-White shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl p-[17px] text-black md:flex-row">
+        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl p-[17px] text-black md:flex-row">
             <div
                 className={`relative h-full min-h-[200px] w-full ${nextTraining?.training?.image ? "overflow-hidden" : ""} rounded-xl`}
             >

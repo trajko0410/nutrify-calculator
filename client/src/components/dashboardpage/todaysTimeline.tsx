@@ -46,7 +46,7 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
 
     if (loading) {
         return (
-            <div className="bg-White shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
                 <p>Loading...</p> {/* Loading UI */}
             </div>
         )
@@ -54,14 +54,14 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
 
     if (!sortedTodaysActivities || sortedTodaysActivities.length === 0) {
         return (
-            <div className="bg-White shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
                 <p>No upcoming Activities.</p> {/* UI for no activities */}
             </div>
         )
     }
 
     return (
-        <div className="bg-White shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
+        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
             <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                 <div className="flex w-full flex-col gap-6 md:flex-row md:justify-between">
                     <div>

@@ -4,6 +4,8 @@ import { Menu, MenuItem } from "@mui/material"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import React from "react"
+import Link from "next/link"
+import { Gear, SignOut } from "@phosphor-icons/react"
 
 const ProfileIcon: React.FC = () => {
     const { user, isLoaded } = useUser()
@@ -56,6 +58,15 @@ const ProfileIcon: React.FC = () => {
                         horizontal: "left",
                     }}
                     onClose={handleClose}
+                    disableScrollLock
+                    slotProps={{
+                        paper: {
+                            sx: {
+                                mt: 3, // Pomera meni malo dole
+                                ml: -1, // Pomera meni malo ulevo
+                            },
+                        },
+                    }}
                 >
                     <MenuItem
                         onClick={() => {
@@ -63,8 +74,21 @@ const ProfileIcon: React.FC = () => {
                             handleSignOut()
                         }}
                     >
-                        SignOut
+                        <div className="flex items-center gap-4">
+                            <SignOut size={20} />
+                            SignOut
+                        </div>
                     </MenuItem>
+                    <div className="md:hidden">
+                        <MenuItem>
+                            <Link
+                                href={"/settings"}
+                                className="flex items-center gap-4"
+                            >
+                                <Gear size={20}></Gear>Settings
+                            </Link>
+                        </MenuItem>
+                    </div>
                 </Menu>
             </div>
         )

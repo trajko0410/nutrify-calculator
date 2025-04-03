@@ -156,7 +156,7 @@ const GrocerysForNextMeal = () => {
 
     if (loading) {
         return (
-            <div className="bg-White shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="bg-[#ffffff] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
                 <p>Loading...</p> {/* Loading UI */}
             </div>
         )
@@ -164,7 +164,7 @@ const GrocerysForNextMeal = () => {
 
     if (!grocerys || grocerys.length === 0) {
         return (
-            <div className="bg-White shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
                 <p>No grocerys to show at this moment.</p>{" "}
                 {/* UI for no activities */}
             </div>
@@ -172,7 +172,7 @@ const GrocerysForNextMeal = () => {
     }
 
     return (
-        <div className="bg-White shadow-Combined font-Poppins flex cursor-pointer flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
+        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex cursor-pointer flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
             <div className="flex flex-col md:flex-row md:justify-between">
                 <div>
                     <h3 className="text-DarkGreen text-xl font-medium">

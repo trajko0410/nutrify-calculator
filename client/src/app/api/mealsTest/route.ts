@@ -123,7 +123,7 @@ export async function GET(): Promise<NextResponse> {
             caloriesBurned: 500,
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
-            duration: "60 minutes",
+            duration: "60",
             exercises: [
                 { name: "Squats", sets: 4, reps: 12 },
                 { name: "Bench Press", sets: 3, reps: 10 },
@@ -178,11 +178,11 @@ export async function GET(): Promise<NextResponse> {
             ? [
                   {
                       training: TodaysTraining[0],
-                      time: "2025-04-03T17:00:00Z",
+                      time: "2025-04-02T17:00:00Z",
                   },
                   {
                       training: TodaysTraining[1],
-                      time: "2025-04-03T16:00:00Z",
+                      time: "2025-04-02T16:00:00Z",
                   },
               ]
             : []
