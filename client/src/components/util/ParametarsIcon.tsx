@@ -1,6 +1,6 @@
 "use client"
 
-import { FireSimple , Drop, Egg, BowlFood, Bread, Timer, Barbell,/* Pause, ListNumbers*/ } from "@phosphor-icons/react"
+import { FireSimple , Drop, Egg, BowlFood, Bread, Timer, Barbell, Pause, ListNumbers,} from "@phosphor-icons/react"
 import { JSX } from "react";
 
 
@@ -19,7 +19,9 @@ const ParametarsIcon:React.FC<FoodIntakeParametarsIcon>=({parametarName, iconSiz
         Fats: <Drop  size={iconSize} color="white" />,
         Carbohydrates: <Bread size={iconSize} color="white" />,
         Time: <Timer size={iconSize} color="white"/>,
-        Exercises: <Barbell size={iconSize} color="white"></Barbell>
+        Exercises: <Barbell size={iconSize} color="white"></Barbell>,
+        Pause: <Pause size={iconSize} color="white"></Pause>,
+        Series: <ListNumbers size={iconSize} color="white"></ListNumbers>,
     };
   
   return  <div

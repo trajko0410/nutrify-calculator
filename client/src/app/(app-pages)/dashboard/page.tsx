@@ -102,6 +102,7 @@ const DashboardPage: React.FC = async () => {
                             <div className="h-full w-full lg:col-span-2">
                                 <YourNextTraining
                                     nextTrainingProp={nextTraining}
+                                    isNextTrainingComponent={true}
                                 />
                             </div>
                         </div>
@@ -111,6 +112,7 @@ const DashboardPage: React.FC = async () => {
                             totalProteins={totalProteins}
                             totalCarbohydrates={totalCarbohydrates}
                             totalFats={totalFats}
+                            isTodayTimelineComponent={true}
                         />
                         <GrocerysForNextMeal />
                     </div>

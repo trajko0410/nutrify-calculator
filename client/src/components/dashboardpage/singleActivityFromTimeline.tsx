@@ -9,6 +9,7 @@ import Link from "next/link"
 
 type SingleActivityFromTimelineProps = {
     activity: ActivityType
+    
 }
 
 const SingleActivityFromTimeline: React.FC<SingleActivityFromTimelineProps> = ({

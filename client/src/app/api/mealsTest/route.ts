@@ -17,7 +17,7 @@ export interface Meal {
     carbohydrates: number
     grocerys: GroceryItem[]
     image: string | null
-    authorUserId?: number | string | null
+    authorUserId: number | string | null
     preparationVideoUrl?: string | null
     detailePreparation?: PreperationType[] | null | undefined
 }
@@ -27,10 +27,14 @@ export interface PreperationType {
     instructions?: string[]
 }
 
-interface Exercise {
+export interface Exercise {
+    id: number | string
     name: string
     sets: number
     reps: number | string
+    pause?: string | number
+    description: string
+    image?: string | null
 }
 
 export interface Training {
@@ -41,6 +45,7 @@ export interface Training {
     exercises: Exercise[]
     image: string | null
     description: string
+    authorUserId: number | string | null
 }
 
 interface User {
@@ -84,6 +89,7 @@ export async function GET(): Promise<NextResponse> {
             proteins: 40,
             fats: 10,
             carbohydrates: 30,
+            authorUserId: 1,
             grocerys: [
                 { name: "chicken", amount: "300gr", groceryId: 1 },
                 { name: "lettuce", amount: "100gr", groceryId: 2 },
@@ -94,6 +100,7 @@ export async function GET(): Promise<NextResponse> {
         {
             id: 2,
             name: "Spaghetti Carbonara",
+            authorUserId: 1,
             description:
                 "Classic Italian pasta with creamy sauce, bacon, and parmesan cheese.",
             calories: 700,
@@ -109,6 +116,7 @@ export async function GET(): Promise<NextResponse> {
         },
         {
             id: 3,
+            authorUserId: 4,
             name: "Margherita Pizza",
             description:
                 "Tomato sauce, fresh mozzarella, and basil on a thin crust.",
@@ -134,12 +142,45 @@ export async function GET(): Promise<NextResponse> {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
             duration: "60",
             exercises: [
-                { name: "Squats", sets: 4, reps: 12 },
-                { name: "Bench Press", sets: 3, reps: 10 },
-                { name: "Deadlifts", sets: 3, reps: 8 },
-                { name: "Pull-ups", sets: 3, reps: 10 },
+                {
+                    name: "Squats",
+                    sets: 4,
+                    reps: 12,
+                    id: 1,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Bench Press",
+                    sets: 3,
+                    reps: 10,
+                    id: 2,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Deadlifts",
+                    sets: 3,
+                    reps: 8,
+                    id: 3,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Pull-ups",
+                    sets: 3,
+                    reps: 10,
+                    id: 4,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
             ],
             image: null,
+            authorUserId: 1,
         },
         {
             id: 2,
@@ -149,11 +190,36 @@ export async function GET(): Promise<NextResponse> {
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
             exercises: [
-                { name: "Running", sets: 1, reps: "30 minutes" },
-                { name: "Jump Rope", sets: 3, reps: "5 minutes" },
-                { name: "Cycling", sets: 1, reps: "15 minutes" },
+                {
+                    name: "Running",
+                    sets: 1,
+                    reps: "30 minutes",
+                    id: 5,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Jump Rope",
+                    sets: 3,
+                    reps: "5 minutes",
+                    id: 6,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Cycling",
+                    sets: 1,
+                    reps: "15 minutes",
+                    id: 7,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
             ],
             image: null,
+            authorUserId: 1,
         },
     ]
 
@@ -191,7 +257,7 @@ export async function GET(): Promise<NextResponse> {
                   },
                   {
                       training: TodaysTraining[1],
-                      time: "2025-04-02T16:00:00Z",
+                      time: "2025-04-07T16:00:00Z",
                   },
               ]
             : []

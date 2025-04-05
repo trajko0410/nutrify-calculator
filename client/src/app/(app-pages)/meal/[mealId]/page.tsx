@@ -28,6 +28,7 @@ const fetchedMeal = [
                 { name: "Lettuce", amount: "100g", groceryId: 2 },
                 { name: "Tomato", amount: "50g", groceryId: 3 },
             ],
+            authorUserId: 1,
             image: null,
             videoUrl: "ovo je video",
             detailePreparation: [
