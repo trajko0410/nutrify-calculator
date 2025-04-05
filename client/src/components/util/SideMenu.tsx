@@ -118,6 +118,7 @@ const SideMenu: React.FC = () => {
                         icon={<SignOut size={20} />}
                         path="/"
                         isSignOut={true}
+                        
                     />
                 </div>
             </div>

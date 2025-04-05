@@ -23,7 +23,7 @@ const RegisterModal: React.FC = () => {
 
     useEffect(() => {
         if (session?.status === "active") {
-            router.push("/home")
+            router.push("/")
         }
     }, [session, router])
 

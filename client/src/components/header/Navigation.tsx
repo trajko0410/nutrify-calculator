@@ -1,5 +1,6 @@
 "use client"
-import React, { useEffect } from "react"
+
+import React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import DropDown from "../util/DropDown"
@@ -14,15 +15,17 @@ export const Navigation: React.FC = () => {
     const handleSignOut = () => {
         if (session) {
             session.end()
+            router.push("/home")
         }
         return
     }
 
+    /*
     useEffect(() => {
         if (isSignedIn) {
             router.push("/dashboard")
         }
-    }, [isSignedIn, router])
+    }, [isSignedIn, router])*/
 
     return (
         <>
@@ -100,7 +103,6 @@ export const Navigation: React.FC = () => {
                     </div>
                 )}
             </div>
-            <div className="block w-full md:hidden text-black">in</div>
         </>
     )
 }

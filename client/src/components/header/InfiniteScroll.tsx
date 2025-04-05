@@ -18,7 +18,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({ text }) => {
                 alignItems: "stretch",
             }}
         >
-            <p className="px-10">{text}</p>
+            <p className="px-10 text-white">{text}</p>
         </Marquee>
     )
 }

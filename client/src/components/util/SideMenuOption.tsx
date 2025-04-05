@@ -24,6 +24,7 @@ const SideMenuOption: React.FC<SideMenuOptionProps> = ({
     const handleClick = () => {
         if (isSignOut && session) {
             session.end()
+            router.push("/")
             return
         }
 

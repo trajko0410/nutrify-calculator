@@ -151,7 +151,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                   })
                                 : "No time available"}
                         </p>
-                        <p
+                        <button
                             className={`flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                         >
                             <Link href={`/singleTraining/${nextTraining?.training.id}`}>Read More</Link>
@@ -164,7 +164,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 size="12"
                                 className="rotate-270"
                             />
-                        </p>
+                        </button>
                     </div>
                 </div>
             </div>

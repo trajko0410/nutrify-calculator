@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 export interface GroceryItem {
     name: string
     amount: string
+    groceryId: number
 }
 
 export interface Meal {
@@ -16,6 +17,14 @@ export interface Meal {
     carbohydrates: number
     grocerys: GroceryItem[]
     image: string | null
+    authorUserId?: number | string | null
+    preparationVideoUrl?: string | null
+    detailePreparation?: PreperationType[] | null | undefined
+}
+
+export interface PreperationType {
+    stepTitle?: string
+    instructions?: string[]
 }
 
 interface Exercise {
@@ -76,9 +85,9 @@ export async function GET(): Promise<NextResponse> {
             fats: 10,
             carbohydrates: 30,
             grocerys: [
-                { name: "chicken", amount: "300gr" },
-                { name: "lettuce", amount: "100gr" },
-                { name: "tomatoes", amount: "50gr" },
+                { name: "chicken", amount: "300gr", groceryId: 1 },
+                { name: "lettuce", amount: "100gr", groceryId: 2 },
+                { name: "tomatoes", amount: "50gr", groceryId: 3 },
             ],
             image: null,
         },
@@ -92,9 +101,9 @@ export async function GET(): Promise<NextResponse> {
             fats: 25,
             carbohydrates: 80,
             grocerys: [
-                { name: "spaghetti", amount: "200gr" },
-                { name: "bacon", amount: "100gr" },
-                { name: "parmesan", amount: "50gr" },
+                { name: "spaghetti", amount: "200gr", groceryId: 4 },
+                { name: "bacon", amount: "100gr", groceryId: 5 },
+                { name: "parmesan", amount: "50gr", groceryId: 6 },
             ],
             image: null,
         },
@@ -108,9 +117,9 @@ export async function GET(): Promise<NextResponse> {
             fats: 40,
             carbohydrates: 90,
             grocerys: [
-                { name: "pizza dough", amount: "250gr" },
-                { name: "mozzarella", amount: "150gr" },
-                { name: "tomato sauce", amount: "100gr" },
+                { name: "pizza dough", amount: "250gr", groceryId: 7 },
+                { name: "mozzarella", amount: "150gr", groceryId: 8 },
+                { name: "tomato sauce", amount: "100gr", groceryId: 9 },
             ],
             image: null,
         },

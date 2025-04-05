@@ -1,8 +1,10 @@
 "use client"
-import { useSignIn } from "@clerk/nextjs"
+
+import { useSession, useSignIn } from "@clerk/nextjs"
 import { IconButton, Input, InputAdornment } from "@mui/material"
 import { Eye, EyeClosed } from "@phosphor-icons/react"
-import React   from "react"
+import { useRouter } from "next/navigation"
+import React, {useEffect}   from "react"
 import { toast } from "react-toastify"
 
 const LoginModal: React.FC = () => {
@@ -11,6 +13,16 @@ const LoginModal: React.FC = () => {
     const [password, setPassword] = React.useState("")
     const [error, setError] = React.useState("")
     const [showPassword, setShowPassword] = React.useState(false)
+    const {session} = useSession()
+
+    const router = useRouter()
+
+       useEffect(() => {
+            if (session?.status === "active") {
+                router.push("/dashboard")
+            }
+        }, [session, router])
+
 
      
 
@@ -51,6 +63,8 @@ const LoginModal: React.FC = () => {
                 await setActive({ session: result.createdSessionId })
 
                 toast.success("Login successful!")
+                router.push("/dashboard")
+
                 return
             } else {
                 console.error("Unhandled sign-in status:", result)

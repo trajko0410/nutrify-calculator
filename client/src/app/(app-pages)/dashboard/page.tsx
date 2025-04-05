@@ -9,7 +9,7 @@ import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { DailyPlan, Meal, MealType, Training } from "@/app/api/mealsTest/route"
 
-import DashboardContainer from "../../../components/util/DashboardContainer"
+import AppContainer from "../../../components/util/AppContainer"
 import YourNextMeal from "@/components/dashboardpage/yourNextMeal"
 import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
@@ -86,7 +86,7 @@ const DashboardPage: React.FC = async () => {
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
-                <DashboardContainer>
+                <AppContainer>
                     <div className="flex flex-col gap-6">
                         <TodaysFoodInteake
                             userName={personActivitiesForId?.name}
@@ -97,7 +97,7 @@ const DashboardPage: React.FC = async () => {
                         />
                         <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
                             <div className="h-full w-full lg:col-span-3">
-                                <YourNextMeal nextMealProp={nextMeal} />
+                                <YourNextMeal nextMealProp={nextMeal} isNextMealComponent={true}  />
                             </div>
                             <div className="h-full w-full lg:col-span-2">
                                 <YourNextTraining
@@ -114,7 +114,7 @@ const DashboardPage: React.FC = async () => {
                         />
                         <GrocerysForNextMeal />
                     </div>
-                </DashboardContainer>
+                </AppContainer>
             </div>
         </div>
     )
