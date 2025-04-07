@@ -29,7 +29,7 @@ const fetchedTraining = [
                     name: "Squats",
                     sets: 3,
                     reps: 20,
-                    id: 0,
+                    id: 2,
                     description:
                         " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
                     pause: 60,

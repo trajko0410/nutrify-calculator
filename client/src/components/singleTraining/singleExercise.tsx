@@ -8,9 +8,10 @@ import Link from "next/link"
 type SingleEcerciseProp = {
     exercise: Exercise
     index: number
+    trainingId: string | number | null
 }
 
-const SingleExercise: React.FC<SingleEcerciseProp> = ({ exercise, index }) => {
+const SingleExercise: React.FC<SingleEcerciseProp> = ({ exercise, index, trainingId }) => {
     const userSubscription = true // TODO: Replace with actual subscription check logic
 
     if (!exercise) {
@@ -19,10 +20,10 @@ const SingleExercise: React.FC<SingleEcerciseProp> = ({ exercise, index }) => {
     return (
         <div className="font-Poppins flex w-[370px] shrink-0 flex-col gap-5 pb-4">
             <div>
-                {exercise?.image ? (
+                {exercise?.imageHero ? (
                     <div className="relative h-[190px] w-full overflow-clip rounded-xl">
                         <Image
-                            src={exercise.image}
+                            src={exercise.imageHero}
                             alt={exercise.name}
                             fill
                             className="object-cover"
@@ -89,9 +90,9 @@ const SingleExercise: React.FC<SingleEcerciseProp> = ({ exercise, index }) => {
             </div>
 
             <div className="flex flex-row justify-end border-t-2 border-[#D9D9D9]">
-                {userSubscription && (
+                {userSubscription && trainingId && exercise?.id && (
                     <button className="flex flex-row items-center justify-center gap-2 pt-2 pr-2 text-xs leading-[150%] font-normal text-[#2D3748]">
-                        <Link href={`/training/exercise/${exercise?.id}`}>
+                        <Link href={`/training/${trainingId}/exercise/${exercise?.id}`}>
                             Read More
                         </Link>
                         <ArrowDown

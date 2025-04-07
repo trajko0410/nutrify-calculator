@@ -34,7 +34,15 @@ export interface Exercise {
     reps: number | string
     pause?: string | number
     description: string
-    image?: string | null
+    imageHero?: string | null
+
+    musslceGroupTargetImage?: null | string
+    movmentImage?: null | string
+    videoLink?: null | string
+    musscleGroupTarget?: {
+        name: string
+        description: string
+    }[]
 }
 
 export interface Training {

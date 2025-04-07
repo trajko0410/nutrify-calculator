@@ -176,6 +176,9 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
                                     key={exercise.id}
                                     index={index}
                                     exercise={exercise}
+                                    trainingId = {
+                                        sortedTodaysActivities[0].type === "training"
+                                            ? sortedTodaysActivities[0].training.id : null}
                                 ></SingleExercise>
                             )
                         },
