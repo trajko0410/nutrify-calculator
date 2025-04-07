@@ -53,7 +53,7 @@ const ExerciseDescription: React.FC<exerciseDescriptionProps> = ({
                     <h3 className="text-DarkGreen text-lg leading-[140%] font-medium">
                         Movement
                     </h3>
-                    <div className="shadow-Combined font-Poppins w-full overflow-clip rounded-xl bg-[#F5F5F5] sm:shadow-none">
+                    <div className="shadow-Combined font-Poppins w-full overflow-clip rounded-xl bg-[#FAF9F6] sm:shadow-none">
                         <div className="relative min-h-[200px] w-full overflow-clip rounded-xl">
                             <Image
                                 src={exerciseData?.movmentImage}
@@ -65,7 +65,7 @@ const ExerciseDescription: React.FC<exerciseDescriptionProps> = ({
                     </div>
                 </div>
             )}
-            <div className="shadow-Combined font-Poppins flex w-full flex-col gap-4 overflow-clip rounded-xl bg-[#F5F5F5] p-6 sm:p-0 sm:shadow-none">
+            <div className="shadow-Combined font-Poppins flex w-full flex-col gap-4 overflow-clip rounded-xl bg-[#FAF9F6] p-6 sm:p-0 sm:shadow-none">
                 <h3 className="text-DarkGreen text-lg leading-[140%] font-medium">
                     Muscle Target
                 </h3>
@@ -87,7 +87,7 @@ const ExerciseDescription: React.FC<exerciseDescriptionProps> = ({
                                             key={muscle.name}
                                             className="flex flex-col gap-4"
                                         >
-                                            <h4 className="text-sm font-medium text-[#2D3748]">
+                                            <h4 className="text-base font-bold text-[#2D3748]">
                                                 {muscle.name}
                                             </h4>
                                             <p className="text-sm font-normal text-[#757575]">

@@ -43,7 +43,7 @@ const ParametarsExercise: React.FC<ParametarsExerciseProps> = ({ exercise }) => 
     }
 
     return (
-        <div className=" font-Poppins w-full  bg-[#F5F5F5] jsutify-center ">
+        <div className=" font-Poppins w-full  bg-[#FAF9F6]] jsutify-center ">
            
                 <div className="grid sm:grid-cols-3 grid-cols-2 gap-2">
                     <div className="flex flex-row items-center">

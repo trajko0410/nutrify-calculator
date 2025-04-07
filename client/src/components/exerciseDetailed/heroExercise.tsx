@@ -47,7 +47,7 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
     }
 
     return (
-        <div className="shadow-Combined font-Poppins w-full overflow-clip rounded-xl bg-[#F5F5F5] sm:shadow-none">
+        <div className="shadow-Combined font-Poppins w-full overflow-clip rounded-xl bg-[#FAF9F6] sm:shadow-none">
             <div>
                 {exerciseData?.imageHero ? (
                     <div className="relative h-[320px] w-full overflow-clip rounded-xl">
@@ -67,14 +67,14 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
                                 </h4>
                             </div>
                             {!exercise.videoLink && (
-                                <div className="flex min-w-3/12 justify-center">
+                                <div className="flex min-w-3/12  items items-end justify-end p-[24px]">
                                     <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]">
                                         <a
                                             href={
                                                 "https://www.youtube.com/watch?v=i_ksoAjK-EI&list=RDi_ksoAjK-EI&start_radio=1"
                                             }
                                         >
-                                            Read More
+                                            Watch video
                                         </a>
                                         <ArrowDown
                                             color="white"
@@ -100,14 +100,14 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
                                 </h4>
                             </div>
                             {!exercise.videoLink && (
-                                <div className="flex min-w-3/12 items-end justify-center">
+                                <div className="flex min-w-3/12 items-end justify-end p-[24px]">
                                     <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]">
                                         <a
                                             href={
                                                 "https://www.youtube.com/watch?v=i_ksoAjK-EI&list=RDi_ksoAjK-EI&start_radio=1"
                                             }
                                         >
-                                            Read More
+                                            Watch vieo
                                         </a>
                                         <ArrowDown
                                             color="white"

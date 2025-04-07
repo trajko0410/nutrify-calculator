@@ -1,6 +1,7 @@
 import MainContainer from "../util/MainContainer"
 import InfiniteScroll from "./InfiniteScroll"
 import { Navigation } from "./Navigation"
+import NavigationMobile from "./NavigationMobile"
 
 const Header: React.FC = () => {
     return (
@@ -11,7 +12,9 @@ const Header: React.FC = () => {
                     <Navigation />
                 </MainContainer>
             </div>
-            <div className="block w-full md:hidden"></div>
+            <div className="block w-full md:hidden">
+                <NavigationMobile />
+            </div>
         </div>
     )
 }
