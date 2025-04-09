@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "medical_food_recipes",
+  "info": {
+    "singularName": "medical-food-recipe",
+    "pluralName": "medical-food-recipes",
+    "displayName": "MedicalFood-Recipe",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Code": {
+      "type": "string"
+    },
+    "Ingredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "ingredients.recipe-ingredient"
+    }
+  }
+}

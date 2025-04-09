@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_recipes_menu_recipes",
+  "info": {
+    "displayName": "Menu_recipe",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::medical-food-recipe.medical-food-recipe"
+    }
+  }
+}
