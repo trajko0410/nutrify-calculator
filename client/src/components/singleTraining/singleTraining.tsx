@@ -1,40 +1,39 @@
 "use client"
 
-import { Training } from "@/app/api/mealsTest/route"
+//import { Training } from "@/app/api/mealsTest/route"
 import { useState, useEffect } from "react"
 
 //import TrainingImage from "../../../public/trainingImage.png"
 import Image from "next/image"
 
 import ParametarsIcon from "../util/ParametarsIcon"
-import Link from "next/link"
-import { ArrowDown } from "@phosphor-icons/react"
+import {Eraser, ForkKnife } from "@phosphor-icons/react"
+import { useTrainingCtx } from "./trainingProvider"
+
 
 type YourNextTrainingProps = {
-    nextTrainingProp: { training: Training; time: string } | undefined | null
     userId?: number | string | null
 }
 
-const YourNextTraining: React.FC<YourNextTrainingProps> = ({
-    nextTrainingProp,
+const SingleTraining: React.FC<YourNextTrainingProps> = ({
+    userId,
 }) => {
-    const [nextTraining, setNextTraining] = useState<{
-        training: Training
-        time: string
-    } | null>(null)
+
+    const {nextTraining, openModal} = useTrainingCtx()
     const [loading, setLoading] = useState(true)
 
     //console.log(userId, "userIdTRAINING")
 
     useEffect(() => {
-        if (!nextTrainingProp) {
+        if (!nextTraining) {
             setLoading(false)
             return
         }
-        //console.log(nextTraining)
-        setNextTraining(nextTrainingProp)
+        //zconsole.log(nextTraining)
         setLoading(false)
-    }, [nextTrainingProp])
+    }, [nextTraining])
+
+    
 
     //console.log(training)
 
@@ -57,49 +56,35 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
     return (
         <div className="shadow-Combined font-Poppins flex h-full flex-col-reverse justify-between gap-8 rounded-xl bg-[#FFFFFF] p-[17px] text-black md:flex-row">
             <div
-                className={`relative flex h-full min-h-[200px] w-full flex-col justify-between overflow-hidden rounded-xl`}
+                className={`flex h-full min-h-[200px] flex-col justify-between relative  ${!nextTraining?.training?.image ? "relative w-full overflow-hidden" : "w-full md:w-3/5"} rounded-xl`}
             >
-                {nextTraining?.training?.image && (
-                    <>
-                        <Image
-                            src={nextTraining?.training?.image}
-                            alt="image"
-                            fill
-                            className="absolute inset-0 h-full object-cover"
-                        ></Image>
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/20"></div>
-                    </>
-                )}
+  
 
                 <div
-                    className={`font-Poppins flex h-full w-full flex-1 flex-col justify-between gap-6 ${nextTraining?.training?.image ? "p-[10px]" : ""} relative`}
+                    className={`font-Poppins flex h-full w-full flex-1 flex-col justify-between gap-6 `}
                 >
                     <div className="max-gap-[6px] flex h-full flex-col justify-between gap-[6px]">
                         <h3
-                            className={`text-xs leading-[150%] font-medium ${nextTraining?.training?.image ? "text-[#A0AEC0]" : "text-[#A0AEC0]"}`}
+                            className={`text-xs leading-[150%] font-medium`}
                         >
                             Your Training
                         </h3>
                         <h3
-                            className={`text-lg leading-[140%] font-medium ${nextTraining?.training?.image ? "text-white" : "text-[#2D3748]"}`}
+                            className={`text-lg leading-[140%] font-medium text-DarkGreen`}
                         >
                             {nextTraining?.training?.name
                                 ? nextTraining?.training?.name
                                 : "Next Training"}
                         </h3>
-                        <p
-                            className={`text-sm leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#A0AEC0]"}`}
-                        >
-                            {nextTraining?.training?.description
-                                ? nextTraining?.training?.description?.length >
-                                  120
-                                    ? nextTraining.training?.description.slice(
-                                          0,
-                                          120,
-                                      ) + "..."
-                                    : nextTraining?.training?.description
-                                : "Description of your training..."}
-                        </p>
+                       
+                    
+                            <p
+                                className={`text-sm leading-[140%] font-medium  text-[#A0AEC0]`}
+                            >
+                                {nextTraining?.training?.description
+                                    ? nextTraining?.training?.description
+                                    : "Description of your training..."}
+                            </p>
                     </div>
 
                     <div className="flex flex-row flex-wrap gap-4">
@@ -110,7 +95,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 containerSize={32}
                             />
                             <p
-                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                                className={`ml-2 text-base leading-[140%] font-medium `}
                             >
                                 -{nextTraining?.training?.caloriesBurned ?? 0}
                                 kcal
@@ -123,7 +108,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 containerSize={32}
                             />
                             <p
-                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                                className={`ml-2 text-base leading-[140%] font-medium `}
                             >
                                 {nextTraining?.training?.duration ?? 0} &nbsp;m
                             </p>
@@ -135,20 +120,22 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                 containerSize={32}
                             />
                             <p
-                                className={`ml-2 text-base leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                                className={`ml-2 text-base leading-[140%] font-medium `}
                             >
                                 {nextTraining?.training?.exercises?.length ?? 0}
                                 &nbsp;Exercises
                             </p>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between gap-2 sm:flex-row">
+                    <div className="flex flex-col gap-2 justify-between sm:flex-row">
                         <p
-                            className={`flex flex-col text-lg leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
+                            className={`flex flex-col text-lg leading-[140%] font-medium `}
                         >
-                            <span className="text-xs font-normal text-[#757575]">
+                       
+                                <span className="text-xs font-normal text-[#757575]">
                                 Training Time
-                            </span>
+                                </span>
+                            
                             {nextTraining?.time
                                 ? new Date(
                                       nextTraining?.time,
@@ -159,30 +146,38 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                                   })
                                 : "No time available"}
                         </p>
-
-                        <button
-                            className={`flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
-                        >
-                            <Link
-                                href={`/singleTraining/${nextTraining?.training.id}`}
-                            >
-                                Read More
-                            </Link>
-                            <ArrowDown
-                                color={
-                                    nextTraining.training.image
-                                        ? "white"
-                                        : "black"
-                                }
-                                size="12"
-                                className="rotate-270"
-                            />
-                        </button>
+                       
+                        {
+                            userId === nextTraining.training?.authorUserId && (
+                                <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]" onClick={openModal}>
+                                    <div 
+                                    >
+                                        Edit Training
+                                    </div>
+                                    <Eraser color="white" size="16" />
+                                </button>
+                            )}
                     </div>
                 </div>
             </div>
+                <div className="flex w-full justify-center md:w-2/5">
+                    {!nextTraining?.training?.image ? (
+                        <div className="flex h-[265px] w-full items-center justify-center rounded-xl bg-[#F5F5F5]">
+                            <ForkKnife color="#00000033" size={80}></ForkKnife>
+                        </div>
+                    ) : (
+                        <div className="relative h-[265px] w-full overflow-clip rounded-xl">
+                            <Image
+                                src={nextTraining.training.image}
+                                alt={nextTraining.training.name}
+                                fill
+                                className="overflow-cover object-cover"
+                            />
+                        </div>
+                    )}
+                </div>
         </div>
     )
 }
 
-export default YourNextTraining
+export default SingleTraining

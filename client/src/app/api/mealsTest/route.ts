@@ -49,11 +49,12 @@ export interface Training {
     id: number
     name: string
     caloriesBurned: number
-    duration: string
+    duration: string | number
     exercises: Exercise[]
     image: string | null
     description: string
     authorUserId: number | string | null
+    longDescription?: string
 }
 
 interface User {
@@ -261,11 +262,11 @@ export async function GET(): Promise<NextResponse> {
             ? [
                   {
                       training: TodaysTraining[0],
-                      time: "2025-04-02T17:00:00Z",
+                      time: "2025-05-02T17:00:00Z",
                   },
                   {
                       training: TodaysTraining[1],
-                      time: "2025-04-07T16:00:00Z",
+                      time: "2025-04-17T16:00:00Z",
                   },
               ]
             : []

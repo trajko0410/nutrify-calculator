@@ -7,10 +7,10 @@ import { redirect } from "next/navigation"
 import ParametarsExercise from "@/components/exerciseDetailed/parametarsExercise"
 import ExerciseDescription from "@/components/exerciseDetailed/exerciseDescription"
 
-interface Params {
+/*interface Params {
     trainingId: string | number
     exerciseId: string | number
-}
+}*/
 
 const exercise = {
     name: "Plank",
@@ -38,7 +38,7 @@ const exercise = {
     ],
 }
 
-const SingleExercisePage = async ({ params }: { params: Params }) => {
+const SingleExercisePage = async (/*{ params }: { params: Params }*/) => {
     //const { trainingId, exerciseId } = await params // ako ne stavim await dobijamo error
 
     const { userId } = await auth()

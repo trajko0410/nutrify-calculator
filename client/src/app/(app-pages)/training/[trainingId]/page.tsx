@@ -3,9 +3,11 @@ import Header from "@/components/util/AppHeader"
 
 import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs/server"
-import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
+//import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import AppContainer from "@/components/util/AppContainer"
-import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
+//import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
+import { TrainingCtxProvider } from "@/components/singleTraining/trainingProvider"
+import TrainingClientWrapper from "@/components/singleTraining/trainingClientWrapper"
 
 const fetchedTraining = [
     {
@@ -65,25 +67,9 @@ export default async function SingleTraining() {
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
                 <AppContainer>
-                    <div className="flex flex-col gap-6">
-                        <YourNextTraining
-                            isNextTrainingComponent={false}
-                            userId={userId}
-                            nextTrainingProp={fetchedTraining[0]}
-                        />
-                        <TodaysTimeline
-                            todaysActivityProps={[
-                                {
-                                    type: "training",
-
-                                    time: fetchedTraining[0].time,
-                                    training: fetchedTraining[0].training,
-                                },
-                            ]}
-                            isTodayTimelineComponent={false}
-                            userId={userId}
-                        />
-                    </div>
+                    <TrainingCtxProvider>
+                    <TrainingClientWrapper initialTraining={fetchedTraining[0]} userId={userId}/>
+                    </TrainingCtxProvider>
                 </AppContainer>
             </div>
         </div>

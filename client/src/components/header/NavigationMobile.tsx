@@ -51,93 +51,98 @@ export const NavigationMobile: React.FC = () => {
             </div>
 
             {/* Mobile Dropdown Menu */}
-            {hamburgerMenuOpen && (
-                <div className="shadow-Combined text-DarkGreen font-Poppins flex flex-col items-center justify-center space-y-4 bg-white px-4 pt-8 pb-15 text-sm font-medium md:hidden">
-                    {!isSignedIn && (
-                        <>
-                            <Link
-                                href="/"
-                                className="w-[60%] border-b-[1px] border-[#E2E8F0] p-[6px] pb-4 text-center"
-                            >
-                                Home
-                            </Link>
 
-                            <Link
-                                href="/contact"
-                                className="w-[60%] border-b-[1px] border-[#E2E8F0] p-[6px] pb-4 text-center"
-                            >
-                                Why NutrifyS
-                            </Link>
-                            <Link
-                                href="/contact"
-                                className="w-[60%] border-b-[1px] border-[#E2E8F0] p-[6px] pb-4 text-center"
-                            >
-                                About Us
-                            </Link>
-                            <div className="w-[60%] border-b-[1px] border-[#E2E8F0] pb-4 text-center">
-                                <DropDown
-                                    content={[
-                                        "Calculator",
-                                        "Food diary",
-                                        "Workout plan",
-                                    ]}
-                                    id="services"
-                                    title="Services"
-                                />
-                            </div>
-                            <div className="w-[60%] border-b-[1px] border-[#E2E8F0] pb-4 text-center">
-                                <DropDown
-                                    content={["Contact", "FAQ", "Support"]}
-                                    id="support"
-                                    title="Support"
-                                />
-                            </div>
-                            <Link href="/contact" className="p-[6px]">
-                                Contact
-                            </Link>
-                        </>
-                    )}
-                    {isSignedIn ? (
-                        <>
-                            <Link
-                                href="/login"
-                                onClick={handleSignOut}
-                                className="block text-gray-800"
-                            >
-                                Logout
-                            </Link>
-                            <Link
-                                href="/profile"
-                                className="flex items-center gap-2"
-                            >
-                                <Image
-                                    src={user.imageUrl}
-                                    alt="profile"
-                                    width={30}
-                                    height={30}
-                                    className="rounded-full"
-                                />
-                                <span className="text-gray-800">Profile</span>
-                            </Link>
-                        </>
-                    ) : (
-                        <div className="flex flex-row gap-2 pt-6">
-                            <Link
-                                href="/login"
-                                className="text-DarkGreen bg-Cream rounded-lg px-4 py-2 text-center"
-                            >
-                                Sign In
-                            </Link>
-                            <Link
-                                href="/register"
-                                className="bg-LightGreen rounded-lg px-4 py-2 text-center text-white"
-                            >
-                                Start Now
-                            </Link>
+            <div
+                className={`shadow-DarkBottom text-DarkGreen font-Poppins flex flex-col items-center justify-center space-y-4 overflow-hidden bg-white px-4 pt-8 pb-15 text-sm font-medium transition-all duration-600 ease-in-out md:hidden ${
+                    hamburgerMenuOpen
+                        ? "max-h-[800px] opacity-100"
+                        : "max-h-[100px] opacity-0"
+                }`}
+            >
+                {!isSignedIn && (
+                    <>
+                        <Link
+                            href="/"
+                            className="w-[60%] border-b-[1px] border-[#E2E8F0] p-[6px] pb-4 text-center"
+                        >
+                            Home
+                        </Link>
+
+                        <Link
+                            href="/contact"
+                            className="w-[60%] border-b-[1px] border-[#E2E8F0] p-[6px] pb-4 text-center"
+                        >
+                            Why NutrifyS
+                        </Link>
+                        <Link
+                            href="/contact"
+                            className="w-[60%] border-b-[1px] border-[#E2E8F0] p-[6px] pb-4 text-center"
+                        >
+                            About Us
+                        </Link>
+                        <div className="w-[60%] border-b-[1px] border-[#E2E8F0] pb-4 text-center">
+                            <DropDown
+                                content={[
+                                    "Calculator",
+                                    "Food diary",
+                                    "Workout plan",
+                                ]}
+                                id="services"
+                                title="Services"
+                            />
                         </div>
-                    )}
-                </div>
-            )}
+                        <div className="w-[60%] border-b-[1px] border-[#E2E8F0] pb-4 text-center">
+                            <DropDown
+                                content={["Contact", "FAQ", "Support"]}
+                                id="support"
+                                title="Support"
+                            />
+                        </div>
+                        <Link href="/contact" className="p-[6px]">
+                            Contact
+                        </Link>
+                    </>
+                )}
+                {isSignedIn ? (
+                    <>
+                        <Link
+                            href="/login"
+                            onClick={handleSignOut}
+                            className="block text-gray-800"
+                        >
+                            Logout
+                        </Link>
+                        <Link
+                            href="/profile"
+                            className="flex items-center gap-2"
+                        >
+                            <Image
+                                src={user.imageUrl}
+                                alt="profile"
+                                width={30}
+                                height={30}
+                                className="rounded-full"
+                            />
+                            <span className="text-gray-800">Profile</span>
+                        </Link>
+                    </>
+                ) : (
+                    <div className="flex flex-row gap-2 pt-6">
+                        <Link
+                            href="/login"
+                            className="text-DarkGreen bg-Cream rounded-lg px-4 py-2 text-center"
+                        >
+                            Sign In
+                        </Link>
+                        <Link
+                            href="/register"
+                            className="bg-LightGreen rounded-lg px-4 py-2 text-center text-white"
+                        >
+                            Start Now
+                        </Link>
+                    </div>
+                )}
+            </div>
         </>
     )
 }
