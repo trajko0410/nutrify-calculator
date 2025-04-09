@@ -1,18 +1,26 @@
 import { Exercise } from "@/app/api/mealsTest/route"
-import { ArrowDown, Barbell } from "@phosphor-icons/react"
+import { ArrowDown, Barbell, Eraser } from "@phosphor-icons/react"
 
 import Image from "next/image"
 import ParametarsIcon from "../util/ParametarsIcon"
 import Link from "next/link"
-
+import { useTrainingCtx } from "./trainingProvider"
 type SingleEcerciseProp = {
     exercise: Exercise
     index: number
     trainingId: string | number | null
+    userId: string | null
 }
 
-const SingleExercise: React.FC<SingleEcerciseProp> = ({ exercise, index, trainingId }) => {
+const SingleExercise: React.FC<SingleEcerciseProp> = ({
+    exercise,
+    index,
+    trainingId,
+    userId,
+}) => {
     const userSubscription = true // TODO: Replace with actual subscription check logic
+    const { nextTraining, setSingleExercise, openEditExerciseModal } =
+        useTrainingCtx()
 
     if (!exercise) {
         return <div>No exercise for today!</div>
@@ -89,10 +97,24 @@ const SingleExercise: React.FC<SingleEcerciseProp> = ({ exercise, index, trainin
                 </div>
             </div>
 
-            <div className="flex flex-row justify-end border-t-2 border-[#D9D9D9]">
+            <div className="flex flex-row justify-between border-t-2 border-[#D9D9D9] p-2">
+                {userId === nextTraining?.training.authorUserId && (
+                    <button
+                        onClick={() => {
+                            setSingleExercise(exercise)
+                            openEditExerciseModal()
+                        }}
+                        className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]"
+                    >
+                        Edit Exercises
+                        <Eraser color="white" size="16" />
+                    </button>
+                )}
                 {userSubscription && trainingId && exercise?.id && (
-                    <button className="flex flex-row items-center justify-center gap-2 pt-2 pr-2 text-xs leading-[150%] font-normal text-[#2D3748]">
-                        <Link href={`/training/${trainingId}/exercise/${exercise?.id}`}>
+                    <button className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
+                        <Link
+                            href={`/training/${trainingId}/exercise/${exercise?.id}`}
+                        >
                             Read More
                         </Link>
                         <ArrowDown

@@ -6,6 +6,7 @@ import { Training } from "@/app/api/mealsTest/route"
 import TrainingEditModal from "./trainingEditModal"
 import SingleTraining from "./singleTraining"
 import EcerciseTimeline from "./exerciseTimeline"
+import ExerciseEditModal from "./exerciseEditModal"
 
 interface TrainingClientWrapperProps {
     initialTraining: { training: Training; time: string }
@@ -16,7 +17,7 @@ export default function TrainingClientWrapper({
     initialTraining,
     userId,
 }: TrainingClientWrapperProps) {
-    const { setNextTraining, nextTraining, isOpen } = useTrainingCtx()
+    const { setNextTraining, nextTraining, isEditTrainingModalOpen, isEditExerciseModalOpen} = useTrainingCtx()
 
     useEffect(() => {
         if (
@@ -35,7 +36,9 @@ export default function TrainingClientWrapper({
                     userId={userId}
                 />
             </div>
-            {isOpen && <TrainingEditModal />}
+            {isEditTrainingModalOpen && <TrainingEditModal />}
+            {isEditExerciseModalOpen && <ExerciseEditModal />}
+
         </>
     )
 }

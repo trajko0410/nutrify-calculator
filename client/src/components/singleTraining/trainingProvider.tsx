@@ -1,45 +1,77 @@
 "use client"
 
 import { createContext, useContext, useState, ReactNode } from "react"
-import { Training } from "@/app/api/mealsTest/route"
+import { Exercise, Training } from "@/app/api/mealsTest/route"
 
 type TrainingCtxContextType = {
     nextTraining: { training: Training; time: string } | null
-    isOpen: boolean
-    openModal: () => void
-    closeModal: () => void
+    singleExercise: Exercise | null
+
+    isEditTrainingModalOpen: boolean
+    isEditExerciseModalOpen: boolean
+
+    openEditTrainingModal: () => void
+    closeEditTrainingModal: () => void
+
+    openEditExerciseModal: () => void
+    closeEditExerciseModal: () => void
+
     updateTraining: (updated: Training, updatedTime: string) => void
     setNextTraining: (training: Training[], time: string) => void
+
+    updateExercise: (updated: Exercise) => void
+    setSingleExercise: (exercise: Exercise) => void
 }
 
-const TrainingContext = createContext<
-    TrainingCtxContextType | undefined
->(undefined)
+const TrainingContext = createContext<TrainingCtxContextType | undefined>(
+    undefined,
+)
 
-export const TrainingCtxProvider = ({
-    children,
-}: {
-    children: ReactNode
-}) => {
+export const TrainingCtxProvider = ({ children }: { children: ReactNode }) => {
     const [nextTraining, setNextTraining] = useState<{
         training: Training
         time: string
     } | null>(null)
-    const [isOpen, setIsOpen] = useState(false)
+    const [singleExercise, setSingleExercise] = useState<Exercise | null>(null)
+    const [isEditTrainingModalOpen, setIsEditTrainingModalOpen] =
+        useState(false)
+    const [isEditExerciseModalOpen, setIsEditExerciseModalOpen] =
+        useState(false)
 
-    const openModal = () => {
-        setIsOpen(true)
+    console.log(singleExercise, isEditExerciseModalOpen, "singleExercise")
+
+    const openEditTrainingModal = () => {
+        setIsEditTrainingModalOpen(true)
     }
 
-    const closeModal = () => {
-        setIsOpen(false)
+    const closeEditTrainingModal = () => {
+        setIsEditTrainingModalOpen(false)
+    }
+
+    const openEditExerciseModal = () => {
+        setIsEditExerciseModalOpen(true)
+    }
+
+    const closeEditExerciseModal = () => {
+        setIsEditExerciseModalOpen(false)
+    }
+
+    const updateExercise = (updated: Exercise) => {
+        setSingleExercise((prev) => {
+            if (!prev) {
+                return updated // Initialize state if it's null
+            }
+
+            // Merge the existing exercise state with the updated one
+            return {
+                ...prev,
+                ...updated, // Override with the updated data
+            }
+        })
     }
 
     const updateTraining = (updated: Training, updatedTime: string) => {
         setNextTraining((prev) => {
-            console.log(prev, "prev")
-            console.log(updated, "updated")
-
             if (!prev) {
                 return { training: updated, time: updatedTime } // Initialize state if it's null
             }
@@ -64,15 +96,33 @@ export const TrainingCtxProvider = ({
         }
     }
 
+    const setSingleExerciseWrapper = (exercise: Exercise) => {
+        if (exercise) {
+            setSingleExercise(exercise)
+        } else {
+            setSingleExercise(null)
+        }
+    }
+
     return (
         <TrainingContext.Provider
             value={{
                 nextTraining,
-                isOpen,
-                openModal,
-                closeModal,
+                singleExercise,
+
+                isEditTrainingModalOpen,
+                openEditTrainingModal,
+                closeEditTrainingModal,
+
+                isEditExerciseModalOpen,
+                openEditExerciseModal,
+                closeEditExerciseModal,
+
                 updateTraining,
                 setNextTraining: setNextTrainingWrapper,
+
+                setSingleExercise: setSingleExerciseWrapper,
+                updateExercise,
             }}
         >
             {children}

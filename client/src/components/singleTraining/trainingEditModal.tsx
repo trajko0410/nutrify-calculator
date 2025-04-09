@@ -6,12 +6,9 @@ import Image from "next/image"
 import { Barbell, Upload } from "@phosphor-icons/react"
 import { useTrainingCtx } from "./trainingProvider"
 
-type TrainingModalProps = {
-    isEditModal: boolean
-}
-
-const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
-    const { nextTraining, closeModal, updateTraining } = useTrainingCtx()
+const TrainingEditModal = () => {
+    const { nextTraining, closeEditTrainingModal, updateTraining } =
+        useTrainingCtx()
 
     const training = nextTraining?.training || {
         name: "",
@@ -20,6 +17,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
         duration: "",
         caloriesBurned: "",
         image: null,
+        exercises: [],
     }
 
     const [trainingName, setTrainingName] = useState(training.name)
@@ -61,7 +59,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
     const handleCloseModal = () => {
         setIsClosing(true)
         setTimeout(() => {
-            closeModal()
+            closeEditTrainingModal()
         }, 500)
     }
 
@@ -81,6 +79,21 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
         if (e.target === e.currentTarget) {
             handleCloseModal()
         }
+    }
+
+    const handleDeleteExercise = (indexToDelete: number) => {
+        if (!nextTraining) return
+
+        const updatedExercises = nextTraining.training.exercises?.filter(
+            (_, index) => index !== indexToDelete,
+        )
+
+        const updatedTraining = {
+            ...nextTraining.training,
+            exercises: updatedExercises,
+        }
+
+        updateTraining(updatedTraining, nextTraining?.time)
     }
 
     const saveEditHandler = () => {
@@ -122,6 +135,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                         Lorem ipsum dolor sit amet
                     </h4>
                 </div>
+
                 <div className="flex flex-col gap-2">
                     <p className="text-DarkGreen text-base font-medium">
                         Training Name
@@ -135,6 +149,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                         onChange={(e) => setTrainingName(e.target.value)}
                     />
                 </div>
+
                 <div className="flex flex-row-reverse items-start gap-6">
                     <div className="w-2/5 items-start">
                         <input
@@ -151,10 +166,10 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                             </div>
                         </label>
                     </div>
-                    {trainingImage !== "" ? (
+                    {trainingImage ? (
                         <div className="relative flex h-[125px] w-3/5 items-center justify-center overflow-clip rounded-xl bg-[#F5F5F5] md:h-[250px]">
                             <Image
-                                src={trainingImage || ""}
+                                src={trainingImage}
                                 alt={trainingName || "trainingImage"}
                                 fill
                                 className="object-cover"
@@ -183,6 +198,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                         variant="standard"
                     />
                 </div>
+
                 <div className="flex flex-col gap-2">
                     <p className="text-DarkGreen text-base font-medium">
                         Training Long Description
@@ -201,6 +217,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                         variant="standard"
                     />
                 </div>
+
                 <div className="flex flex-col gap-2">
                     <p className="text-DarkGreen text-base font-medium">
                         Duration
@@ -208,7 +225,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                     <Input
                         placeholder="Enter Number"
                         className="w-full"
-                        type="string"
+                        type="text"
                         required
                         value={trainingTimeDuration}
                         onChange={(e) =>
@@ -216,6 +233,7 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                         }
                     />
                 </div>
+
                 <div className="flex flex-col gap-2">
                     <p className="text-DarkGreen text-base font-medium">
                         Energy Consumed
@@ -231,6 +249,41 @@ const TrainingEditModal:React.FC<TrainingModalProps> = ({isEditModal}) => {
                         }
                     />
                 </div>
+
+                {(nextTraining?.training?.exercises ?? []).length > 0 ? (
+                    <div className="flex flex-col gap-4">
+                        <p className="text-DarkGreen text-base font-semibold">
+                            Exercises
+                        </p>
+                        {nextTraining?.training?.exercises.map(
+                            (exercise, index) => (
+                                <div
+                                    key={exercise.id || index}
+                                    className="flex items-center justify-between gap-4 border-b-2 border-black p-3"
+                                >
+                                    <div>
+                                        <p className="font-medium text-black">
+                                            {exercise.name}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() =>
+                                            handleDeleteExercise(index)
+                                        }
+                                        className="fontbold text-sm text-red-500 transition-transform duration-200 hover:underline"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            ),
+                        )}
+                    </div>
+                ) : (
+                    <p className="text-sm text-gray-500">
+                        No exercises added yet.
+                    </p>
+                )}
+
                 <button
                     onClick={saveEditHandler}
                     className="bg-LightGreen flex w-full cursor-pointer flex-row items-center justify-center gap-6 rounded-lg p-2 text-sm font-medium text-white"

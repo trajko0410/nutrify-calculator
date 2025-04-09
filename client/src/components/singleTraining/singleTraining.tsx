@@ -19,7 +19,7 @@ const SingleTraining: React.FC<YourNextTrainingProps> = ({
     userId,
 }) => {
 
-    const {nextTraining, openModal} = useTrainingCtx()
+    const {nextTraining, openEditTrainingModal} = useTrainingCtx()
     const [loading, setLoading] = useState(true)
 
     //console.log(userId, "userIdTRAINING")
@@ -149,7 +149,7 @@ const SingleTraining: React.FC<YourNextTrainingProps> = ({
                        
                         {
                             userId === nextTraining.training?.authorUserId && (
-                                <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]" onClick={openModal}>
+                                <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]" onClick={openEditTrainingModal}>
                                     <div 
                                     >
                                         Edit Training

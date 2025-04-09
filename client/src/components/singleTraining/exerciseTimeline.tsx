@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react"
 
 import { Exercise } from "@/app/api/mealsTest/route"
-import Link from "next/link"
-import { Eraser } from "@phosphor-icons/react"
+
 import SingleExercise from "../singleTraining/singleExercise"
 
 import { useTrainingCtx } from "./trainingProvider"
@@ -16,7 +15,6 @@ type TodaysTimelineProps = {
 const ExerciseTimeline: React.FC<TodaysTimelineProps> = ({ userId = null }) => {
     const { nextTraining } = useTrainingCtx()
     const [sortedExercises, setSortedEcercises] = useState<Exercise[]>([])
-    console.log(sortedExercises, "exercises")
     const [loading, setLoading] = useState(true)
 
     //console.log(sortedTodaysActivities, "sortedTodaysActivities")
@@ -67,14 +65,7 @@ const ExerciseTimeline: React.FC<TodaysTimelineProps> = ({ userId = null }) => {
                         </h4>
                     </div>
 
-                    {userId === nextTraining?.training?.authorUserId && (
-                        <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]">
-                            <Link href={`/meal/${sortedExercises[0]?.id}`}>
-                                Edit Exercises
-                            </Link>
-                            <Eraser color="white" size="16" />
-                        </button>
-                    )}
+             
                 </div>
             </div>
             <div className="custom-scrollbar flex snap-x flex-row gap-x-6 overflow-x-scroll scroll-smooth whitespace-nowrap">
@@ -86,6 +77,7 @@ const ExerciseTimeline: React.FC<TodaysTimelineProps> = ({ userId = null }) => {
                             index={index}
                             exercise={exercise}
                             trainingId={nextTraining?.training.id ?? null}
+                            userId={userId ?? null}
                         ></SingleExercise>
                     )
                 })}
