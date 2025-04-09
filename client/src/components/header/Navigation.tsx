@@ -100,7 +100,7 @@ export const Navigation: React.FC = () => {
                     </div>
                 )}
             </div>
-            <div className="block w-full md:hidden"></div>
+            <div className="block w-full md:hidden text-black">in</div>
         </>
     )
 }

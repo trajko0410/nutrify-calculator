@@ -17,6 +17,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-Poppins: var(--font-geist-poppins);
+  --shadow-Dark: 2px 2px 20px 0px #2B33434D;
+  --shadow-Light: -6px -6px 20px 0px #FAF9F6;
+  --shadow-Combined: var(--shadow-Dark), var(--shadow-Light);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,4 +33,20 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Poppins", sans-serif;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px; 
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #00473C; 
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #D9D9D9; 
+  border-radius: 10px;
 }

@@ -64,7 +64,7 @@ const ExtendedSideMenu: React.FC = () => {
     if (!options.length) return null
     return (
         <div
-            className={`frex-col z-20 fixed ${!show && "-translate-x-[92px]"} top-19 left-[92px] flex h-full items-center transition duration-200`}
+            className={`frex-col z-20 fixed ${!show && "md:-translate-x-[92px]"} top-19 md:left-[92px] flex h-full items-center transition duration-200`}
         >
             <div
                 className={`flex h-full w-[92px] flex-col items-center justify-between gap-6 bg-white p-6 shadow-[0_0_2px_rgba(0,0,0,0.25)]`}

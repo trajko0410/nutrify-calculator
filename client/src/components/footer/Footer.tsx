@@ -26,7 +26,7 @@ type FooterLinksProps = {
 
 const FooterLinks: React.FC<FooterLinksProps> = ({ title, links, socials }) => {
     return (
-        <div className="font-Poppins flex flex-1/6 flex-col gap-7.5 text-sm font-medium">
+        <div className="font-Poppins flex flex-1/6 flex-col gap-7.5 text-sm font-medium ">
             <h4 className="text-[#6B9C6F]">{title}</h4>
             <ul>
                 {links.map((link, index) => (
@@ -67,7 +67,7 @@ const FooterLinks: React.FC<FooterLinksProps> = ({ title, links, socials }) => {
 
 const Footer = () => {
     return (
-        <footer className="font-Poppins flex flex-col items-center bg-[url('/shape3.png')] bg-cover bg-center pb-[32px]">
+        <footer className="font-Poppins flex flex-col items-center bg-[url('/shape3.png')] bg-cover bg-center pb-[32px] bg-DarkGreen">
             <div className="flex max-w-[500px] flex-col items-center gap-6 pt-[130px] pb-[140px] text-center">
                 <h2 className="text-5xl font-normal tracking-[-0.58px] text-white">
                     Get started today

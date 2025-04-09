@@ -49,11 +49,6 @@ const SideMenu: React.FC = () => {
                         title: "Workout",
                         path: "/workout",
                     },
-                    {
-                        icon: <Gear size={20} />,
-                        title: "Settings",
-                        path: "/settings",
-                    },
                 )
                 break
             case "Client":
@@ -78,11 +73,6 @@ const SideMenu: React.FC = () => {
                         title: "Workout",
                         path: "/workout",
                     },
-                    {
-                        icon: <Gear size={20} />,
-                        title: "Settings",
-                        path: "/settings",
-                    },
                 )
                 break
         }
@@ -90,9 +80,9 @@ const SideMenu: React.FC = () => {
 
     return (
         <>
-            <div className="fixed top-0 left-0 z-40 flex h-screen w-[92px] flex-col items-center justify-between gap-6 bg-white p-6 shadow-[0_0_8px_rgba(0,0,0,0.25)]">
-                <div className="flex flex-col items-center gap-6">
-                    <div className="flex h-11 w-11 items-center justify-center">
+            <div className="fixed right-0 bottom-0 left-0 z-40 flex h-[72px] w-full flex-row items-center justify-between bg-white p-[24px] shadow-[0_0_8px_rgba(0,0,0,0.25)] md:top-0 md:left-0 md:h-screen md:w-[92px] md:flex-col md:gap-6 md:p-6">
+                <div className="flex w-full flex-row items-center justify-between gap-6 md:flex-col md:justify-baseline">
+                    <div className="hidden h-11 w-11 items-center justify-center md:flex">
                         <Image
                             src="/Vector.svg"
                             alt="logo"
@@ -100,8 +90,8 @@ const SideMenu: React.FC = () => {
                             height={32}
                         />
                     </div>
-                    <div className="h-[2px] w-full bg-[#F6F6F6]"></div>
-                    <span className="font-Poppins text-[10px] font-medium text-[#757575]">
+                    <div className="hidden h-[2px] w-full bg-[#F6F6F6] md:block"></div>
+                    <span className="font-Poppins hidden text-[10px] font-medium text-[#757575] md:block">
                         MAIN
                     </span>
                     {menuOptions.map((option) => (
@@ -112,20 +102,24 @@ const SideMenu: React.FC = () => {
                             title={option.title}
                         />
                     ))}
-                    <div className="h-[2px] w-full bg-[#F6F6F6]"></div>
-                    <span className="font-Poppins text-[10px] font-medium text-[#757575]">
-                        SETTINGS
-                    </span>
+                    <div className="hidden h-[2px] w-full bg-[#F6F6F6] md:block"></div>
+                    <div className="hidden md:block">
+                        <span className="font-Poppins text-[10px] font-medium text-[#757575]">
+                            SETTINGS
+                        </span>
+                        <SideMenuOption
+                            icon={<Gear size={20} />}
+                            path="/settings"
+                        />
+                    </div>
+                </div>
+                <div className="hidden md:block">
                     <SideMenuOption
-                        icon={<Gear size={20} />}
-                        path="/settings"
+                        icon={<SignOut size={20} />}
+                        path="/"
+                        isSignOut={true}
                     />
                 </div>
-                <SideMenuOption
-                    icon={<SignOut size={20} />}
-                    path="/"
-                    isSignOut={true}
-                />
             </div>
             <ExtendedSideMenu />
         </>
