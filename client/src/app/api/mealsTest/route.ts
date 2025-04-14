@@ -69,6 +69,11 @@ export enum MealType {
     Dinner = "dinner",
 }
 
+export interface WaterConsumption {
+    planedWaterConsumption: number
+    currentWatterConsumption: number
+}
+
 export interface DailyPlan {
     personId: number
     name: string
@@ -77,6 +82,8 @@ export interface DailyPlan {
         mealType: MealType
         time: string
     }[]
+    waterConsumption?: WaterConsumption | null
+
     trainingPlan:
         | {
               training: Training
@@ -88,6 +95,11 @@ export interface DailyPlan {
 type DailyPlansResponse = DailyPlan[]
 
 export async function GET(): Promise<NextResponse> {
+    const waterConsumption: WaterConsumption = {
+        planedWaterConsumption: 3000,
+        currentWatterConsumption: 2000,
+    }
+
     const TodaysMeals: Meal[] = [
         {
             id: 1,
@@ -276,6 +288,8 @@ export async function GET(): Promise<NextResponse> {
             name: user.name,
             mealPlan,
             trainingPlan,
+            waterConsumption,
+            date: "2025-04-17",
         }
     })
 

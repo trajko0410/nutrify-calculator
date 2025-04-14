@@ -88,8 +88,15 @@ const DashboardPage: React.FC = async () => {
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
                 <AppContainer>
                     <div className="flex flex-col gap-6">
+                   <div className="flex flex-col gap-2 text-black">
+                <h2 className="text-DarkGreen font-Poppins text-2xl font-medium">
+                    Hi, username
+                </h2>
+                <p className="text-lg font-normal text-[#757575]">
+                    Lorem ipsum dolor sit amet
+                </p>
+            </div>
                         <TodaysFoodInteake
-                            userName={personActivitiesForId?.name}
                             totalCalories={totalCalories}
                             totalProteins={totalProteins}
                             totalCarbohydrates={totalCarbohydrates}
@@ -97,7 +104,7 @@ const DashboardPage: React.FC = async () => {
                         />
                         <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
                             <div className="h-full w-full lg:col-span-3">
-                                <YourNextMeal nextMealProp={nextMeal} isNextMealComponent={true}  />
+                                <YourNextMeal nextMealProp={nextMeal} />
                             </div>
                             <div className="h-full w-full lg:col-span-2">
                                 <YourNextTraining

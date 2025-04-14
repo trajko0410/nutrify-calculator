@@ -88,6 +88,11 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
 
     return (
         <div className="shadow-Combined font-Poppins flex h-fit min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
+            <div>
+                <h3>Water consumption</h3>
+                <button>Edit Goal</button>
+            </div>
+
             <div className="flex h-fit flex-row flex-wrap gap-2">
                 {Array.from({ length: totalGlasses }).map((_, index) => {
                     if (index < filledGlasses) {
