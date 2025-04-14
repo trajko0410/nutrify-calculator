@@ -104,7 +104,7 @@ const DashboardPage: React.FC = async () => {
                         />
                         <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
                             <div className="h-full w-full lg:col-span-3">
-                                <YourNextMeal nextMealProp={nextMeal} />
+                                <YourNextMeal nextMealProp={nextMeal} isNextMealComponent={true} />
                             </div>
                             <div className="h-full w-full lg:col-span-2">
                                 <YourNextTraining

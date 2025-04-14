@@ -73,6 +73,7 @@ export default async function SingleMeal() {
                     <div className="flex flex-col gap-6">
                         <YourNextMeal
                             nextMealProp={fetchedMeal[0]}
+                            isNextMealComponent={false}
                         />
                         <HowToMakeMeal
                             mealInstructionProp={
