@@ -89,12 +89,22 @@ const ExerciseEditModal= () => {
 
 
 
-    const saveEditHandler = () => {
+    const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         //console.log("Before saving:", nextTraining) // Log current training
+        e.preventDefault()
+
+        const formData = new FormData()
+        formData.append("name", exerciseName)
+        formData.append("description", exerciseDescription)
+        formData.append("pause", exercisePauseDuration?.toString() || "")
+        formData.append("sets", exerciseSets.toString())
+        formData.append("reps", exerciseReps.toString())
+        formData.append("imageHero", exerciseImageHero || "")
+        //post formmdata wait for new data and uplooad(data) da bi pormenio front
 
         const updatedTraining = {
             ...singleExercise,
-            name: exercise,
+            name: exerciseName,
             description: exerciseDescription,
             pause: exercisePauseDuration,
             sets: exerciseSets,
@@ -108,16 +118,17 @@ const ExerciseEditModal= () => {
     }
 
     return (
+        <form onSubmit={submitHandler}>
         <div
             onClick={handleBackdropClick}
             className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
         >
             <div
-                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-xl bg-white px-[32px] py-[24px] transition-transform duration-500 md:h-[80vh] md:w-[80vw] ${isClosing
-                        ? "translate-y-full"
+                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 md:h-[80vh] md:w-[80vw] ${isClosing
+                        ? "translate-y-full opacity-0"
                         : isOpening
-                            ? "translate-y-0"
-                            : "translate-y-full"
+                            ? "translate-y-0 opacity-100"
+                            : "translate-y-full opacity-0"
                     }`}
             >
                 <div className="flex flex-col gap-2">
@@ -239,12 +250,14 @@ const ExerciseEditModal= () => {
                     
                 <button
                     onClick={saveEditHandler}
+                    type="submit"
                     className="bg-LightGreen flex w-full cursor-pointer flex-row items-center justify-center gap-6 rounded-lg p-2 text-sm font-medium text-white"
                 >
                     Save Changes
                 </button>
             </div>
         </div>
+        </form>
     )
 }
 

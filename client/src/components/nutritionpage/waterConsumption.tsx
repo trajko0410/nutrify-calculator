@@ -7,6 +7,12 @@ import Image from "next/image"
 import waterGlassImageFull from "../../../public/waterGlassFull.png"
 import waterGlassImageEmpty from "../../../public/waterGlassEmpty.png"
 
+import { Eraser } from "@phosphor-icons/react"
+import ProgressBar from "../util/ProgressBar"
+
+import { percentageOfTotal } from "../../utils/procentageCalculator"
+import WaterConsumptionModal from "./waterConsumptionModal"
+
 type WaterConsumptionProps = {
     waterConsumption: WaterConsumptionType[] | undefined | null
 }
@@ -23,6 +29,8 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
 
     const [totalGlasses, setTotalGlasses] = useState(0)
     const [filledGlasses, setFilledGlasses] = useState(0)
+
+    const [modalOpen, setModalOpen] = useState(false)
 
     useEffect(() => {
         if (!waterConsumption) {
@@ -45,7 +53,29 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
         }
     }, [waterConsumption])
 
-    console.log(totalGlasses, filledGlasses, "waterConsumptionData")
+    const procentage = percentageOfTotal(filledGlasses, totalGlasses)
+
+    const hadleUpdatingWaterConsumptionGoal = (
+        newWaterConsumptionGoal: number,
+        currentWaterConsumption: number,
+        planedWaterConsumptionGoal: number,
+    ) => {
+        if (
+            newWaterConsumptionGoal < 0 ||
+            newWaterConsumptionGoal < currentWaterConsumption
+        ) {
+            const total = Math.round(planedWaterConsumptionGoal / GLASS_SIZE)
+
+            setTotalGlasses(total)
+            console.log(
+                "New water consumption goal is less than current consumption",
+            )
+            return
+        }
+
+        const total = Math.round(newWaterConsumptionGoal / GLASS_SIZE)
+        setTotalGlasses(total)
+    }
 
     const handleAddWater = () => {
         if (filledGlasses < totalGlasses) {
@@ -54,7 +84,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
         // Logic to add water consumption
         // For example, you can update the state or make an API call here
 
-        console.log("Add water clicked")
+        console.log("Add water clicked post it to the server")
     }
 
     if (loading) {
@@ -87,10 +117,20 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
     }
 
     return (
-        <div className="shadow-Combined font-Poppins flex h-fit min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-            <div>
-                <h3>Water consumption</h3>
-                <button>Edit Goal</button>
+        <div className="shadow-Combined font-Poppins flex h-fit min-h-[200px] flex-col justify-between gap-4 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
+            <div className="flex w-full items-center justify-between">
+                <h3 className="text-xs font-medium text-[#A0AEC0]">
+                    Water consumption
+                </h3>
+                <button
+                    className="flex flex-row items-center gap-2 text-xs font-medium text-[#2D3748]"
+                    onClick={() => setModalOpen(true)}
+                >
+                    Edit Goal
+                    <span>
+                        <Eraser color="#2D3748" size="14" />
+                    </span>
+                </button>
             </div>
 
             <div className="flex h-fit flex-row flex-wrap gap-2">
@@ -141,6 +181,34 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
                     )
                 })}
             </div>
+            <div>
+                <div className="text-DarkGreen flex w-full flex-row justify-between text-base font-medium">
+                    <h4>
+                        {(filledGlasses * GLASS_SIZE) / 100}L (
+                        {procentage.toFixed()}% )
+                    </h4>
+                    <h4>( {(totalGlasses * GLASS_SIZE) / 100}L ) 100%</h4>
+                </div>
+                <div className="h-[10px] w-full">
+                    <ProgressBar value={procentage} />
+                </div>
+            </div>
+            {modalOpen && waterConsumption && waterConsumption[0] && (
+                <WaterConsumptionModal
+                    planedWaterConsumption={
+                        waterConsumption[0]?.planedWaterConsumption
+                    }
+                    closeModal={() => {
+                        setModalOpen(false)
+                    }}
+                    updateWaterConsumptionGoal={
+                        hadleUpdatingWaterConsumptionGoal
+                    }
+                    currentWatterConsumption={
+                        waterConsumption[0]?.currentWatterConsumption
+                    }
+                />
+            )}
         </div>
     )
 }
