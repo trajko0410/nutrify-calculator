@@ -7,10 +7,9 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs/server"
 import DashboardContainer from "@/components/util/AppContainer"
 import { DailyPlan } from "@/app/api/mealsTest/route"
-import TodaysFoodInteake from "@/components/dashboardpage/todaysFoodIntakes"
-import DatePicker from "@/components/nutritionpage/datePicker"
-import WaterConsumption from "@/components/nutritionpage/waterConsumption"
 
+import { NutritionPageCtxProvider } from "@/components/nutritionpage/nutritionPageProvider"
+import NutritionPageClientWrapper from "@/components/nutritionpage/nutritionPageClientWrapper"
 
 
 
@@ -40,24 +39,15 @@ export default async function NutritionPage() {
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
                 <DashboardContainer>
-                    <h2 className="text-DarkGreen pb-6 text-xl font-medium">
+                <h2 className="text-DarkGreen pb-6 text-xl font-medium">
                         Nutrition
                     </h2>
-                    <div className="flex flex-col-reverse gap-6 lg:flex-row">
-                        <div className="flex w-full flex-col gap-6 lg:w-9/12">
-                            <TodaysFoodInteake
-                                glycemicIndex={40}
-                                glycemicLoad={20}
-                            />
-                            <WaterConsumption waterConsumption={personActivitiesForId?.waterConsumption ? [personActivitiesForId.waterConsumption] : null}/>
-                        </div>
-                        <div className="flex w-full flex-col gap-6 lg:w-3/12">
-                            <DatePicker />
-                            <div className="shadow-Combined font-Poppins text-p-[10px] hidden min-h-[260px] w-full min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#FFFFFF] text-[#2D3748] lg:flex lg:h-fit">
-                                Reklama
-                            </div>
-                        </div>
-                    </div>
+                    <NutritionPageCtxProvider> 
+                        <NutritionPageClientWrapper initialDailyPlanForId={personActivitiesForId ? [personActivitiesForId] : undefined} userId={userId
+                
+                        } />
+            
+                    </NutritionPageCtxProvider>
                 </DashboardContainer>
             </div>
         </div>

@@ -119,7 +119,7 @@ const TrainingEditModal = () => {
             className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
         >
             <div
-                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-xl bg-white px-[32px] py-[24px] transition-transform duration-500 md:h-[80vh] md:w-[80vw] ${
+                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-xl bg-white px-[32px] py-[24px] transition-transform duration-500 md:h-[80vh] md:w-[80vw] scrollbar-thin-mobile ${
                     isClosing
                         ? "translate-y-full"
                         : isOpening

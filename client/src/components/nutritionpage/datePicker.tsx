@@ -5,10 +5,13 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { CaretRight } from "@phosphor-icons/react"
+import { useNutritionPageCtx } from "./nutritionPageProvider"
 
 const DatePicker = () => {
     const [isClient, setIsClient] = useState(false)
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+
+    const { selectedDate, setSelectedDate } = useNutritionPageCtx()
+
 
     useEffect(() => {
         setIsClient(true)

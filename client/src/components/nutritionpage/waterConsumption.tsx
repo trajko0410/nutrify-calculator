@@ -180,6 +180,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
                         </div> // empty glass
                     )
                 })}
+                
             </div>
             <div>
                 <div className="text-DarkGreen flex w-full flex-row justify-between text-base font-medium">

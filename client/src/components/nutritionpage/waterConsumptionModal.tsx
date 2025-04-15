@@ -24,6 +24,8 @@ const WaterConsumptionModal: React.FC<waterConsumptionModalProp> = ({
     const [isOpening, setIsOpening] = useState(false)
     const [isClosing, setIsClosing] = useState(false)
 
+    console.log(planedWaterConsumption, "planedWaterConsumption", currentWatterConsumption, "currentWatterConsumption")
+
     const handleCloseModal = () => {
         setIsClosing(true)
         setTimeout(() => {
@@ -115,6 +117,9 @@ const WaterConsumptionModal: React.FC<waterConsumptionModalProp> = ({
                                 setNewWaterConsumption(Number(e.target.value))
                             }
                         />
+                        {(newWaterConsumption ?? 0) < (currentWatterConsumption ?? 0) && (
+                            <p className="text-[8px] font-normal text-red-400">Planned consumption can not be less than current consumption</p>
+                        )}
                     </div>
                     <button
                         type="submit"
