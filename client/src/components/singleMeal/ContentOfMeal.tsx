@@ -44,7 +44,8 @@ necessaryGroceries
         <div className="shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
             <div className="flex w-full gap-2 flex-col">
                 <h3 className="text-DarkGreen text-xl font-normal">
-                Necessary Groceries
+                Waiting for backend to figure outh what should i show and if i should calculate the vitamins depending on grocery amount
+
                 </h3>
                 <h4 className=" text-xs font-medium text-[#2D3748]">Lorem ipsum dolor sit amet</h4>
             </div>

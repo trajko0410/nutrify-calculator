@@ -44,7 +44,7 @@ const DatePicker = () => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <div className="shadow-Combined font-Poppins flex h-[60px] w-full min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#FFFFFF] p-[10px] lg:h-fit">
+            <div className="shadow-Combined font-Poppins flex h-[60px] w-full  items-center justify-center gap-2 rounded-xl bg-[#FFFFFF] p-[10px] lg:h-fit">
                 <div className="hidden items-start justify-center overflow-hidden lg:flex">
                     <DateCalendar
                         showDaysOutsideCurrentMonth

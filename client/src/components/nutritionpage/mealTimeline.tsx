@@ -56,7 +56,7 @@ const MealTimeline = () => {
 
     return (
         <>
-            <div className="shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
+            <div className="shadow-Combined font-Poppins flex min-h-fit w-full h-full flex-col gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
                 <div
                     className={`flex flex-col justify-between gap-4 sm:flex-row md:items-center`}
                 >
@@ -82,7 +82,7 @@ const MealTimeline = () => {
                         </button>
                     </div>
                 </div>
-                <div className="custom-scrollbar flex snap-x flex-row gap-x-6 overflow-x-scroll scroll-smooth whitespace-nowrap">
+                <div className="custom-scrollbar flex snap-x flex-row min-h-fit gap-x-6 overflow-x-scroll scroll-smooth whitespace-nowrap">
                     {sortedMeals.map((meal) => {
                         //console.log(exercise, "exercise")
                         return (

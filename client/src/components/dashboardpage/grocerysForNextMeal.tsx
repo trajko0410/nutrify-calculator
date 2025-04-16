@@ -107,12 +107,17 @@ import { Checkbox } from "@mui/material"
 import { percentageOfTotal } from "@/utils/procentageCalculator"
 
 type Grocerys = {
-    id: number
+    id: number 
     name: string
     grocerys: GroceryItem[] | null
 }
 
-const GrocerysForNextMeal = () => {
+type grocerysForNextMealProp = {
+    grocerysProp?: Grocerys[] | null
+
+}
+
+const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) => {
     const [grocerys, setGrocerys] = useState<Grocerys[] | null>(null)
     const [choseGrocerys, setChoseGrocerys] = useState<string>("nextMeal")
     const [loading, setLoading] = useState(true)
@@ -123,6 +128,12 @@ const GrocerysForNextMeal = () => {
     //console.log(choseGrocerys)
 
     useEffect(() => {
+        if(grocerysProp){
+            setGrocerys(grocerysProp)
+            setLoading(false)
+            return
+        }
+
         if (!choseGrocerys) {
             setLoading(false)
             return
@@ -140,7 +151,7 @@ const GrocerysForNextMeal = () => {
 
         
         setLoading(false)
-    }, [choseGrocerys])
+    }, [choseGrocerys, grocerysProp])
 
     const handleCheckboxChange = (groceryId: number, ingName: string) => {
         setCheckedItems((prev) => ({

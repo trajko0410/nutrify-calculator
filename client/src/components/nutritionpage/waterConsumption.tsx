@@ -117,7 +117,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
     }
 
     return (
-        <div className="shadow-Combined font-Poppins flex h-fit min-h-[200px] flex-col justify-between gap-4 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
+        <div className="shadow-Combined font-Poppins flex h-full min-h-fit flex-col justify-between gap-4 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
             <div className="flex w-full items-center justify-between">
                 <h3 className="text-xs font-medium text-[#A0AEC0]">
                     Water consumption
