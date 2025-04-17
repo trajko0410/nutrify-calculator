@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { CaretRight } from "@phosphor-icons/react"
 import { useNutritionPageCtx } from "./nutritionPageProvider"
+import DatePickerLoader from "../skeletonLoaders/datePickerLoader"
 
 const DatePicker = () => {
     const [isClient, setIsClient] = useState(false)
@@ -18,7 +19,9 @@ const DatePicker = () => {
     }, [])
 
     if (!isClient) {
-        return null
+        return (
+            <DatePickerLoader/>
+        )
     }
 
     const handlePrevDay = () => {
