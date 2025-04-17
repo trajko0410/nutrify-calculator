@@ -461,6 +461,71 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMedicalFoodMenuMedicalFoodMenu
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'medical_food_menus';
+  info: {
+    displayName: 'MedicalFood-Menu';
+    pluralName: 'medical-food-menus';
+    singularName: 'medical-food-menu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::medical-food-menu.medical-food-menu'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    Recipes: Schema.Attribute.Component<'recipes.menu-recipe', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMedicalFoodRecipeMedicalFoodRecipe
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'medical_food_recipes';
+  info: {
+    description: '';
+    displayName: 'MedicalFood-Recipe';
+    pluralName: 'medical-food-recipes';
+    singularName: 'medical-food-recipe';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Code: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Ingredients: Schema.Attribute.Component<
+      'ingredients.recipe-ingredient',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::medical-food-recipe.medical-food-recipe'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   collectionName: 'recipes';
   info: {
@@ -1016,6 +1081,8 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
       'api::ingredient.ingredient': ApiIngredientIngredient;
+      'api::medical-food-menu.medical-food-menu': ApiMedicalFoodMenuMedicalFoodMenu;
+      'api::medical-food-recipe.medical-food-recipe': ApiMedicalFoodRecipeMedicalFoodRecipe;
       'api::recipe.recipe': ApiRecipeRecipe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

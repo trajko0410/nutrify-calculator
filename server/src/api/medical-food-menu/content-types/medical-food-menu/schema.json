@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "medical_food_menus",
+  "info": {
+    "singularName": "medical-food-menu",
+    "pluralName": "medical-food-menus",
+    "displayName": "MedicalFood-Menu"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Recipes": {
+      "displayName": "Menu_recipe",
+      "type": "component",
+      "repeatable": true,
+      "component": "recipes.menu-recipe"
+    }
+  }
+}
