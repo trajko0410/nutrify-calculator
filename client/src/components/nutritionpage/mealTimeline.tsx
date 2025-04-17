@@ -8,6 +8,7 @@ import { useNutritionPageCtx } from "./nutritionPageProvider"
 import SingleActivityFromTimeline from "../dashboardpage/singleActivityFromTimeline"
 import { ListPlus } from "@phosphor-icons/react"
 import AddMealModal from "./addMealModal"
+import TodayTimelineLoader from "../skeletonLoaders/todayTimelineLoader"
 
 const MealTimeline = () => {
     const { meals, setAddMealModalOpen, addMealModalOpen } =
@@ -40,9 +41,7 @@ const MealTimeline = () => {
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+           <TodayTimelineLoader/>
         )
     }
 

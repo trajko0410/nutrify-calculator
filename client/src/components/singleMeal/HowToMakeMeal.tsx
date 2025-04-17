@@ -1,6 +1,7 @@
 "use client"
 import { ArrowDown } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
+import HowToMakeMealLoader from "../skeletonLoaders/HowToMakeMealLoader"
 
 type HowToMakeMealProps = {
     videoInstructions: string | null | undefined
@@ -31,11 +32,7 @@ const HowToMakeMeal: React.FC<HowToMakeMealProps> = ({
     }, [mealInstructionProp])
 
     if (loading) {
-        return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <HowToMakeMealLoader />
     }
 
     if (!mealInstructionProp || mealInstructionProp?.length === 0) {

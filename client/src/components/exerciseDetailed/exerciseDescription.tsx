@@ -4,6 +4,7 @@ import Image from "next/image"
 
 import { Exercise } from "@/app/api/mealsTest/route"
 import React from "react"
+import ExerciseDescriptionLoader from "../skeletonLoaders/exerciseDescriptionLoader"
 
 //import rdnImage from "../../../public/picture2.png"
 
@@ -31,11 +32,7 @@ const ExerciseDescription: React.FC<exerciseDescriptionProps> = ({
     }, [exercise])
 
     if (loading) {
-        return (
-            <div className="shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <ExerciseDescriptionLoader />
     }
 
     if (!exercise) {

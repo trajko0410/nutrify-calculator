@@ -9,6 +9,7 @@ import Image from "next/image"
 import ParametarsIcon from "../util/ParametarsIcon"
 import {Eraser, ForkKnife } from "@phosphor-icons/react"
 import { useTrainingCtx } from "./trainingProvider"
+import SingleTrainingLoader from "../skeletonLoaders/singleTrainingTraining"
 
 
 type YourNextTrainingProps = {
@@ -39,9 +40,7 @@ const SingleTraining: React.FC<YourNextTrainingProps> = ({
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+          <SingleTrainingLoader />
         )
     }
 

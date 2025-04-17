@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { Exercise } from "@/app/api/mealsTest/route"
 import React from "react"
 import ParametarsIcon from "../util/ParametarsIcon"
+import TodaysFoodInteakeLoader from "../skeletonLoaders/todaysFoodIntakeLoader"
 
 
 type ParametarsExerciseProps = {
@@ -28,8 +29,10 @@ const ParametarsExercise: React.FC<ParametarsExerciseProps> = ({ exercise }) => 
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex min-h-[300px] flex-col w-full justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
+            <div className="grid sm:grid-cols-3 grid-cols-2 gap-2 w-full">
+                <TodaysFoodInteakeLoader />
+                <TodaysFoodInteakeLoader />
+                <TodaysFoodInteakeLoader />
             </div>
         )
     }

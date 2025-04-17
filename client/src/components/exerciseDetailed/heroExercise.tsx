@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Exercise } from "@/app/api/mealsTest/route"
 import React from "react"
 import { ArrowDown, Barbell } from "@phosphor-icons/react"
+import HeroExerciseLoader from "../skeletonLoaders/heroExerciseLoader"
 
 //import rdnImage from "../../../public/picture2.png"
 
@@ -13,7 +14,7 @@ type HeroExerciseProps = {
 }
 
 const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
-    console.log(exercise, "exercise")
+    //console.log(exercise, "exercise")
     const [exerciseData, setExerciseData] = useState<Exercise | null>()
     const [loading, setLoading] = useState(true)
 
@@ -31,11 +32,7 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
     }, [exercise])
 
     if (loading) {
-        return (
-            <div className="shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <HeroExerciseLoader />
     }
 
     if (!exercise) {
@@ -47,7 +44,7 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
     }
 
     return (
-        <div className="shadow-Combined font-Poppins w-full overflow-clip rounded-xl bg-[#FAF9F6] sm:shadow-none">
+        <div className="shadow-Combined font-Poppins w-full overflow-clip rounded-xl bg-[#FFFFFF] sm:shadow-none">
             <div>
                 {exerciseData?.imageHero ? (
                     <div className="relative h-[320px] w-full overflow-clip rounded-xl">
@@ -59,7 +56,7 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
                         />
                         <div className="right-0 bottom-0 left-0 hidden flex-row items-center justify-between gap-2 sm:absolute sm:flex">
                             <div className="flex min-w-3/12 flex-col gap-2 rounded-tr-xl rounded-bl-xl bg-[#F5F5F5] p-[24px]">
-                                <h3 className="text-lg leading-[140%] font-medium text-DarkGreen">
+                                <h3 className="text-DarkGreen text-lg leading-[140%] font-medium">
                                     {exerciseData?.name ?? "Ecerscise"}
                                 </h3>
                                 <h4 className="text-sm leading-[140%] font-normal text-[#A0AEC0]">
@@ -67,7 +64,7 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
                                 </h4>
                             </div>
                             {!exercise.videoLink && (
-                                <div className="flex min-w-3/12  items items-end justify-end p-[24px]">
+                                <div className="items flex min-w-3/12 items-end justify-end p-[24px]">
                                     <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]">
                                         <a
                                             href={
@@ -150,8 +147,6 @@ const HeroExercise: React.FC<HeroExerciseProps> = ({ exercise }) => {
                     )}
                 </div>
             </div>
-
-        
         </div>
     )
 }

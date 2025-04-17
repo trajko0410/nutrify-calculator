@@ -105,19 +105,21 @@ import { useEffect, useState } from "react"
 import ProgressBar from "../util/ProgressBar"
 import { Checkbox } from "@mui/material"
 import { percentageOfTotal } from "@/utils/procentageCalculator"
+import GrocerysForNextMealLoader from "../skeletonLoaders/grocerysForNextMealLoader"
 
 type Grocerys = {
-    id: number 
+    id: number
     name: string
     grocerys: GroceryItem[] | null
 }
 
 type grocerysForNextMealProp = {
     grocerysProp?: Grocerys[] | null
-
 }
 
-const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) => {
+const GrocerysForNextMeal: React.FC<grocerysForNextMealProp> = ({
+    grocerysProp,
+}) => {
     const [grocerys, setGrocerys] = useState<Grocerys[] | null>(null)
     const [choseGrocerys, setChoseGrocerys] = useState<string>("nextMeal")
     const [loading, setLoading] = useState(true)
@@ -128,7 +130,7 @@ const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) =
     //console.log(choseGrocerys)
 
     useEffect(() => {
-        if(grocerysProp){
+        if (grocerysProp) {
             setGrocerys(grocerysProp)
             setLoading(false)
             return
@@ -147,9 +149,7 @@ const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) =
         } else {
             setGrocerys([]) // Ako slučajno dođe nevažeći unos
         }
-      
 
-        
         setLoading(false)
     }, [choseGrocerys, grocerysProp])
 
@@ -171,15 +171,13 @@ const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) =
 
     if (loading) {
         return (
-            <div className="bg-[#ffffff] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+            <GrocerysForNextMealLoader/>
         )
     }
 
     if (!grocerys || grocerys.length === 0) {
         return (
-            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
                 <p>No grocerys to show at this moment.</p>{" "}
                 {/* UI for no activities */}
             </div>
@@ -187,7 +185,7 @@ const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) =
     }
 
     return (
-        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex cursor-pointer flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
+        <div className="shadow-Combined font-Poppins flex cursor-pointer flex-col gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
             <div className="flex flex-col md:flex-row md:justify-between">
                 <div>
                     <h3 className="text-DarkGreen text-xl font-medium">
@@ -206,12 +204,12 @@ const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) =
                             <ProgressBar value={progress} />
                         </div>
                     </div>
-                    <div className="flex pt-2 sm:pt-0 ">
+                    <div className="flex pt-2 sm:pt-0">
                         <select
                             onChange={(e) => {
-                                setChoseGrocerys(e.target.value);
-                                setCheckedItems({});
-                                setGrocerys(null);
+                                setChoseGrocerys(e.target.value)
+                                setCheckedItems({})
+                                setGrocerys(null)
                             }}
                             value={choseGrocerys}
                             className="w-fit cursor-pointer rounded-md bg-transparent py-2 text-sm font-medium text-[#757575] focus:outline-none sm:px-4"
@@ -227,7 +225,7 @@ const GrocerysForNextMeal:React.FC<grocerysForNextMealProp> = ({grocerysProp}) =
                     </div>
                 </div>
             </div>
-            <div className="custom-scrollbar  flex flex-col overflow-x-auto">
+            <div className="custom-scrollbar flex flex-col overflow-x-auto">
                 <div className="flex flex-col gap-2">
                     <div className="grid w-full grid-cols-6 pb-1 text-sm text-[#A0AEC0]">
                         <p className="col-span-4 min-w-[300px] border-b-1 border-[#E2E8F0] pb-2 font-medium">

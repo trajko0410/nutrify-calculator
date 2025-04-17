@@ -2,15 +2,13 @@
 
 import { GroceryItem } from "@/app/api/mealsTest/route"
 import { useEffect, useState } from "react"
+import GrocerysForNextMealLoader from "../skeletonLoaders/grocerysForNextMealLoader"
 
 type Groceries = {
-  necessaryGroceries: GroceryItem[] | null | undefined
-
+    necessaryGroceries: GroceryItem[] | null | undefined
 }
 
-const NecesseryGroceries: React.FC<Groceries> = ({
-necessaryGroceries
-}) => {
+const NecesseryGroceries: React.FC<Groceries> = ({ necessaryGroceries }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -25,11 +23,7 @@ necessaryGroceries
     }, [necessaryGroceries])
 
     if (loading) {
-        return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <GrocerysForNextMealLoader />
     }
 
     if (!necessaryGroceries || necessaryGroceries?.length === 0) {
@@ -42,21 +36,34 @@ necessaryGroceries
 
     return (
         <div className="shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
-            <div className="flex w-full gap-2 flex-col">
+            <div className="flex w-full flex-col gap-2">
                 <h3 className="text-DarkGreen text-xl font-normal">
-                  Necesery groceries
+                    Necesery groceries
                 </h3>
-                <h4 className=" text-xs font-medium text-[#2D3748]">Lorem ipsum dolor sit amet</h4>
+                <h4 className="text-xs font-medium text-[#2D3748]">
+                    Lorem ipsum dolor sit amet
+                </h4>
             </div>
-            <div className="flex flex-col gap-4   ">
+            <div className="flex flex-col gap-4">
                 <div className="flex w-full items-center justify-between border-b border-[#E2E8F0] pb-[10px]">
-                    <h4 className="text-xs font-semibold text-[#A0AEC0]">GROCERIES</h4>
-                    <h4 className="text-xs font-semibold text-[#A0AEC0]">AMOUNT</h4>
+                    <h4 className="text-xs font-semibold text-[#A0AEC0]">
+                        GROCERIES
+                    </h4>
+                    <h4 className="text-xs font-semibold text-[#A0AEC0]">
+                        AMOUNT
+                    </h4>
                 </div>
                 {necessaryGroceries?.map((grocery) => (
-                    <div key={grocery.groceryId} className="flex w-full items-center justify-between pb-[10px] border-b border-[#E2E8F0] ">
-                        <h4 className="text-sm font-medium text-[#2D3748]">{grocery.name}</h4>
-                        <h4 className="text-xs font-normal text-[#2D3748] pr-4">{grocery.amount}</h4>
+                    <div
+                        key={grocery.groceryId}
+                        className="flex w-full items-center justify-between border-b border-[#E2E8F0] pb-[10px]"
+                    >
+                        <h4 className="text-sm font-medium text-[#2D3748]">
+                            {grocery.name}
+                        </h4>
+                        <h4 className="pr-4 text-xs font-normal text-[#2D3748]">
+                            {grocery.amount}
+                        </h4>
                     </div>
                 ))}
             </div>

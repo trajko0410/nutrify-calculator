@@ -7,6 +7,7 @@ import { Exercise } from "@/app/api/mealsTest/route"
 import SingleExercise from "../singleTraining/singleExercise"
 
 import { useTrainingCtx } from "./trainingProvider"
+import TodayTimelineLoader from "../skeletonLoaders/todayTimelineLoader"
 
 type TodaysTimelineProps = {
     userId?: string | null
@@ -34,9 +35,7 @@ const ExerciseTimeline: React.FC<TodaysTimelineProps> = ({ userId = null }) => {
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+           <TodayTimelineLoader/>
         )
     }
 

@@ -2,6 +2,7 @@
 
 import { GroceryItem } from "@/app/api/mealsTest/route"
 import { useEffect, useState } from "react"
+import VitaminsContentLoader from "../skeletonLoaders/vitaminsContentLoader"
 
 type Groceries = {
   necessaryGroceries: GroceryItem[] | null | undefined
@@ -26,9 +27,7 @@ necessaryGroceries
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+           <VitaminsContentLoader/>
         )
     }
 

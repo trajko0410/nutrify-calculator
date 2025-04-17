@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useNutritionPageCtx } from "./nutritionPageProvider"
+import VitaminsContentLoader from "../skeletonLoaders/vitaminsContentLoader"
 
 
 
@@ -22,9 +23,7 @@ const MealVitamins = () => {
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+           <VitaminsContentLoader/>
         )
     }
 

@@ -12,6 +12,7 @@ import ProgressBar from "../util/ProgressBar"
 
 import { percentageOfTotal } from "../../utils/procentageCalculator"
 import WaterConsumptionModal from "./waterConsumptionModal"
+import WaterConsumptionLoader from "../skeletonLoaders/waterConsumtionLoader"
 
 type WaterConsumptionProps = {
     waterConsumption: WaterConsumptionType[] | undefined | null
@@ -89,9 +90,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
 
     if (loading) {
         return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+<WaterConsumptionLoader />
         )
     }
 
@@ -123,7 +122,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
                     Water consumption
                 </h3>
                 <button
-                    className="flex flex-row items-center gap-2 text-xs font-medium text-[#2D3748]"
+                    className="flex flex-row items-center gap-2 text-xs font-medium cursor-pointer text-[#2D3748]"
                     onClick={() => setModalOpen(true)}
                 >
                     Edit Goal

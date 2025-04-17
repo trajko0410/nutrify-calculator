@@ -7,17 +7,24 @@ import Link from "next/link"
 import { ForkKnife, ArrowDown, Eraser } from "@phosphor-icons/react"
 import Image from "next/image"
 
+import YourNextMealLoader from "../skeletonLoaders/yourNextMealLoader"
+
 //import slika from "../../../public/work2.png"
 
 type YourNextMealsProps = {
-    nextMealProp: { meal: Meal; mealType: MealType; time: string } | undefined | null,
-    isNextMealComponent: boolean,
-    userId?: number | string | null,
+    nextMealProp:
+        | { meal: Meal; mealType: MealType; time: string }
+        | undefined
+        | null
+    isNextMealComponent: boolean
+    userId?: number | string | null
 }
 
-const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp, isNextMealComponent, userId
-
- }) => {
+const YourNextMeal: React.FC<YourNextMealsProps> = ({
+    nextMealProp,
+    isNextMealComponent,
+    userId,
+}) => {
     const [nextMeal, setNextMeal] = useState<{
         meal: Meal
         mealType: MealType
@@ -32,34 +39,27 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp, isNextMealCo
         }
         //console.log(meal, "dsfas")
 
-
         setNextMeal(nextMealProp)
         setLoading(false)
     }, [nextMealProp])
 
-   
-
     //console.log(nextMeal)
 
     if (loading) {
-        return (
-            <div className="bg-[#FFFFFF] shadow-Combined h-full font-Poppins flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <YourNextMealLoader />
     }
 
     if (!nextMeal) {
         return (
-            <div className="bg-[#FFFFFF] shadow-Combined h-full font-Poppins flex min-h-[200px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black md:flex-row">
+            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
                 <p>No upcoming meal found.</p> {/* UI for no meals */}
             </div>
         )
     }
 
     return (
-        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] md:flex-row-reverse">
-            <div className="flex w-full  justify-center md:w-2/5">
+        <div className="shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] md:flex-row-reverse">
+            <div className="flex w-full justify-center md:w-2/5">
                 {!nextMeal?.meal?.image ? (
                     <div className="flex h-[265px] w-full items-center justify-center rounded-xl bg-[#F5F5F5]">
                         <ForkKnife color="#00000033" size={80}></ForkKnife>
@@ -77,22 +77,30 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp, isNextMealCo
             </div>
             <div className="flex w-full flex-col justify-between gap-6 md:w-3/5">
                 <div className="flex flex-col gap-[6px]">
-                    {isNextMealComponent &&<h3 className="text-xs leading-[150%] font-medium text-[#A0AEC0]">
-                        Your Next Meal
-                    </h3>}
+                    {isNextMealComponent && (
+                        <h3 className="text-xs leading-[150%] font-medium text-[#A0AEC0]">
+                            Your Next Meal
+                        </h3>
+                    )}
                     <h3 className="text-lg leading-[140%] font-medium text-[#2D3748]">
                         {nextMeal.meal?.name ? nextMeal.meal.name : "Meal"}
                     </h3>
-                    {isNextMealComponent ? <p className="text-sm leading-[140%] font-normal text-[#A0AEC0]">
-                        {nextMeal.meal.description
-                            ? nextMeal.meal.description.length > 255
-                                ? nextMeal.meal.description.slice(0, 255) +
-                                  "..."
-                                : nextMeal.meal.description
-                            : "Description of your meal..."}
-                    </p> : <p className="text-sm leading-[140%] font-normal text-[#A0AEC0]">
-                        {nextMeal.meal.description ? nextMeal.meal.description : "Description of your meal..."}
-                    </p>}
+                    {isNextMealComponent ? (
+                        <p className="text-sm leading-[140%] font-normal text-[#A0AEC0]">
+                            {nextMeal.meal.description
+                                ? nextMeal.meal.description.length > 255
+                                    ? nextMeal.meal.description.slice(0, 255) +
+                                      "..."
+                                    : nextMeal.meal.description
+                                : "Description of your meal..."}
+                        </p>
+                    ) : (
+                        <p className="text-sm leading-[140%] font-normal text-[#A0AEC0]">
+                            {nextMeal.meal.description
+                                ? nextMeal.meal.description
+                                : "Description of your meal..."}
+                        </p>
+                    )}
                 </div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                     <div className="flex flex-row items-center">
@@ -136,10 +144,13 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp, isNextMealCo
                         </p>
                     </div>
                 </div>
-                <div className="flex flex-row justify-between items-center">
-                    <p className="text-lg leading-[140%] font-medium text-[#2D3748] flex flex-col  ">
-                        {!isNextMealComponent && 
-                        (<span className="font-normal text-xs text-[#757575]">Meal Time</span>)}
+                <div className="flex flex-row items-center justify-between">
+                    <p className="flex flex-col text-lg leading-[140%] font-medium text-[#2D3748]">
+                        {!isNextMealComponent && (
+                            <span className="text-xs font-normal text-[#757575]">
+                                Meal Time
+                            </span>
+                        )}
                         {nextMeal?.time
                             ? new Date(nextMeal.time).toLocaleTimeString(
                                   "en-US",
@@ -151,21 +162,27 @@ const YourNextMeal: React.FC<YourNextMealsProps> = ({ nextMealProp, isNextMealCo
                               )
                             : "No time available"}
                     </p>
-                    {isNextMealComponent && <button className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
-                        <Link href={`/meal/${nextMeal?.meal.id}`}>Read More</Link>
-                        <ArrowDown
-                            color="black"
-                            size="12"
-                            className="rotate-270"
-                        />
-                    </button>}
-                    {!isNextMealComponent && userId === nextMeal.meal?.authorUserId && <button className="flex flex-row bg-LightGreen rounded-lg p-3 gap-4 items-center justify-center text-sm leading-[140%] font-medium text-[#FFFFFF]">
-                        <Link href={`/meal/${nextMeal?.meal.id}`}>Edit Meal</Link>
-                        <Eraser 
-                            color="white"
-                            size="16"
-                        />
-                    </button>}
+                    {isNextMealComponent && (
+                        <button className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
+                            <Link href={`/meal/${nextMeal?.meal.id}`}>
+                                Read More
+                            </Link>
+                            <ArrowDown
+                                color="black"
+                                size="12"
+                                className="rotate-270"
+                            />
+                        </button>
+                    )}
+                    {!isNextMealComponent &&
+                        userId === nextMeal.meal?.authorUserId && (
+                            <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]">
+                                <Link href={`/meal/${nextMeal?.meal.id}`}>
+                                    Edit Meal
+                                </Link>
+                                <Eraser color="white" size="16" />
+                            </button>
+                        )}
                 </div>
             </div>
         </div>

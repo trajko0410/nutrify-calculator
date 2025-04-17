@@ -9,6 +9,7 @@ import Image from "next/image"
 import ParametarsIcon from "../util/ParametarsIcon"
 import Link from "next/link"
 import { ArrowDown } from "@phosphor-icons/react"
+import YourNextTrainingLoader from "../skeletonLoaders/yourNextTrainingLoader"
 
 type YourNextTrainingProps = {
     nextTrainingProp: { training: Training; time: string } | undefined | null
@@ -39,11 +40,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
     //console.log(training)
 
     if (loading) {
-        return (
-            <div className="shadow-Combined font-Poppins flex h-full min-h-[200px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black md:flex-row">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <YourNextTrainingLoader />
     }
 
     if (!nextTraining) {
@@ -142,7 +139,7 @@ const YourNextTraining: React.FC<YourNextTrainingProps> = ({
                             </p>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between gap-2 sm:flex-row">
+                    <div className="flex flex-row flex-wrap justify-between gap-2 ">
                         <p
                             className={`flex flex-col text-lg leading-[140%] font-medium ${nextTraining?.training?.image ? "text-[#E0E0E0]" : "text-[#2D3748]"}`}
                         >
