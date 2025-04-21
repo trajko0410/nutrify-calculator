@@ -249,7 +249,6 @@ const ExerciseEditModal= () => {
 
                     
                 <button
-                    onClick={saveEditHandler}
                     type="submit"
                     className="bg-LightGreen flex w-full cursor-pointer flex-row items-center justify-center gap-6 rounded-lg p-2 text-sm font-medium text-white"
                 >
