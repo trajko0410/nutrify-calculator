@@ -6,6 +6,7 @@ import FilterButton from "./filterButton"
 import SingleNutritionist from "./singleNutritionist"
 
 import NutritionistListLoader from "../skeletonLoaders/nutritionistListLoader"
+import FilterNutritionistModal from "./filterModal"
 
 const nutritionistList = [
     {
@@ -80,6 +81,8 @@ export default function NutritionListClientWrapper() {
     const [loading, setLoading] = useState(true)
     const searchParams = useSearchParams()
 
+    const [modalOpen, setModalOpen] = useState(false)
+
     const name = searchParams.get("name")
     const location = searchParams.get("location")
     const minRating = searchParams.get("minRating")
@@ -107,9 +110,18 @@ export default function NutritionListClientWrapper() {
         fetchData()
     }, [name, location, minRating, maxRating, yearOfExperience])
 
+
+    const openModalHadler = () => {
+        setModalOpen(true)
+    }
+
+    const closeModalHandler = () => {
+        setModalOpen(false)
+    }
+
     return (
         <>
-            <div className="flex w-full flex-col items-center justify-between gap-2 text-black md:flex-row">
+            <div className="flex w-full flex-col justify-between gap-2 text-black md:flex-row md:items-center">
                 <div>
                     <h2 className="text-DarkGreen font-Poppins text-2xl font-medium">
                         List of our Nutritionists
@@ -118,7 +130,7 @@ export default function NutritionListClientWrapper() {
                         Lorem ipsum dolor sit amet
                     </p>
                 </div>
-                <FilterButton />
+                <FilterButton openModal={openModalHadler} />
             </div>
             <div className="flex-col bg-[#FAF9F6]">
                 {loading ? (
@@ -141,6 +153,9 @@ export default function NutritionListClientWrapper() {
                     </div>
                 )}
             </div>
+            {modalOpen && (
+                <FilterNutritionistModal closeModal={closeModalHandler} />
+            )}
         </>
     )
 }
