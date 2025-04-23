@@ -10,11 +10,7 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "Name": {
       "type": "string",
@@ -31,7 +27,28 @@
       "displayName": "Recipe_ingredient",
       "type": "component",
       "repeatable": true,
-      "component": "ingredients.recipe-ingredient"
+      "component": "ingredients.recipe-ingredient",
+      "required": true
+    },
+    "Short_description": {
+      "type": "text",
+      "maxLength": 300,
+      "pluginOptions": {}
+    },
+    "Preparation": {
+      "type": "richtext",
+      "pluginOptions": {}
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

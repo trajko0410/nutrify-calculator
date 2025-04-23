@@ -465,6 +465,7 @@ export interface ApiMedicalFoodMenuMedicalFoodMenu
   extends Struct.CollectionTypeSchema {
   collectionName: 'medical_food_menus';
   info: {
+    description: '';
     displayName: 'MedicalFood-Menu';
     pluralName: 'medical-food-menus';
     singularName: 'medical-food-menu';
@@ -484,7 +485,8 @@ export interface ApiMedicalFoodMenuMedicalFoodMenu
       Schema.Attribute.Private;
     Name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    Recipes: Schema.Attribute.Component<'recipes.menu-recipe', true>;
+    Recipes: Schema.Attribute.Component<'recipes.menu-recipe', true> &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -511,7 +513,8 @@ export interface ApiMedicalFoodRecipeMedicalFoodRecipe
     Ingredients: Schema.Attribute.Component<
       'ingredients.recipe-ingredient',
       true
-    >;
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -537,11 +540,6 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   options: {
     draftAndPublish: true;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
     Code: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -551,19 +549,30 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     Ingredients: Schema.Attribute.Component<
       'ingredients.recipe-ingredient',
       true
-    >;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::recipe.recipe'>;
+    > &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recipe.recipe'
+    > &
+      Schema.Attribute.Private;
     Name: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 30;
       }>;
+    Preparation: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    Short_description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 300;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

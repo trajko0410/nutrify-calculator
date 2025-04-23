@@ -20,7 +20,8 @@
     "Ingredients": {
       "type": "component",
       "repeatable": true,
-      "component": "ingredients.recipe-ingredient"
+      "component": "ingredients.recipe-ingredient",
+      "required": true
     }
   }
 }

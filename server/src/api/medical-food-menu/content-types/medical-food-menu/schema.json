@@ -4,7 +4,8 @@
   "info": {
     "singularName": "medical-food-menu",
     "pluralName": "medical-food-menus",
-    "displayName": "MedicalFood-Menu"
+    "displayName": "MedicalFood-Menu",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -17,7 +18,8 @@
       "displayName": "Menu_recipe",
       "type": "component",
       "repeatable": true,
-      "component": "recipes.menu-recipe"
+      "component": "recipes.menu-recipe",
+      "required": true
     }
   }
 }
