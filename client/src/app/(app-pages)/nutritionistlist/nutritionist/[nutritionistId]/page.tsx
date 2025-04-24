@@ -47,7 +47,7 @@ const NutritionistPage = async () => {
             <div className="h-full pt-[100px] pb-10">
                 <AppContainer>
                     <div className="flex flex-col gap-6">
-                    <AboutNutritionist nutritionist={singleNutritionist}></AboutNutritionist>
+                    <AboutNutritionist nutritionistProp={singleNutritionist}></AboutNutritionist>
                     <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-6 lg:grid-rows-1">
                             <div className="h-full w-full lg:col-span-4 ">
                                 <ContactInformationOrEducation showType="contact" education={singleNutritionist?.education ?? "No education"} nutrtionistEmail={singleNutritionist.email ?? "No email"} nutrtionistLanguages={singleNutritionist.languages ?? "No languages to show"} nutrtionistPhoneNumber={singleNutritionist.phone ?? "No phone number to show"} ></ContactInformationOrEducation>

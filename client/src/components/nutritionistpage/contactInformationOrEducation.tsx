@@ -1,4 +1,8 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import ParametarsIcon from "../../components/util/ParametarsIcon"
+import NutrtionistEducationOrContactLoader from "../skeletonLoaders/nutrtionistEducationOrContactLoader"
 
 type ContactInformationProps = {
     nutrtionistEmail: string
@@ -15,6 +19,29 @@ const ContactInformationOrEducation: React.FC<ContactInformationProps> = ({
     education,
     showType,
 }) => {
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const isDataReady =
+            nutrtionistEmail &&
+            nutrtionistPhoneNumber &&
+            education &&
+            Array.isArray(nutrtionistLanguages) &&
+            nutrtionistLanguages.length > 0
+
+        if (isDataReady) {
+            setLoading(false)
+        }
+    }, [
+        nutrtionistEmail,
+        nutrtionistPhoneNumber,
+        education,
+        nutrtionistLanguages,
+    ])
+
+    if (!loading) {
+        return <NutrtionistEducationOrContactLoader showType={showType} />
+    }
     return (
         <div className="shadow-Combined font-Poppins flex h-full flex-col gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px]">
             <div>
@@ -31,7 +58,7 @@ const ContactInformationOrEducation: React.FC<ContactInformationProps> = ({
             </div>
 
             {showType === "contact" ? (
-                <div className="flex flex-wrap  gap-6">
+                <div className="flex flex-wrap gap-6">
                     <div className="flex min-w-[200px] flex-row items-center gap-4">
                         <ParametarsIcon
                             iconSize={16}
