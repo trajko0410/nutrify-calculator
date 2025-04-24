@@ -2,6 +2,8 @@
 import { User } from "@phosphor-icons/react"
 import Image from "next/image"
 import ParametarsIcon from "../util/ParametarsIcon"
+import { useState } from "react"
+import ConfirmNutritionistModal from "./confirmModal"
 
 export type Testimonial = {
     userId: number
@@ -32,7 +34,19 @@ type AboutNutritionistProps = {
 const AboutNutritionist: React.FC<AboutNutritionistProps> = ({
     nutritionist,
 }) => {
+        const [modalOpen, setModalOpen] = useState(false)
+
+        const openModalHadler = () => {
+            setModalOpen(true)
+        }
+    
+        const closeModalHandler = () => {
+            setModalOpen(false)
+        }
+    
     return (
+        <>
+    
         <div className="shadow-Combined font-Poppins flex h-full flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] md:flex-row">
             <div className="flex w-full justify-center md:w-2/5">
                 {nutritionist?.avatarPhoto === "" ||
@@ -61,7 +75,7 @@ const AboutNutritionist: React.FC<AboutNutritionistProps> = ({
                             {nutritionist.education ?? "Education"}
                         </p>
                     </div>
-                    <button className="bg-LightGreen flex h-[44px] min-w-[200px] items-center justify-center gap-4 rounded-lg px-4 text-sm font-medium text-[#FFFFFF]">
+                    <button onClick={openModalHadler} className="bg-LightGreen flex h-[44px] min-w-[200px] items-center justify-center gap-4 rounded-lg px-4 text-sm font-medium text-[#FFFFFF]">
                         Hire Nutritionist
                     </button>
                 </div>
@@ -112,6 +126,10 @@ const AboutNutritionist: React.FC<AboutNutritionistProps> = ({
                 </div>
             </div>
         </div>
+        {modalOpen && (
+                <ConfirmNutritionistModal closeModal={closeModalHandler} />
+            )}
+        </>
     )
 }
 
