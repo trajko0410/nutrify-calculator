@@ -97,7 +97,7 @@ const SingleNutritionist: React.FC<NutritionistProp> = ({ nutritionist }) => {
             <div className="h-[1px] bg-[#D9D9D9]"></div>
             <div className="flex justify-end">
                 <Link
-                    href={`/nutritionis/${nutritionist.id}`}
+                    href={`nutritionistlist/nutritionist/${nutritionist.id}`}
                     className="flex w-fit flex-row items-center gap-4"
                 >
                     <p className="text-xs font-medium text-[#2D3748]">

@@ -77,7 +77,7 @@ const nutritionistList = [
 ]
 
 export default function NutritionListClientWrapper() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<typeof nutritionistList>([])
     const [loading, setLoading] = useState(true)
     const searchParams = useSearchParams()
 
