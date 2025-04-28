@@ -9,15 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.12.4",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.7",
     "@mui/styled-engine-sc": "^6.4.6",
+    "@nextui-org/react": "^2.6.11",
     "@phosphor-icons/react": "^2.1.7",
+    "@strapi/client": "^1.2.0",
     "axios": "^1.8.3",
     "critters": "^0.0.23",
     "eslint-config-prettier": "^10.1.1",
+    "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
     "next": "^15.0.4",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.0.9",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

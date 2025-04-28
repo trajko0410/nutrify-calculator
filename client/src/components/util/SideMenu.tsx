@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import SideMenuOption from "./SideMenuOption"
 import {
     Barbell,
@@ -11,72 +11,97 @@ import {
     Notebook,
     SignOut,
 } from "@phosphor-icons/react"
-import { useUser } from "@clerk/nextjs"
 import ExtendedSideMenu from "./ExtendedSideMenu"
 import { MenuOption } from "@/utils/types"
+import Cookies from "js-cookie"
 
 const SideMenu: React.FC = () => {
-    const { user } = useUser()
+    const [menuOptions, setMenuOptions] = useState<MenuOption[]>([])
 
-    const menuOptions: MenuOption[] = []
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            const token = Cookies.get("jwtNutrifyS")
 
-    if (user) {
-        switch (user.unsafeMetadata.role) {
-            case "Admin":
-                menuOptions.push(
-                    {
-                        icon: <HouseSimple size={20} />,
-                        title: "Dashboard",
-                        path: "/dashboard",
-                    },
-                    {
-                        icon: <Calculator size={20} />,
-                        title: "Calculator",
-                        path: "/calculator",
-                    },
-                    {
-                        icon: <Notebook size={20} />,
-                        title: "Diary",
-                        path: "/diary",
-                    },
-                    {
-                        icon: <ForkKnife size={20} />,
-                        title: "Nutrition",
-                        path: "/nutrition",
-                    },
-                    {
-                        icon: <Barbell size={20} />,
-                        title: "Workout",
-                        path: "/workout",
-                    },
-                )
-                break
-            case "Client":
-                menuOptions.push(
-                    {
-                        icon: <HouseSimple size={20} />,
-                        title: "Dashboard",
-                        path: "/dashboard",
-                    },
-                    {
-                        icon: <Notebook size={20} />,
-                        title: "Diary",
-                        path: "/diary",
-                    },
-                    {
-                        icon: <ForkKnife size={20} />,
-                        title: "Nutrition",
-                        path: "/nutrition",
-                    },
-                    {
-                        icon: <Barbell size={20} />,
-                        title: "Workout",
-                        path: "/workout",
-                    },
-                )
-                break
+            if (token) {
+                try {
+                    const res = await fetch(
+                        `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me?populate=*`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        },
+                    )
+
+                    if (res.ok) {
+                        const data = await res.json()
+                        const role = data.role?.name
+                        const options: MenuOption[] = []
+
+                        if (role === "Nutritionist") {
+                            options.push(
+                                {
+                                    icon: <HouseSimple size={20} />,
+                                    title: "Dashboard",
+                                    path: "/dashboard",
+                                },
+                                {
+                                    icon: <Calculator size={20} />,
+                                    title: "Calculator",
+                                    path: "/calculator",
+                                },
+                                {
+                                    icon: <Notebook size={20} />,
+                                    title: "Diary",
+                                    path: "/diary",
+                                },
+                                // {
+                                //     icon: <ForkKnife size={20} />,
+                                //     title: "Nutrition",
+                                //     path: "/nutrition",
+                                // },
+                                // {
+                                //     icon: <Barbell size={20} />,
+                                //     title: "Workout",
+                                //     path: "/workout",
+                                // },
+                            )
+                        } else if (role === "User-Free") {
+                            options.push(
+                                {
+                                    icon: <HouseSimple size={20} />,
+                                    title: "Dashboard",
+                                    path: "/dashboard",
+                                },
+                                {
+                                    icon: <Notebook size={20} />,
+                                    title: "Diary",
+                                    path: "/diary",
+                                },
+                                {
+                                    icon: <ForkKnife size={20} />,
+                                    title: "Nutrition",
+                                    path: "/nutrition",
+                                },
+                                {
+                                    icon: <Barbell size={20} />,
+                                    title: "Workout",
+                                    path: "/workout",
+                                },
+                            )
+                        }
+                        setMenuOptions(options)
+                    } else {
+                        console.error("Failed to fetch user data")
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error)
+                }
+            }
         }
-    }
+
+        fetchUserRole()
+    }, [])
 
     return (
         <>

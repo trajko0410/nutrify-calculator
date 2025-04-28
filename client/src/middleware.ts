@@ -1,15 +1,48 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"])
+// Utility to check protected routes
+const isProtectedRoute = (req: NextRequest) => {
+    return req.nextUrl.pathname.startsWith("/dashboard")
+}
 
-export default clerkMiddleware(async (auth, req) => {
-    const { userId } = await auth()
+// Function to validate JWT token with Strapi
+async function validateStrapiToken(token: string | undefined) {
+    if (!token) return null
 
-    if (!userId && isProtectedRoute(req)) {
-        return NextResponse.redirect(new URL("/login", req.url))
+    try {
+        const res = await fetch("http://localhost:1337/api/users/me", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+
+        if (!res.ok) return null
+
+        const user = await res.json()
+        return user
+    } catch (err) {
+        console.error("Error validating token with Strapi:", err)
+        return null
     }
-})
+}
+
+export async function middleware(req: NextRequest) {
+    const token =
+        req.cookies.get("jwtNutrifyS")?.value ||
+        req.headers.get("Authorization")?.replace("Bearer ", "")
+
+    if (isProtectedRoute(req)) {
+        const user = await validateStrapiToken(token)
+        if (!user) {
+            return NextResponse.redirect(new URL("/login", req.url))
+        }
+
+        // You can attach user to request if needed via headers or rewrites
+    }
+
+    return NextResponse.next()
+}
 
 export const config = {
     matcher: [

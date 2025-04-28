@@ -12,12 +12,12 @@ const nextConfig = {
         ],
     },
     experimental: {
-        optimizeCss: false, // ✅ Optimize CSS delivery
+        optimizeCss: false,
     },
     compiler: {
-        removeConsole: process.env.NODE_ENV === "production", // ✅ Remove console logs in production
+        removeConsole: process.env.NODE_ENV === "production",
     },
-    output: "standalone", // ✅ Optimize for smaller Docker/Serverless deployment
+    output: "standalone",
 }
 
 module.exports = nextConfig

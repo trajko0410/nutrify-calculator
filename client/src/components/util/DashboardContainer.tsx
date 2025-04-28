@@ -1,7 +1,13 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from "react"
 
 const MainContainer = ({ children }: { children: ReactNode }) => {
-  return <div className=" w-full pl-[24px] md:pl-[118px] pr-[24px] md:pb-[0px] pb-[70px]">{children}</div>;
-};
+    return (
+        <div className="bg-[#FAF9F6] pt-[100px] pb-10">
+            <div className="w-full pr-[24px] pb-[70px] pl-[24px] md:pb-[0px] md:pl-[118px]">
+                {children}
+            </div>
+        </div>
+    )
+}
 
-export default MainContainer;
+export default MainContainer

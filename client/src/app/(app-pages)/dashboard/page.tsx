@@ -1,48 +1,64 @@
-"use server"
-
+import { cookies } from "next/headers"
 import TodaysFoodInteake from "@/components/dashboardpage/todaysFoodIntakes"
 import Header from "@/components/util/AppHeader"
 import SideMenu from "@/components/util/SideMenu"
-import React from "react"
-
-import { auth } from "@clerk/nextjs/server"
-import { redirect } from "next/navigation"
-import { DailyPlan, Meal, MealType, Training } from "@/app/api/mealsTest/route"
-
-import DashboardContainer from "../../../components/util/DashboardContainer"
+import DashboardContainer from "@/components/util/DashboardContainer"
 import YourNextMeal from "@/components/dashboardpage/yourNextMeal"
 import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
+import GrocerysForNextMeal from "@/components/dashboardpage/grocerysForNextMeal"
 import {
     mealsSortedByTime,
     trainingSortedByTime,
 } from "@/utils/activitySortByTime"
-import GrocerysForNextMeal from "@/components/dashboardpage/grocerysForNextMeal"
+import { DailyPlan } from "@/app/api/mealsTest/route"
+// import {Meal, MealType, Training} from "@/app/api/mealsTest/route"
+import { redirect } from "next/navigation"
 
-const DashboardPage: React.FC = async () => {
-    const {userId} = await auth()
+const authenticateUser = async (token: string) => {
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me?populate=*`,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+                cache: "no-store",
+            },
+        )
+        if (!response.ok) throw new Error("Unauthorized")
+        const user = await response.json()
+        return user
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}
 
-    if (!userId) {
+export default async function DashboardPage() {
+    const cookieStore = await cookies()
+    const token = cookieStore.get("jwtNutrifyS")?.value
+
+    if (!token) {
+        redirect("/login")
+    }
+    const user = await authenticateUser(token)
+    console.log("User from dashboard:", user)
+    if (!user) {
         redirect("/login")
     }
 
-    //no database using my json
+    const res = await fetch("http://localhost:3000/api/mealsTest", {
+        cache: "no-store",
+    })
+    const personActivities: DailyPlan[] = await res.json()
 
-    const res = await fetch("http://localhost:3000/api/mealsTest")
-    const personActivites: DailyPlan[] = await res.json()
+    let totalCalories = 0
+    let totalProteins = 0
+    let totalFats = 0
+    let totalCarbohydrates = 0
 
-    const personActivitiesForId = personActivites.find(
-        (activity) => activity.personId === 11,
+    const personActivitiesForId = personActivities.find(
+        (activity) => activity.personId === user.id,
     )
-    //wont need this when i fetch just logein user data
-    //We don't need to create a UI for 'no user found' since this section is only accessible to registered and logged-in users.
-
-    let totalCalories: number = 0
-    let totalProteins: number = 0
-    let totalFats: number = 0
-    let totalCarbohydrates: number = 0
-
-    //console.log(personActivitiesForId)
 
     if (personActivitiesForId) {
         personActivitiesForId.mealPlan.forEach((entry) => {
@@ -55,15 +71,13 @@ const DashboardPage: React.FC = async () => {
         })
     }
 
-    let nextTraining: { training: Training; time: string } | null = null
-    if (personActivitiesForId?.trainingPlan) {
-        nextTraining = trainingSortedByTime(personActivitiesForId?.trainingPlan)
-    }
+    const nextTraining = personActivitiesForId?.trainingPlan
+        ? trainingSortedByTime(personActivitiesForId.trainingPlan)
+        : null
 
-    let nextMeal: { meal: Meal; mealType: MealType; time: string } | null = null
-    if (personActivitiesForId?.mealPlan) {
-        nextMeal = mealsSortedByTime(personActivitiesForId?.mealPlan)
-    }
+    const nextMeal = personActivitiesForId?.mealPlan
+        ? mealsSortedByTime(personActivitiesForId.mealPlan)
+        : null
 
     const sortedActivities = [
         ...(personActivitiesForId?.mealPlan?.map((meal) => ({
@@ -76,48 +90,37 @@ const DashboardPage: React.FC = async () => {
         })) || []),
     ].sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
 
-    //console.log(sortedActivities)
-    //console.log(nextMeal)
-    //console.log(nextTraining)
-    //console.log(personActivitiesForId)
-
     return (
         <div className="h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
-            <div className="bg-[#FAF9F6] pt-[100px] pb-10">
-                <DashboardContainer>
-                    <div className="flex flex-col gap-6">
-                        <TodaysFoodInteake
-                            userName={personActivitiesForId?.name}
-                            totalCalories={totalCalories}
-                            totalProteins={totalProteins}
-                            totalCarbohydrates={totalCarbohydrates}
-                            totalFats={totalFats}
-                        />
-                        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
-                            <div className="h-full w-full lg:col-span-3">
-                                <YourNextMeal nextMealProp={nextMeal} />
-                            </div>
-                            <div className="h-full w-full lg:col-span-2">
-                                <YourNextTraining
-                                    nextTrainingProp={nextTraining}
-                                />
-                            </div>
+            <DashboardContainer>
+                <div className="flex flex-col gap-6">
+                    <TodaysFoodInteake
+                        userName={user.first_name}
+                        totalCalories={totalCalories}
+                        totalProteins={totalProteins}
+                        totalCarbohydrates={totalCarbohydrates}
+                        totalFats={totalFats}
+                    />
+                    <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
+                        <div className="h-full w-full lg:col-span-3">
+                            <YourNextMeal nextMealProp={nextMeal} />
                         </div>
-                        <TodaysTimeline
-                            todaysActivityProps={sortedActivities}
-                            totalCalories={totalCalories}
-                            totalProteins={totalProteins}
-                            totalCarbohydrates={totalCarbohydrates}
-                            totalFats={totalFats}
-                        />
-                        <GrocerysForNextMeal />
+                        <div className="h-full w-full lg:col-span-2">
+                            <YourNextTraining nextTrainingProp={nextTraining} />
+                        </div>
                     </div>
-                </DashboardContainer>
-            </div>
+                    <TodaysTimeline
+                        todaysActivityProps={sortedActivities}
+                        totalCalories={totalCalories}
+                        totalProteins={totalProteins}
+                        totalCarbohydrates={totalCarbohydrates}
+                        totalFats={totalFats}
+                    />
+                    <GrocerysForNextMeal />
+                </div>
+            </DashboardContainer>
         </div>
     )
 }
-
-export default DashboardPage

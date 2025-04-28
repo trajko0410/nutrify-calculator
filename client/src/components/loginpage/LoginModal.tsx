@@ -1,18 +1,18 @@
 "use client"
-import { useSignIn } from "@clerk/nextjs"
 import { IconButton, Input, InputAdornment } from "@mui/material"
 import { Eye, EyeClosed } from "@phosphor-icons/react"
-import React   from "react"
+import React from "react"
 import { toast } from "react-toastify"
+import { strapi } from "@strapi/client"
+import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
 
 const LoginModal: React.FC = () => {
-    const { signIn, setActive } = useSignIn()
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [error, setError] = React.useState("")
     const [showPassword, setShowPassword] = React.useState(false)
-
-     
+    const router = useRouter()
 
     const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -28,38 +28,53 @@ const LoginModal: React.FC = () => {
         event.preventDefault()
     }
 
-    const handleSignIn = async () => {
+    const handleSignIn = async (event?: React.FormEvent) => {
+        if (event) event.preventDefault()
+
         if (!email || !password) {
             toast.error("Email or password is empty")
             return
         }
 
         try {
-            console.log("signIn object:", signIn)
+            const loginRes = await fetch(
+                "http://localhost:1337/api/auth/local",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ identifier: email, password }),
+                },
+            )
 
-            if (!signIn) {
-                toast.error("Authentication service is not available.")
-                return
+            const loginData = await loginRes.json()
+
+            if (!loginRes.ok) {
+                throw new Error(loginData?.error?.message || "Login failed")
             }
 
-            const result = await signIn.create({
-                identifier: email.trim(),
-                password: password,
+            const jwt = loginData.jwt
+
+            const client = strapi({
+                baseURL: "http://localhost:1337/api",
+                auth: jwt,
             })
 
-            if (result?.status === "complete") {
-                await setActive({ session: result.createdSessionId })
+            const me = await (await client.fetch("users/me?populate=*")).json()
 
-                toast.success("Login successful!")
-                return
-            } else {
-                console.error("Unhandled sign-in status:", result)
-                toast.error("There was an error signing in. Please try again.")
-            }
+            console.log("User info:", me)
+            toast.success("Login successful")
+
+            Cookies.set("jwtNutrifyS", jwt, { expires: 1, path: "/" })
+
+            // maybe redirect here if you want
+            router.push("/dashboard")
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: unknown | any) {
             console.error(error)
             toast.error(String(error.message))
-            switch (error.errors[0].meta.paramName) {
+
+            const param = error?.errors?.[0]?.meta?.paramName
+            switch (param) {
                 case "identifier":
                     setError("identifier")
                     break
@@ -73,18 +88,18 @@ const LoginModal: React.FC = () => {
                     setError("unknown")
                     break
             }
-            console.log("error here:", error.errors[0].meta.paramName)
         }
     }
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === "Enter") {
-            handleSignIn()
+            event.preventDefault() // Prevent form submission behavior
+            handleSignIn() // Call sign-in logic
         }
     }
 
     return (
-        <div className="w-full max-w-[510px] justify-around rounded-2xl bg-white p-8">
+        <form className="w-full max-w-[510px] justify-around rounded-2xl bg-white p-8">
             <h1 className="text-DarkGreen text-2xl font-medium">Login</h1>
             <p className={`text-DarkGreen pt-8 pb-6`}>Email</p>
             <Input
@@ -138,6 +153,7 @@ const LoginModal: React.FC = () => {
                 }
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyDown={handleKeyDown}
+                autoComplete="current-password"
             />
             <button
                 onClick={handleSignIn}
@@ -145,7 +161,7 @@ const LoginModal: React.FC = () => {
             >
                 Login
             </button>
-        </div>
+        </form>
     )
 }
 

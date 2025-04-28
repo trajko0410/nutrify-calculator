@@ -4,40 +4,45 @@ export type MenuOption = {
     path: string
 }
 
+export type Meal = {
+    name: string,
+    ingredients: Ingredient[],
+    kcal: number,
+}
+
 export type Ingredient = {
-    name: string;
-    code: string;
-    amount?: number;
-    kcal?: number;
-    protein_plant?: number;
-    protein_animal?: number;
-    protein_total?: number;
-    fat_saturated?: number;
-    fat_unsaturated?: number;
-    fat_total?: number;
-    cholesterol?: number;
-    carbohydrates_mono?: number;
-    carbohydrates_poli?: number;
-    carbohydrates_total?: number;
-    ashes?: number;
-    cellulose?: number;
-    mineral_Na?: number;
-    mineral_K?: number;
-    mineral_Ca?: number;
-    mineral_Mg?: number;
-    mineral_P?: number;
-    mineral_Fe?: number;
-    mineral_Zn?: number;
-    mineral_Cu?: number;
-    vitamin_RE?: number;
-    vitamin_B1?: number;
-    vitamin_B2?: number;
-    vitamin_B6?: number;
-    vitamin_PP?: number;
-    vitamin_C?: number;
-    vitamin_E?: number;
-    glycemic_index?: number;
-    glycemic_load?: number;
-    atherogenic_index?: number;
-  };
-  
+    Name: string
+    Code: string
+    Amount?: number
+    Kcal?: number
+    Protein_plant?: number
+    Protein_animal?: number
+    Protein_total?: number
+    Fat_saturated?: number
+    Fat_unsaturated?: number
+    Fat_total?: number
+    Cholesterol?: number
+    Carbohydrates_mono?: number
+    Carbohydrates_poli?: number
+    Carbohydrates_total?: number
+    Ashes?: number
+    Cellulose?: number
+    Mineral_Na?: number
+    Mineral_K?: number
+    Mineral_Ca?: number
+    Mineral_Mg?: number
+    Mineral_P?: number
+    Mineral_Fe?: number
+    Mineral_Zn?: number
+    Mineral_Cu?: number
+    Vitamin_RE?: number
+    Vitamin_B1?: number
+    Vitamin_B2?: number
+    Vitamin_B6?: number
+    Vitamin_PP?: number
+    Vitamin_C?: number
+    Vitamin_E?: number
+    Glycemic_index?: number
+    Glycemic_load?: number
+    Atherogenic_index?: number
+}

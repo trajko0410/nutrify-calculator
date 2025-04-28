@@ -1,15 +1,12 @@
 "use client"
-import { useSession, useSignIn, useSignUp } from "@clerk/nextjs"
 import { Input } from "@mui/material"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { toast } from "react-toastify"
+import Cookies from "js-cookie" // To handle storing the JWT token in a cookie
 
 const RegisterModal: React.FC = () => {
     const router = useRouter()
-    const { setActive } = useSignIn()
-    const { session } = useSession()
-    const { signUp } = useSignUp()
     const [email, setEmail] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -19,13 +16,11 @@ const RegisterModal: React.FC = () => {
     const [showVerificationModal, setShowVerificationModal] = useState(false)
     const [disableSignUp, setDisableSignUp] = useState(false)
 
-     
-
     useEffect(() => {
-        if (session?.status === "active") {
-            router.push("/home")
+        if (Cookies.get("jwt")) {
+            router.push("/dashboard")
         }
-    }, [session, router])
+    }, [router])
 
     const handleSignUp = async () => {
         if (!email || !password) {
@@ -37,67 +32,82 @@ const RegisterModal: React.FC = () => {
             return
         }
 
-        if (!signUp) {
-            toast.error("Authentication service is not available.")
-            return
-        }
-
         try {
-            const result = await signUp.create({
-                emailAddress: email.trim(),
-                password,
-                firstName,
-                lastName,
-                unsafeMetadata: { dateOfBirth: date_of_birth },
-            })
+            // 1. Sign up request to Strapi's /auth/local/register endpoint
+            const response = await fetch(
+                "http://localhost:1337/api/auth/local/register",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        username: email.trim(), // Strapi uses 'username' as identifier
+                        email,
+                        password,
+                        firstName,
+                        lastName,
+                        dateOfBirth: date_of_birth,
+                    }),
+                },
+            )
 
-            if (result.status === "missing_requirements") {
-                await signUp.prepareEmailAddressVerification()
-                setShowVerificationModal(true) // Show verification modal
-                toast.info("Verification email sent. Check your inbox.")
+            const result = await response.json()
+
+            if (!response.ok) {
+                throw new Error(result?.message || "Sign-up failed.")
+            }
+
+            // If email verification is required by Strapi
+            if (result?.user?.confirmed === false) {
+                setShowVerificationModal(true)
+                toast.info("Please verify your email.")
                 return
             }
-        } catch (error: unknown) {
+
+            // If sign-up is successful, save JWT in cookie
+            Cookies.set("jwt", result?.jwt, { expires: 1, path: "/" })
+
+            toast.success("Sign-up successful!")
+            router.push("/dashboard") // Redirect after successful sign-up
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: unknown | any) {
             console.error("Error signing up:", error)
-            const clerkError = error as { errors?: { message: string }[] }
-            toast.error(
-                clerkError.errors?.[0]?.message || "Sign-up failed. Try again.",
-            )
+            toast.error(error.message || "Sign-up failed. Try again.")
         }
-        setTimeout(() => {
-            setDisableSignUp(true)
-        }, 3500)
+
         setDisableSignUp(false)
     }
 
     const handleVerifyEmail = async () => {
-        if (!signUp) {
-            toast.error("Authentication service is not available.")
+        if (!verificationCode) {
+            toast.error("Please enter the verification code.")
             return
         }
-        try {
-            const verificationResult =
-                await signUp.attemptEmailAddressVerification({
-                    code: verificationCode,
-                })
 
-            if (verificationResult.status === "complete" && setActive) {
-                toast.success("Email verified!")
-                await setActive({
-                    session: verificationResult.createdSessionId,
-                })
-                router.push("/dashboard")
-                toast.success("Sign-up successful!")
-                setShowVerificationModal(false) // Close the modal
-            } else {
-                toast.error("Verification failed. Try again.")
-            }
-        } catch (error: unknown) {
-            console.error("Error verifying email:", error)
-            const clerkError = error as { errors?: { message: string }[] }
-            toast.error(
-                clerkError.errors?.[0]?.message || "Verification failed.",
+        try {
+            const response = await fetch(
+                `http://localhost:1337/api/auth/email-verification/${verificationCode}`,
+                {
+                    method: "POST",
+                },
             )
+
+            const result = await response.json()
+
+            if (
+                response.ok &&
+                result?.message === "Email successfully confirmed"
+            ) {
+                toast.success("Email verified!")
+                setShowVerificationModal(false)
+                router.push("/dashboard") // Redirect after successful verification
+            } else {
+                toast.error("Verification failed. Please try again.")
+            }
+        } catch (error) {
+            console.error("Error verifying email:", error)
+            toast.error("Verification failed. Please try again.")
         }
     }
 
@@ -144,19 +154,11 @@ const RegisterModal: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="text-DarkGreen pt-8 pb-1">Confirm your password</p>
-            <Input
-                className="w-full"
-                placeholder="Confirm your password"
-                type="password"
-                required
-                value={date_of_birth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
-            />
+
             <p className="text-DarkGreen pt-8 pb-1">Date of birth</p>
             <Input
                 className="w-full"
-                placeholder="Enter your password"
+                placeholder="Enter your birth date"
                 type="date"
                 required
                 value={date_of_birth}

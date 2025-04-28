@@ -1,7 +1,7 @@
 "use client"
-import { useSession } from "@clerk/nextjs"
 import { useRouter, usePathname } from "next/navigation"
 import React from "react"
+import Cookies from "js-cookie"
 
 type SideMenuOptionProps = {
     icon: React.ReactNode
@@ -19,15 +19,15 @@ const SideMenuOption: React.FC<SideMenuOptionProps> = ({
     const router = useRouter()
     const pathname = usePathname() // Get the current active path
     const isSelected = pathname.startsWith(path)
-    const { session } = useSession()
 
-    const handleClick = () => {
-        if (isSignOut && session) {
-            session.end()
+    const handleClick = async () => {
+        if (isSignOut) {
+
+            Cookies.remove("jwtNutrifyS")
+            router.push("/login") // Redirect to login or home page
             return
         }
 
-        // If clicking "Calculator", make sure it redirects to its default child
         if (path === "/calculator") {
             router.push("/calculator/create-ingredient")
         } else {

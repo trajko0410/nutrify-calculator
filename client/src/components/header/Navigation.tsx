@@ -1,28 +1,57 @@
 "use client"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import DropDown from "../util/DropDown"
-import { useSession, useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
 
 export const Navigation: React.FC = () => {
-    const { user, isSignedIn } = useUser()
     const router = useRouter()
-    const { session } = useSession()
-
-    const handleSignOut = () => {
-        if (session) {
-            session.end()
-        }
-        return
-    }
+    const [isSignedIn, setIsSignedIn] = useState(false)
+    const [user, setUser] = useState<{ imageUrl: string } | null>(null)
 
     useEffect(() => {
-        if (isSignedIn) {
-            router.push("/dashboard")
+        const token = Cookies.get("jwtNutrifyS")
+        const fetchUser = async () => {
+            try {
+                console.log(process.env.STRAPI_URL)
+
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me?populate=*`,
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                        cache: "no-store",
+                    },
+                )
+
+                if (res.ok) {
+                    const data = await res.json()
+                    setUser({
+                        imageUrl: data.avatar?.url || null,
+                    })
+                    setIsSignedIn(true)
+                } else {
+                    setIsSignedIn(false)
+                }
+            } catch (error) {
+                console.error("Error fetching user:", error)
+                setIsSignedIn(false)
+            }
         }
-    }, [isSignedIn, router])
+        if (token) fetchUser()
+    }, [])
+
+    const handleSignOut = () => {
+        Cookies.remove("jwtNutrifyS")
+
+        // OR, if you're using cookie auth, maybe remove the cookie manually (if accessible)
+        // Otherwise, you might just "fake logout" by clearing state
+
+        setIsSignedIn(false)
+        setUser(null)
+        router.push("/login")
+    }
 
     return (
         <>
@@ -66,16 +95,15 @@ export const Navigation: React.FC = () => {
                 )}
                 {isSignedIn ? (
                     <div className="flex items-center gap-2">
-                        <Link
-                            href="/login"
-                            onClick={() => handleSignOut()}
+                        <button
+                            onClick={handleSignOut}
                             className="text-gray-800"
                         >
                             Logout
-                        </Link>
+                        </button>
                         <Link href="/profile" className="text-gray-800">
                             <Image
-                                src={user.imageUrl}
+                                src={user?.imageUrl || "/default-profile.png"}
                                 alt="profile"
                                 width={40}
                                 height={40}
@@ -100,7 +128,7 @@ export const Navigation: React.FC = () => {
                     </div>
                 )}
             </div>
-            <div className="block w-full md:hidden text-black">in</div>
+            <div className="block w-full text-black md:hidden">in</div>
         </>
     )
 }
