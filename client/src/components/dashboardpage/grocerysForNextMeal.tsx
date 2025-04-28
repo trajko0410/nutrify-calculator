@@ -6,9 +6,9 @@ const nextMeal = [
         id: 1,
         name: "Ovsena kaša",
         grocerys: [
-            { name: "Ovsene pahuljice", amount: "100g" },
-            { name: "Mleko", amount: "200ml" },
-            { name: "Med", amount: "1 kašika" },
+            { name: "Ovsene pahuljice", amount: "100g", groceryId: 1 },
+            { name: "Mleko", amount: "200ml", groceryId: 2 },
+            { name: "Med", amount: "1 kašika", groceryId: 3 },
         ],
     },
 ]
@@ -18,27 +18,27 @@ const todaysMeals = [
         id: 1,
         name: "Ovsena kaša",
         grocerys: [
-            { name: "Ovsene pahuljice", amount: "100g" },
-            { name: "Mleko", amount: "200ml" },
-            { name: "Med", amount: "1 kašika" },
+            { name: "Ovsene pahuljice", amount: "100g", groceryId: 1 },
+            { name: "Mleko", amount: "200ml", groceryId: 2 },
+            { name: "Med", amount: "1 kašika", groceryId: 3 },
         ],
     },
     {
         id: 2,
         name: "Piletina sa povrćem",
         grocerys: [
-            { name: "Piletina", amount: "200g" },
-            { name: "Tikvice", amount: "150g" },
-            { name: "Maslinovo ulje", amount: "1 kašika" },
+            { name: "Piletina", amount: "200g", groceryId: 4 },
+            { name: "Tikvice", amount: "150g", groceryId: 5 },
+            { name: "Maslinovo ulje", amount: "1 kašika", groceryId: 6 },
         ],
     },
     {
         id: 3,
         name: "Tuna salata",
         grocerys: [
-            { name: "Tunjevina", amount: "100g" },
-            { name: "Zelena salata", amount: "50g" },
-            { name: "Maslinovo ulje", amount: "1 kašika" },
+            { name: "Tunjevina", amount: "100g", groceryId: 7 },
+            { name: "Zelena salata", amount: "50g", groceryId: 8 },
+            { name: "Maslinovo ulje", amount: "1 kašika", groceryId: 9 },
         ],
     },
 ]
@@ -48,54 +48,54 @@ const weeksMeals = [
         id: 1,
         name: "Greek yougurt with bluberries",
         grocerys: [
-            { name: "Greek yogurt", amount: "200g" },
-            { name: "Granola", amount: "50g" },
-            { name: "Blueberries", amount: "50g" },
+            { name: "Greek yogurt", amount: "200g", groceryId: 1 },
+            { name: "Granola", amount: "50g", groceryId: 2 },
+            { name: "Blueberries", amount: "50g", groceryId: 3 },
         ],
     },
     {
         id: 2,
         name: "Sandwich",
         grocerys: [
-            { name: "Turkey sandwich", amount: "1 serving" },
-            { name: "Mixed greens", amount: "100g" },
-            { name: "Apple", amount: "1 medium" },
+            { name: "Turkey sandwich", amount: "1 serving", groceryId: 4 },
+            { name: "Mixed greens", amount: "100g", groceryId: 5 },
+            { name: "Apple", amount: "1 medium", groceryId: 6 },
         ],
     },
     {
         id: 3,
         name: "Chicken with brocooli and rice",
         grocerys: [
-            { name: "Grilled chicken", amount: "150g" },
-            { name: "Brown rice", amount: "100g" },
-            { name: "Broccoli", amount: "100g" },
+            { name: "Grilled chicken", amount: "150g", groceryId: 7 },
+            { name: "Brown rice", amount: "100g", groceryId: 8 },
+            { name: "Broccoli", amount: "100g", groceryId: 9 },
         ],
     },
     {
         id: 4,
         name: "Green Smoothie",
         grocerys: [
-            { name: "Smoothie", amount: "1 serving" },
-            { name: "Spinach", amount: "30g" },
-            { name: "Protein powder", amount: "1 scoop" },
+            { name: "Smoothie", amount: "1 serving", groceryId: 10 },
+            { name: "Spinach", amount: "30g", groceryId: 11 },
+            { name: "Protein powder", amount: "1 scoop", groceryId: 12 },
         ],
     },
     {
         id: 5,
         name: "Salad",
         grocerys: [
-            { name: "Quinoa salad", amount: "1 bowl" },
-            { name: "Chickpeas", amount: "100g" },
-            { name: "Cucumber", amount: "50g" },
+            { name: "Quinoa salad", amount: "1 bowl", groceryId: 13 },
+            { name: "Chickpeas", amount: "100g", groceryId: 14 },
+            { name: "Cucumber", amount: "50g", groceryId: 15 },
         ],
     },
     {
         id: 6,
         name: "Beef noodles",
         grocerys: [
-            { name: "Beef stir-fry", amount: "200g" },
-            { name: "Bell peppers", amount: "100g" },
-            { name: "Noodles", amount: "150g" },
+            { name: "Beef stir-fry", amount: "200g", groceryId: 16 },
+            { name: "Bell peppers", amount: "100g", groceryId: 17 },
+            { name: "Noodles", amount: "150g", groceryId: 18 },
         ],
     },
 ]
@@ -105,6 +105,7 @@ import { useEffect, useState } from "react"
 import ProgressBar from "../util/ProgressBar"
 import { Checkbox } from "@mui/material"
 import { percentageOfTotal } from "@/utils/procentageCalculator"
+import GrocerysForNextMealLoader from "../skeletonLoaders/grocerysForNextMealLoader"
 
 type Grocerys = {
     id: number
@@ -112,7 +113,13 @@ type Grocerys = {
     grocerys: GroceryItem[] | null
 }
 
-const GrocerysForNextMeal = () => {
+type grocerysForNextMealProp = {
+    grocerysProp?: Grocerys[] | null
+}
+
+const GrocerysForNextMeal: React.FC<grocerysForNextMealProp> = ({
+    grocerysProp,
+}) => {
     const [grocerys, setGrocerys] = useState<Grocerys[] | null>(null)
     const [choseGrocerys, setChoseGrocerys] = useState<string>("nextMeal")
     const [loading, setLoading] = useState(true)
@@ -123,6 +130,12 @@ const GrocerysForNextMeal = () => {
     //console.log(choseGrocerys)
 
     useEffect(() => {
+        if (grocerysProp) {
+            setGrocerys(grocerysProp)
+            setLoading(false)
+            return
+        }
+
         if (!choseGrocerys) {
             setLoading(false)
             return
@@ -131,12 +144,14 @@ const GrocerysForNextMeal = () => {
             setGrocerys(nextMeal)
         } else if (choseGrocerys === "todaysMeals") {
             setGrocerys(todaysMeals)
-        } else {
+        } else if (choseGrocerys === "weeksMeals") {
             setGrocerys(weeksMeals)
+        } else {
+            setGrocerys([]) // Ako slučajno dođe nevažeći unos
         }
-        //setChecked items kada dobijes data od backa
+
         setLoading(false)
-    }, [choseGrocerys])
+    }, [choseGrocerys, grocerysProp])
 
     const handleCheckboxChange = (groceryId: number, ingName: string) => {
         setCheckedItems((prev) => ({
@@ -156,15 +171,13 @@ const GrocerysForNextMeal = () => {
 
     if (loading) {
         return (
-            <div className="bg-[#ffffff] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
+            <GrocerysForNextMealLoader/>
         )
     }
 
     if (!grocerys || grocerys.length === 0) {
         return (
-            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
                 <p>No grocerys to show at this moment.</p>{" "}
                 {/* UI for no activities */}
             </div>
@@ -172,7 +185,7 @@ const GrocerysForNextMeal = () => {
     }
 
     return (
-        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex cursor-pointer flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
+        <div className="shadow-Combined font-Poppins flex cursor-pointer flex-col gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
             <div className="flex flex-col md:flex-row md:justify-between">
                 <div>
                     <h3 className="text-DarkGreen text-xl font-medium">
@@ -193,9 +206,13 @@ const GrocerysForNextMeal = () => {
                     </div>
                     <div className="flex pt-2 sm:pt-0">
                         <select
-                            onChange={(e) => setChoseGrocerys(e.target.value)}
+                            onChange={(e) => {
+                                setChoseGrocerys(e.target.value)
+                                setCheckedItems({})
+                                setGrocerys(null)
+                            }}
                             value={choseGrocerys}
-                            className="w-30 cursor-pointer rounded-md bg-transparent py-2 text-sm font-medium text-[#757575] focus:outline-none sm:px-4"
+                            className="w-fit cursor-pointer rounded-md bg-transparent py-2 text-sm font-medium text-[#757575] focus:outline-none sm:px-4"
                         >
                             <option value="nextMeal">Next Meal</option>
                             <option value="todaysMeals">
@@ -208,7 +225,7 @@ const GrocerysForNextMeal = () => {
                     </div>
                 </div>
             </div>
-            <div className="custom-scrollbar  flex flex-col overflow-x-auto">
+            <div className="custom-scrollbar flex flex-col overflow-x-auto">
                 <div className="flex flex-col gap-2">
                     <div className="grid w-full grid-cols-6 pb-1 text-sm text-[#A0AEC0]">
                         <p className="col-span-4 min-w-[300px] border-b-1 border-[#E2E8F0] pb-2 font-medium">

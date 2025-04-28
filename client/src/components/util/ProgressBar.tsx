@@ -17,7 +17,10 @@ const ProgressBar:React.FC<ProgressBarProps> =({ value, maxValue =100}) =>{
   useEffect(()=>{
     if(value){
       setValueDefault(value)
+      return
     }
+    const safeValue = typeof value === "number" && !isNaN(value) ? value : 0
+    setValueDefault(safeValue)
   },[value])
   
 

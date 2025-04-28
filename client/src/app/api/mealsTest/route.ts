@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 export interface GroceryItem {
     name: string
     amount: string
+    groceryId: number
 }
 
 export interface Meal {
@@ -16,22 +17,44 @@ export interface Meal {
     carbohydrates: number
     grocerys: GroceryItem[]
     image: string | null
+    authorUserId: number | string | null
+    preparationVideoUrl?: string | null
+    detailePreparation?: PreperationType[] | null | undefined
 }
 
-interface Exercise {
+export interface PreperationType {
+    stepTitle?: string
+    instructions?: string[]
+}
+
+export interface Exercise {
+    id: number | string
     name: string
     sets: number
     reps: number | string
+    pause?: string | number
+    description: string
+    imageHero?: string | null
+
+    musslceGroupTargetImage?: null | string
+    movmentImage?: null | string
+    videoLink?: null | string
+    musscleGroupTarget?: {
+        name: string
+        description: string
+    }[]
 }
 
 export interface Training {
     id: number
     name: string
     caloriesBurned: number
-    duration: string
+    duration: string | number
     exercises: Exercise[]
     image: string | null
     description: string
+    authorUserId: number | string | null
+    longDescription?: string
 }
 
 interface User {
@@ -46,6 +69,11 @@ export enum MealType {
     Dinner = "dinner",
 }
 
+export interface WaterConsumption {
+    planedWaterConsumption: number
+    currentWatterConsumption: number
+}
+
 export interface DailyPlan {
     personId: number
     name: string
@@ -54,6 +82,8 @@ export interface DailyPlan {
         mealType: MealType
         time: string
     }[]
+    waterConsumption?: WaterConsumption | null
+
     trainingPlan:
         | {
               training: Training
@@ -65,6 +95,11 @@ export interface DailyPlan {
 type DailyPlansResponse = DailyPlan[]
 
 export async function GET(): Promise<NextResponse> {
+    const waterConsumption: WaterConsumption = {
+        planedWaterConsumption: 3000,
+        currentWatterConsumption: 2000,
+    }
+
     const TodaysMeals: Meal[] = [
         {
             id: 1,
@@ -75,16 +110,18 @@ export async function GET(): Promise<NextResponse> {
             proteins: 40,
             fats: 10,
             carbohydrates: 30,
+            authorUserId: 1,
             grocerys: [
-                { name: "chicken", amount: "300gr" },
-                { name: "lettuce", amount: "100gr" },
-                { name: "tomatoes", amount: "50gr" },
+                { name: "chicken", amount: "300gr", groceryId: 1 },
+                { name: "lettuce", amount: "100gr", groceryId: 2 },
+                { name: "tomatoes", amount: "50gr", groceryId: 3 },
             ],
             image: null,
         },
         {
             id: 2,
             name: "Spaghetti Carbonara",
+            authorUserId: 1,
             description:
                 "Classic Italian pasta with creamy sauce, bacon, and parmesan cheese.",
             calories: 700,
@@ -92,14 +129,15 @@ export async function GET(): Promise<NextResponse> {
             fats: 25,
             carbohydrates: 80,
             grocerys: [
-                { name: "spaghetti", amount: "200gr" },
-                { name: "bacon", amount: "100gr" },
-                { name: "parmesan", amount: "50gr" },
+                { name: "spaghetti", amount: "200gr", groceryId: 4 },
+                { name: "bacon", amount: "100gr", groceryId: 5 },
+                { name: "parmesan", amount: "50gr", groceryId: 6 },
             ],
             image: null,
         },
         {
             id: 3,
+            authorUserId: 4,
             name: "Margherita Pizza",
             description:
                 "Tomato sauce, fresh mozzarella, and basil on a thin crust.",
@@ -108,9 +146,9 @@ export async function GET(): Promise<NextResponse> {
             fats: 40,
             carbohydrates: 90,
             grocerys: [
-                { name: "pizza dough", amount: "250gr" },
-                { name: "mozzarella", amount: "150gr" },
-                { name: "tomato sauce", amount: "100gr" },
+                { name: "pizza dough", amount: "250gr", groceryId: 7 },
+                { name: "mozzarella", amount: "150gr", groceryId: 8 },
+                { name: "tomato sauce", amount: "100gr", groceryId: 9 },
             ],
             image: null,
         },
@@ -125,12 +163,45 @@ export async function GET(): Promise<NextResponse> {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
             duration: "60",
             exercises: [
-                { name: "Squats", sets: 4, reps: 12 },
-                { name: "Bench Press", sets: 3, reps: 10 },
-                { name: "Deadlifts", sets: 3, reps: 8 },
-                { name: "Pull-ups", sets: 3, reps: 10 },
+                {
+                    name: "Squats",
+                    sets: 4,
+                    reps: 12,
+                    id: 1,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Bench Press",
+                    sets: 3,
+                    reps: 10,
+                    id: 2,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Deadlifts",
+                    sets: 3,
+                    reps: 8,
+                    id: 3,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Pull-ups",
+                    sets: 3,
+                    reps: 10,
+                    id: 4,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
             ],
             image: null,
+            authorUserId: 1,
         },
         {
             id: 2,
@@ -140,11 +211,36 @@ export async function GET(): Promise<NextResponse> {
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
             exercises: [
-                { name: "Running", sets: 1, reps: "30 minutes" },
-                { name: "Jump Rope", sets: 3, reps: "5 minutes" },
-                { name: "Cycling", sets: 1, reps: "15 minutes" },
+                {
+                    name: "Running",
+                    sets: 1,
+                    reps: "30 minutes",
+                    id: 5,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Jump Rope",
+                    sets: 3,
+                    reps: "5 minutes",
+                    id: 6,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
+                {
+                    name: "Cycling",
+                    sets: 1,
+                    reps: "15 minutes",
+                    id: 7,
+                    description:
+                        " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eleifend ante ac tortor hendrerit sollicitudin. Nullam sed nulla odio. Sed ultricies quis odio ut dignissim...",
+                    pause: 60,
+                },
             ],
             image: null,
+            authorUserId: 1,
         },
     ]
 
@@ -178,11 +274,11 @@ export async function GET(): Promise<NextResponse> {
             ? [
                   {
                       training: TodaysTraining[0],
-                      time: "2025-04-02T17:00:00Z",
+                      time: "2025-05-02T17:00:00Z",
                   },
                   {
                       training: TodaysTraining[1],
-                      time: "2025-04-02T16:00:00Z",
+                      time: "2025-04-17T16:00:00Z",
                   },
               ]
             : []
@@ -192,6 +288,8 @@ export async function GET(): Promise<NextResponse> {
             name: user.name,
             mealPlan,
             trainingPlan,
+            waterConsumption,
+            date: "2025-04-17",
         }
     })
 

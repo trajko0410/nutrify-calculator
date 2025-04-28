@@ -20,6 +20,7 @@
   --shadow-Dark: 2px 2px 20px 0px #2B33434D;
   --shadow-Light: -6px -6px 20px 0px #FAF9F6;
   --shadow-Combined: var(--shadow-Dark), var(--shadow-Light);
+  --shadow-DarkBottom: 0px 20px 20px 0px #2B33434D;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,4 +50,81 @@ body {
 .custom-scrollbar::-webkit-scrollbar-track {
   background-color: #D9D9D9; 
   border-radius: 10px;
+}
+
+@keyframes modalFromBottom {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes modalToBottom {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+.animate-modal-from-bottom {
+    animation: modalFromBottom 0.5s ease-out forwards;
+}
+
+.animate-modal-to-bottom {
+    animation: modalToBottom 0.5s ease-in forwards;
+}
+
+.scrollbar-thin-mobile {
+  scrollbar-width: thin;              /* Firefox */
+  scrollbar-color: #c1c1c1 transparent;
+}
+
+.scrollbar-thin-mobile::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.scrollbar-thin-mobile::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin-mobile::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.scrollbar-thin-mobile::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: #e2e8f0; /* Tailwind slate-200 */
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
 }

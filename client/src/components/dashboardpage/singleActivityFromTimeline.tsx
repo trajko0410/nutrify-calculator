@@ -9,6 +9,7 @@ import Link from "next/link"
 
 type SingleActivityFromTimelineProps = {
     activity: ActivityType
+    
 }
 
 const SingleActivityFromTimeline: React.FC<SingleActivityFromTimelineProps> = ({
@@ -166,10 +167,10 @@ const SingleActivityFromTimeline: React.FC<SingleActivityFromTimelineProps> = ({
                           })
                         : "No time available"}
                 </p>
-                <p className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
-                    <Link href={activity.type === "meal" ? `/singlefood/${activity?.meal?.id}` : `/singlefood/${activity?.training?.id}`}>Read More</Link>
+                <button className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
+                    <Link href={activity.type === "meal" ? `/meal/${activity?.meal?.id}` : `/training/${activity?.training?.id}`}>Read More</Link>
                     <ArrowDown color="black" size="12" className="rotate-270" />
-                </p>
+                </button>
             </div>
         </div>
     )

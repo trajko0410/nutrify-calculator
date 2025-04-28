@@ -1,11 +1,11 @@
 "use client"
 
-
 import React, { useState, useEffect } from "react"
 import ParametarsIcon from "../util/ParametarsIcon"
 
 import { Meal, MealType, Training } from "@/app/api/mealsTest/route"
 import SingleActivityFromTimeline from "./singleActivityFromTimeline"
+import TodayTimelineLoader from "../skeletonLoaders/todayTimelineLoader"
 
 type TodaysTimelineProps = {
     todaysActivityProps: ActivityType[]
@@ -14,6 +14,7 @@ type TodaysTimelineProps = {
     totalProteins?: number
     totalFats?: number
     totalCarbohydrates?: number
+    userId?: string | null
 }
 
 export type ActivityType =
@@ -26,11 +27,14 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
     totalCalories = 0,
     totalFats = 0,
     totalProteins = 0,
+    //userId = null,
 }) => {
     const [sortedTodaysActivities, setSortedTodaysActivities] = useState<
         ActivityType[]
     >([])
     const [loading, setLoading] = useState(true)
+
+    //console.log(sortedTodaysActivities, "sortedTodaysActivities")
 
     useEffect(() => {
         if (!todaysActivityProps) {
@@ -45,25 +49,25 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
     //console.log(sortedTodaysActivities, "sorted")
 
     if (loading) {
-        return (
-            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
-                <p>Loading...</p> {/* Loading UI */}
-            </div>
-        )
+        return <TodayTimelineLoader />
     }
 
     if (!sortedTodaysActivities || sortedTodaysActivities.length === 0) {
         return (
-            <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl px-[20px] py-[17px] text-black">
+            <div className="shadow-Combined font-Poppins flex min-h-[300px] flex-col justify-between gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
                 <p>No upcoming Activities.</p> {/* UI for no activities */}
             </div>
         )
     }
 
     return (
-        <div className="bg-[#FFFFFF] shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-8 rounded-xl px-[20px] py-[17px] text-black">
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-                <div className="flex w-full flex-col gap-6 md:flex-row md:justify-between">
+        <div className="shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-8 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
+            <div
+                className={`flex flex-col justify-between gap-4 md:flex-row md:items-center`}
+            >
+                <div
+                    className={`flex w-full flex-col gap-6 sm:justify-between md:flex-row`}
+                >
                     <div>
                         <h3 className="text-DarkGreen text-xl font-medium">
                             Today Timeline
@@ -123,8 +127,9 @@ const TodaysTimeline: React.FC<TodaysTimelineProps> = ({
                     </div>
                 </div>
             </div>
-            <div className="custom-scrollbar scroll-smooth flex snap-x flex-row gap-x-6 overflow-x-scroll whitespace-nowrap">
+            <div className="custom-scrollbar flex snap-x flex-row gap-x-6 overflow-x-scroll scroll-smooth whitespace-nowrap">
                 {sortedTodaysActivities.map((activity, index) => (
+                    //console.log(activity, "activity"),
                     <SingleActivityFromTimeline
                         key={index}
                         activity={activity}

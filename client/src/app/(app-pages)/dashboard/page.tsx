@@ -2,7 +2,8 @@ import { cookies } from "next/headers"
 import TodaysFoodInteake from "@/components/dashboardpage/todaysFoodIntakes"
 import Header from "@/components/util/AppHeader"
 import SideMenu from "@/components/util/SideMenu"
-import DashboardContainer from "@/components/util/DashboardContainer"
+import React from "react"
+import AppContainer from "../../../components/util/AppContainer"
 import YourNextMeal from "@/components/dashboardpage/yourNextMeal"
 import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
@@ -94,33 +95,39 @@ export default async function DashboardPage() {
         <div className="h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
-            <DashboardContainer>
-                <div className="flex flex-col gap-6">
-                    <TodaysFoodInteake
-                        userName={user.first_name}
-                        totalCalories={totalCalories}
-                        totalProteins={totalProteins}
-                        totalCarbohydrates={totalCarbohydrates}
-                        totalFats={totalFats}
-                    />
-                    <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
-                        <div className="h-full w-full lg:col-span-3">
-                            <YourNextMeal nextMealProp={nextMeal} />
+            <div className="bg-[#FAF9F6] pt-[100px] pb-10">
+                <AppContainer>
+                    <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-2 text-black">
+                            <h2 className="text-DarkGreen font-Poppins text-2xl font-medium">
+                                Hi, username
+                            </h2>
+                            <p className="text-lg font-normal text-[#757575]">
+                                Lorem ipsum dolor sit amet
+                            </p>
                         </div>
-                        <div className="h-full w-full lg:col-span-2">
-                            <YourNextTraining nextTrainingProp={nextTraining} />
+                        <TodaysFoodInteake
+                            totalCalories={totalCalories}
+                            totalProteins={totalProteins}
+                            totalCarbohydrates={totalCarbohydrates}
+                            totalFats={totalFats}
+                        />
+                        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-5 lg:grid-rows-1">
+                            <div className="h-full w-full lg:col-span-3">
+                                <YourNextMeal
+                                    nextMealProp={nextMeal}
+                                    isNextMealComponent={true}
+                                />
+                            </div>
+                            <div className="h-full w-full lg:col-span-2">
+                                <YourNextTraining
+                                    nextTrainingProp={nextTraining}
+                                />
+                            </div>
                         </div>
                     </div>
-                    <TodaysTimeline
-                        todaysActivityProps={sortedActivities}
-                        totalCalories={totalCalories}
-                        totalProteins={totalProteins}
-                        totalCarbohydrates={totalCarbohydrates}
-                        totalFats={totalFats}
-                    />
-                    <GrocerysForNextMeal />
-                </div>
-            </DashboardContainer>
+                </AppContainer>
+            </div>
         </div>
     )
 }

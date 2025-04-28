@@ -9,7 +9,6 @@ const Header: React.FC = () => {
             <div className="visible flex h-11 w-11 items-center justify-center md:invisible">
                 <Image src="/Vector.svg" alt="logo" width={32} height={32} />
             </div>
-
             <ProfileIcon />
         </div>
     )

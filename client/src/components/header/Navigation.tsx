@@ -42,6 +42,9 @@ export const Navigation: React.FC = () => {
         if (token) fetchUser()
     }, [])
 
+
+   
+
     const handleSignOut = () => {
         Cookies.remove("jwtNutrifyS")
 
