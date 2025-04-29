@@ -1,16 +1,17 @@
 "use server"
 
+import { cookies } from "next/headers"
 import SideMenu from "@/components/util/SideMenu"
 import Header from "@/components/util/AppHeader"
 
 import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs/server"
 import AppContainer from "@/components/util/AppContainer"
 import YourNextMeal from "@/components/dashboardpage/yourNextMeal"
 import { MealType } from "@/app/api/mealsTest/route"
 import HowToMakeMeal from "@/components/singleMeal/HowToMakeMeal"
 import NecessaryGroceries from "@/components/singleMeal/NecessaryGroceries"
 import ContentOfMeal from "@/components/singleMeal/ContentOfMeal"
+import { authenticateUser } from "../../dashboard/page"
 
 const fetchedMeal = [
     {
@@ -56,13 +57,19 @@ const fetchedMeal = [
 ]
 
 export default async function SingleMeal() {
-    const { userId } = await auth()
+     const cookieStore = await cookies()
+        const token = cookieStore.get("jwtNutrifyS")?.value
+    
+        if (!token) {
+            redirect("/login")
+        }
+    
+        const user = await authenticateUser(token)
+        console.log("User from dashboard:", user)
+        if (!user) {
+            redirect("/login")
+        }
 
-    if (!userId) {
-        redirect("/login")
-    }
-
-    console.log(userId, "userId page")
 
     return (
         <div className="h-screen w-full bg-[#FAF9F6]">

@@ -3,17 +3,25 @@
 import SideMenu from "@/components/util/SideMenu"
 import Header from "@/components/util/AppHeader"
 
-import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs/server"
 import AppContainer from "@/components/util/AppContainer"
 import NutritionistListClientWrapper from "@/components/nutritionlistpage/nutritionistListClientWraper"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { authenticateUser } from "../dashboard/page"
 
 const NutritionistListPage = async () => {
-    const { userId } = await auth()
+          const cookieStore = await cookies()
+            const token = cookieStore.get("jwtNutrifyS")?.value
+        
+            if (!token) {
+                redirect("/login")
+            }
+        
+            const user = await authenticateUser(token)
+            if (!user) {
+                redirect("/login")
+            }
 
-    if (!userId) {
-        redirect("/login")
-    }
 
     return (
         <div className="min-h-screen w-full bg-[#FAF9F6]">

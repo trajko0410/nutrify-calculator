@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar"
+import { DateCalendar } from "@mui/x-date-pickers"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { CaretRight } from "@phosphor-icons/react"
@@ -118,7 +118,11 @@ const DatePicker = () => {
                             },
                         }}
                         value={selectedDate}
-                        onChange={(newValue) => setSelectedDate(newValue)}
+                        onChange={(newValue) => {
+                            if (newValue) {
+                                setSelectedDate(newValue as Date)
+                            }
+                        }}
                     />
                 </div>
 

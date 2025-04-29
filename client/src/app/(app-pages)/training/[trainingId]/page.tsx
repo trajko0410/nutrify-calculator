@@ -2,12 +2,13 @@ import SideMenu from "@/components/util/SideMenu"
 import Header from "@/components/util/AppHeader"
 
 import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs/server"
 //import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import AppContainer from "@/components/util/AppContainer"
 //import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
 import { TrainingCtxProvider } from "@/components/singleTraining/trainingProvider"
 import TrainingClientWrapper from "@/components/singleTraining/trainingClientWrapper"
+import { cookies } from "next/headers"
+import { authenticateUser } from "../../dashboard/page"
 
 const fetchedTraining = [
     {
@@ -55,11 +56,20 @@ const fetchedTraining = [
 ]
 
 export default async function SingleTraining() {
-    const { userId } = await auth()
+          const cookieStore = await cookies()
+                    const token = cookieStore.get("jwtNutrifyS")?.value
+                
+                    if (!token) {
+                        redirect("/login")
+                    }
+                
+                    const user = await authenticateUser(token)
+                    if (!user) {
+                        redirect("/login")
+                    }
 
-    if (!userId) {
-        redirect("/login")
-    }
+      
+  
 
     return (
         <div className="h-screen w-full bg-[#FAF9F6]">
@@ -68,7 +78,7 @@ export default async function SingleTraining() {
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
                 <AppContainer>
                     <TrainingCtxProvider>
-                    <TrainingClientWrapper initialTraining={fetchedTraining[0]} userId={userId}/>
+                    <TrainingClientWrapper initialTraining={fetchedTraining[0]} userId={user.id}/>
                     </TrainingCtxProvider>
                 </AppContainer>
             </div>

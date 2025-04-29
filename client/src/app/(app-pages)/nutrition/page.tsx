@@ -3,23 +3,31 @@
 import SideMenu from "@/components/util/SideMenu"
 import Header from "@/components/util/AppHeader"
 
-import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs/server"
 import DashboardContainer from "@/components/util/AppContainer"
 import { DailyPlan } from "@/app/api/mealsTest/route"
 
 import { NutritionPageCtxProvider } from "@/components/nutritionpage/nutritionPageProvider"
 import NutritionPageClientWrapper from "@/components/nutritionpage/nutritionPageClientWrapper"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { authenticateUser } from "../dashboard/page"
 
 
 
 
 export default async function NutritionPage() {
-    const { userId } = await auth()
+        const cookieStore = await cookies()
+        const token = cookieStore.get("jwtNutrifyS")?.value
+    
+        if (!token) {
+            redirect("/login")
+        }
+    
+        const user = await authenticateUser(token)
+        if (!user) {
+            redirect("/login")
+        }
 
-    if (!userId) {
-        redirect("/login")
-    }
 
     const res = await fetch("http://localhost:3000/api/mealsTest")
     const personActivites: DailyPlan[] = await res.json()
@@ -43,9 +51,7 @@ export default async function NutritionPage() {
                         Nutrition
                     </h2>
                     <NutritionPageCtxProvider> 
-                        <NutritionPageClientWrapper initialDailyPlanForId={personActivitiesForId ? [personActivitiesForId] : undefined} userId={userId
-                
-                        } />
+                        <NutritionPageClientWrapper initialDailyPlanForId={personActivitiesForId ? [personActivitiesForId] : undefined}  />
             
                     </NutritionPageCtxProvider>
                 </DashboardContainer>

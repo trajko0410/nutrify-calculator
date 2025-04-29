@@ -4,11 +4,12 @@ import SideMenu from "@/components/util/SideMenu"
 import Header from "@/components/util/AppHeader"
 
 import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs/server"
 import DashboardContainer from "@/components/util/AppContainer"
 
 import DiaryClientWrapper from "@/components/diaryPage/DiaryClientWrapper"
 import { DiaryPageCtxProvider } from "@/components/diaryPage/diaryPageProvider"
+import { cookies } from "next/headers"
+import { authenticateUser } from "../dashboard/page"
 
 export interface DiaryEntry {
     id: string
@@ -68,13 +69,21 @@ const diaryEntrie = [
 ]
 
 export default async function DiaryPage() {
-    const { userId } = await auth()
+          const cookieStore = await cookies()
+                        const token = cookieStore.get("jwtNutrifyS")?.value
+                    
+                        if (!token) {
+                            redirect("/login")
+                        }
+                    
+                        const user = await authenticateUser(token)
+                        if (!user) {
+                            redirect("/login")
+                        }
+    
 
     //fetch diary
 
-    if (!userId) {
-        redirect("/login")
-    }
 
     return (
         <div className="h-screen w-full bg-[#FAF9F6]">

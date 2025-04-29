@@ -2,10 +2,11 @@ import Header from "@/components/util/AppHeader"
 import HeroExercise from "@/components/exerciseDetailed/heroExercise"
 import AppContainer from "@/components/util/AppContainer"
 import SideMenu from "@/components/util/SideMenu"
-import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import ParametarsExercise from "@/components/exerciseDetailed/parametarsExercise"
 import ExerciseDescription from "@/components/exerciseDetailed/exerciseDescription"
+import { cookies } from "next/headers"
+import { authenticateUser } from "@/app/(app-pages)/dashboard/page"
 
 /*interface Params {
     trainingId: string | number
@@ -41,11 +42,17 @@ const exercise = {
 const SingleExercisePage = async (/*{ params }: { params: Params }*/) => {
     //const { trainingId, exerciseId } = await params // ako ne stavim await dobijamo error
 
-    const { userId } = await auth()
-
-    if (!userId) {
-        redirect("/login")
-    }
+              const cookieStore = await cookies()
+                        const token = cookieStore.get("jwtNutrifyS")?.value
+                    
+                        if (!token) {
+                            redirect("/login")
+                        }
+                    
+                        const user = await authenticateUser(token)
+                        if (!user) {
+                            redirect("/login")
+                        }
 
     //const exercise = await getSingleExercise(trainingId, exerciseId)
     //console.log(trainingId, exerciseId, "exerciseIds")

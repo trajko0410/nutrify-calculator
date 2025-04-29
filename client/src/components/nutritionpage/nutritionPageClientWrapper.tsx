@@ -12,17 +12,16 @@ import GrocerysForNextMeal from "../dashboardpage/grocerysForNextMeal";
 
 interface ActivitiesForIdClientWrapperProps {
     initialDailyPlanForId: DailyPlan[] | undefined
-    userId: string
+    userId?: string
 }
 
 export default function NutritionPageClientWrapper({
-    initialDailyPlanForId, userId
+    initialDailyPlanForId
 }: ActivitiesForIdClientWrapperProps) {
       const { setMeals, setWaterConsumption, selectedDate, setUserSubscribed, meals} = useNutritionPageCtx()
 
 
 //fetch user to see if userId is subscribed if or not
-console.log(userId, "userId")
 interface GroceryForMeal {
     id:  number;
     name: string;
@@ -85,7 +84,7 @@ const [grocerysForMeal, setGrocerysForMeal] = useState<GroceryForMeal[]>([]);
                         </div>
                         <div className="flex w-full flex-col gap-6 lg:w-3/12 lg:pr-[24px]">
                             <DatePicker />
-                            <div className="shadow-Combined font-Poppins text-p-[10px] hidden min-h-[260px] w-full min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#FFFFFF] text-[#2D3748] lg:flex lg:h-fit">
+                            <div className="shadow-Combined font-Poppins text-p-[10px] hidden min-h-[260px] w-full  items-center justify-center gap-2 rounded-xl bg-[#FFFFFF] text-[#2D3748] lg:flex lg:h-fit">
                                 Reklama
                             </div>
                         </div>

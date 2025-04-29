@@ -6,11 +6,12 @@ import Header from "../../../../../components/util/AppHeader"
 
 
 import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs/server"
 import AppContainer from "@/components/util/AppContainer"
 import AboutNutritionist from "@/components/nutritionistpage/aboutNutritionist"
 import ContactInformationOrEducation from "@/components/nutritionistpage/contactInformationOrEducation"
 import Testimonial from "@/components/nutritionistpage/testimonial"
+import { cookies } from "next/headers"
+import { authenticateUser } from "@/app/(app-pages)/dashboard/page"
 
 const singleNutritionist = {
     id: 4,
@@ -33,11 +34,18 @@ const singleNutritionist = {
 
 
 const NutritionistPage = async () => {
-    const { userId } = await auth()
-
-    if (!userId) {
-        redirect("/login")
-    }
+      const cookieStore = await cookies()
+                const token = cookieStore.get("jwtNutrifyS")?.value
+            
+                if (!token) {
+                    redirect("/login")
+                }
+            
+                const user = await authenticateUser(token)
+                if (!user) {
+                    redirect("/login")
+                }
+  
     //get params and await nutritionis info
 
     return (

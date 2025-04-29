@@ -8,6 +8,8 @@ import YourNextMeal from "@/components/dashboardpage/yourNextMeal"
 import YourNextTraining from "@/components/dashboardpage/yourNextTraining"
 import TodaysTimeline from "@/components/dashboardpage/todaysTimeline"
 import GrocerysForNextMeal from "@/components/dashboardpage/grocerysForNextMeal"
+
+
 import {
     mealsSortedByTime,
     trainingSortedByTime,
@@ -16,7 +18,7 @@ import { DailyPlan } from "@/app/api/mealsTest/route"
 // import {Meal, MealType, Training} from "@/app/api/mealsTest/route"
 import { redirect } from "next/navigation"
 
-const authenticateUser = async (token: string) => {
+export const authenticateUser = async (token: string) => {
     try {
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_STRAPI_URL}/users/me?populate=*`,
@@ -41,6 +43,7 @@ export default async function DashboardPage() {
     if (!token) {
         redirect("/login")
     }
+
     const user = await authenticateUser(token)
     console.log("User from dashboard:", user)
     if (!user) {
@@ -100,7 +103,7 @@ export default async function DashboardPage() {
                     <div className="flex flex-col gap-6">
                         <div className="flex flex-col gap-2 text-black">
                             <h2 className="text-DarkGreen font-Poppins text-2xl font-medium">
-                                Hi, username
+                                Hi, {user.first_name ? user.first_name : "user"}
                             </h2>
                             <p className="text-lg font-normal text-[#757575]">
                                 Lorem ipsum dolor sit amet
@@ -124,7 +127,16 @@ export default async function DashboardPage() {
                                     nextTrainingProp={nextTraining}
                                 />
                             </div>
+                     
                         </div>
+                        <TodaysTimeline
+                            todaysActivityProps={sortedActivities}
+                            totalCalories={totalCalories}
+                            totalProteins={totalProteins}
+                            totalCarbohydrates={totalCarbohydrates}
+                            totalFats={totalFats}
+                        />
+                        <GrocerysForNextMeal />
                     </div>
                 </AppContainer>
             </div>
