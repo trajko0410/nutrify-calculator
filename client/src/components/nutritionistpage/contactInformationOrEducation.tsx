@@ -39,7 +39,7 @@ const ContactInformationOrEducation: React.FC<ContactInformationProps> = ({
         nutrtionistLanguages,
     ])
 
-    if (!loading) {
+    if (loading) {
         return <NutrtionistEducationOrContactLoader showType={showType} />
     }
     return (
