@@ -49,6 +49,11 @@
         "videos",
         "audios"
       ]
+    },
+    "Recipe_categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recipe-category.recipe-category"
     }
   }
 }

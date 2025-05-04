@@ -72,23 +72,13 @@ const ProfileIcon: React.FC = () => {
                     aria-expanded={open ? "true" : undefined}
                     onClick={handleClick}
                 >
-                    {user.profile_picture ? (
-                        <Image
-                            src={user.profile_picture}
-                            alt="profile"
-                            width={44}
-                            height={44}
-                            className="rounded-full"
-                        />
-                    ) : (
-                        <div className="bg-BlackGreen flex h-11 w-11 items-center justify-center rounded-full">
-                            <span className="font-Poppins text-white">
-                                {user.first_name.charAt(0) +
-                                    "" +
-                                    user.last_name.charAt(0)}
-                            </span>
-                        </div>
-                    )}
+                    <Image
+                        src={user.profile_picture || "/avatarImage.jpeg"}
+                        alt="profile"
+                        width={44}
+                        height={44}
+                        className="rounded-full"
+                    />
                 </button>
                 <Menu
                     open={open}

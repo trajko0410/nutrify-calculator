@@ -8,6 +8,10 @@ export type Meal = {
     name: string,
     ingredients: Ingredient[],
     kcal: number,
+    protein: number,
+    fat: number,
+    carbohydrates: number,
+    glycemicLoad: number,
 }
 
 export type Ingredient = {

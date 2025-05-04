@@ -17,7 +17,7 @@ const RegisterModal: React.FC = () => {
     const [disableSignUp, setDisableSignUp] = useState(false)
 
     useEffect(() => {
-        if (Cookies.get("jwt")) {
+        if (Cookies.get("jwtNutrifyS")) {
             router.push("/dashboard")
         }
     }, [router])
@@ -42,20 +42,29 @@ const RegisterModal: React.FC = () => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        username: email.trim(), // Strapi uses 'username' as identifier
+                        username: email.trim(),
                         email,
                         password,
-                        firstName,
-                        lastName,
-                        dateOfBirth: date_of_birth,
+                        first_name: firstName,
+                        last_name: lastName,
                     }),
                 },
             )
 
+            console.log("Payload being sent:", {
+                username: email.trim(),
+                email,
+                password,
+                first_name: firstName,
+                last_name: lastName,
+            })
+
             const result = await response.json()
 
             if (!response.ok) {
-                throw new Error(result?.message || "Sign-up failed.")
+                const errorData = result
+                console.error("Error response from backend:", errorData)
+                throw new Error(JSON.stringify(errorData))
             }
 
             // If email verification is required by Strapi
@@ -66,7 +75,7 @@ const RegisterModal: React.FC = () => {
             }
 
             // If sign-up is successful, save JWT in cookie
-            Cookies.set("jwt", result?.jwt, { expires: 1, path: "/" })
+            Cookies.set("jwtNutrifyS", result?.jwt, { expires: 1, path: "/" })
 
             toast.success("Sign-up successful!")
             router.push("/dashboard") // Redirect after successful sign-up
