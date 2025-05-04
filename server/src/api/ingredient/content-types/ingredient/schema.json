@@ -129,21 +129,19 @@
     "Glycemic_index": {
       "type": "decimal"
     },
-    "Glycemic_load": {
-      "type": "decimal"
-    },
     "Atherogenic_index": {
       "type": "decimal"
     },
     "Ingredient_Image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }

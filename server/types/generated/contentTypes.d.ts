@@ -423,7 +423,6 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     Fat_total: Schema.Attribute.Decimal;
     Fat_unsaturated: Schema.Attribute.Decimal & Schema.Attribute.Private;
     Glycemic_index: Schema.Attribute.Decimal;
-    Glycemic_load: Schema.Attribute.Decimal;
     Ingredient_Image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -529,6 +528,35 @@ export interface ApiMedicalFoodRecipeMedicalFoodRecipe
   };
 }
 
+export interface ApiRecipeCategoryRecipeCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'recipe_categories';
+  info: {
+    displayName: 'Recipe-category';
+    pluralName: 'recipe-categories';
+    singularName: 'recipe-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recipe-category.recipe-category'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   collectionName: 'recipes';
   info: {
@@ -569,6 +597,10 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       }>;
     Preparation: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    Recipe_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recipe-category.recipe-category'
+    >;
     Short_description: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 300;
@@ -1094,6 +1126,7 @@ declare module '@strapi/strapi' {
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::medical-food-menu.medical-food-menu': ApiMedicalFoodMenuMedicalFoodMenu;
       'api::medical-food-recipe.medical-food-recipe': ApiMedicalFoodRecipeMedicalFoodRecipe;
+      'api::recipe-category.recipe-category': ApiRecipeCategoryRecipeCategory;
       'api::recipe.recipe': ApiRecipeRecipe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

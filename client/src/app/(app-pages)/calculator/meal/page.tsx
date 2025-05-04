@@ -1,6 +1,6 @@
 import CalculateMeal from "@/components/calculatemeal/CalculateMeal"
 import Header from "@/components/util/AppHeader"
-import DashboardContainer from "@/components/util/DashboardContainer"
+import AppContainer from "@/components/util/AppContainer"
 import SideMenu from "@/components/util/SideMenu"
 import React from "react"
 const HomePage: React.FC = () => {
@@ -8,9 +8,9 @@ const HomePage: React.FC = () => {
         <div className="h-screen w-screen bg-[#FAF9F6]">
             <SideMenu />
             <Header />
-            <DashboardContainer>
+            <AppContainer>
                 <CalculateMeal />
-            </DashboardContainer>
+            </AppContainer>
         </div>
     )
 }
