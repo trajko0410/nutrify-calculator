@@ -10,8 +10,7 @@ import { NutritionPageCtxProvider } from "@/components/nutritionpage/nutritionPa
 import NutritionPageClientWrapper from "@/components/nutritionpage/nutritionPageClientWrapper"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { authenticateUser } from "../dashboard/page"
-
+import { authenticateUser } from "@/utils/authenticateUser"
 
 
 

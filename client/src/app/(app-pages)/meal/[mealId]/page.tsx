@@ -11,7 +11,7 @@ import { MealType } from "@/app/api/mealsTest/route"
 import HowToMakeMeal from "@/components/singleMeal/HowToMakeMeal"
 import NecessaryGroceries from "@/components/singleMeal/NecessaryGroceries"
 import ContentOfMeal from "@/components/singleMeal/ContentOfMeal"
-import { authenticateUser } from "../../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const fetchedMeal = [
     {

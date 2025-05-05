@@ -46,32 +46,42 @@ const DiaryComment: React.FC<DiaryCommentProps> = ({ comment }) => {
     }
 
     return (
-        <div className="border-t p-2 text-sm text-gray-600">
-            <div className="mb-1 flex items-center gap-2">
-                {user?.userAvatar ? (
-                    <Image
-                        src={user.userAvatar}
-                        alt="avatar"
-                        height={40}
-                        width={40}
-                    ></Image>
-                ) : (
-                    <Image
-                        src={defaultAvatrar}
-                        alt="avatar"
-                        height={40}
-                        width={40}
-                    ></Image>
-                )}
+        <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-row gap-2">
+                    <div className="h-[26px] w-[26px] overflow-clip rounded-sm">
+                        {user?.userAvatar ? (
+                            <Image
+                                src={user.userAvatar}
+                                alt="avatar"
+                                height={26}
+                                width={26}
+                            ></Image>
+                        ) : (
+                            <Image
+                                src={defaultAvatrar}
+                                alt="avatar"
+                                height={26}
+                                width={26}
+                            ></Image>
+                        )}
+                    </div>
 
-                <span className="text-xs font-medium text-gray-700">
-                    {user?.userName}
-                </span>
+                    <span className="text-base font-medium text-[#2D3748]">
+                        {user?.userName}
+                    </span>
+                </div>
+                <p className="text-sm font-normal text-[#757575]">
+                    {new Date(comment.createdAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}
+                </p>
             </div>
-            {comment.content}
-            <div className="text-[10px] text-gray-400">
-                {new Date(comment.createdAt).toLocaleDateString()}
-            </div>
+            <p className="text-sm font-normal text-[#A0AEC0]">
+                {comment.content}
+            </p>
         </div>
     )
 }

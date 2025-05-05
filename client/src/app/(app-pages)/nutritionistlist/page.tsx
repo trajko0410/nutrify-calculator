@@ -7,7 +7,7 @@ import AppContainer from "@/components/util/AppContainer"
 import NutritionistListClientWrapper from "@/components/nutritionlistpage/nutritionistListClientWraper"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { authenticateUser } from "../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const NutritionistListPage = async () => {
           const cookieStore = await cookies()
