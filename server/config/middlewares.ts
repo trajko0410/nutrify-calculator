@@ -6,10 +6,10 @@ export default [
     name: 'strapi::cors',
     config: {
       enabled: true,
-      origin: ['http://localhost:3000'], // ✅ your frontend URL goes here
+      origin: [process.env.FRONTEND_URL || 'http://localhost:3000'],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization'],
-      credentials: true, // if you're using cookies or auth headers
+      credentials: true,
     },
   },
   'strapi::poweredBy',

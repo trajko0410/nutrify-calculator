@@ -15,7 +15,9 @@ export default ({ env }) => ({
   "users-permissions": {
     enabled: true,
     config: {
-      // Add custom configurations here if needed
+      register: {
+        allowedFields: ["first_name", "last_name"]
+      }
     },
   },
 });

@@ -33,8 +33,7 @@ const RegisterModal: React.FC = () => {
         }
 
         try {
-            // 1. Sign up request to Strapi's /auth/local/register endpoint
-            const response = await fetch(
+            const res = await fetch(
                 "http://localhost:1337/api/auth/local/register",
                 {
                     method: "POST",
@@ -51,34 +50,19 @@ const RegisterModal: React.FC = () => {
                 },
             )
 
-            console.log("Payload being sent:", {
-                username: email.trim(),
-                email,
-                password,
-                first_name: firstName,
-                last_name: lastName,
-            })
+            const data = await res.json()
 
-            const result = await response.json()
+            console.log("Response status:", res.status)
+            console.log("Parsed response:", data)
 
-            if (!response.ok) {
-                const errorData = result
-                console.error("Error response from backend:", errorData)
-                throw new Error(JSON.stringify(errorData))
+            if (res.ok && data.jwt && data.user) {
+                Cookies.set("jwtNutrifyS", data.jwt, { expires: 1 })
+
+                toast.success("Sign-up successful!")
+                router.push("/dashboard")
+            } else {
+                toast.error("Unexpected response from server.")
             }
-
-            // If email verification is required by Strapi
-            if (result?.user?.confirmed === false) {
-                setShowVerificationModal(true)
-                toast.info("Please verify your email.")
-                return
-            }
-
-            // If sign-up is successful, save JWT in cookie
-            Cookies.set("jwtNutrifyS", result?.jwt, { expires: 1, path: "/" })
-
-            toast.success("Sign-up successful!")
-            router.push("/dashboard") // Redirect after successful sign-up
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: unknown | any) {
             console.error("Error signing up:", error)
