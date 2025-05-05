@@ -46,7 +46,7 @@ export interface Exercise {
 }
 
 export interface Training {
-    id: number
+    id: number | string
     name: string
     caloriesBurned: number
     duration: string | number

@@ -7,9 +7,9 @@ import axios from "axios"
 
 const CreateIngredient: React.FC = () => {
     const [ingredient, setIngredient] = useState<Ingredient>({
-        name: "",
-        code: "",
-        amount: 100,
+        Name: "",
+        Code: "",
+        Amount: 100,
     })
     const [image, setImage] = useState<File | null>(null)
 
@@ -74,7 +74,7 @@ const CreateIngredient: React.FC = () => {
             formData.append("files", image)
             try {
                 const res = await axios.post(
-                    "http://localhost:1337/api/upload", // Strapi upload endpoint
+                     `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/upload`, // Strapi upload endpoint
                     formData,
                     {
                         headers: {
@@ -91,7 +91,7 @@ const CreateIngredient: React.FC = () => {
         const ingredientData = { ...ingredient, image: imageUrl }
 
         try {
-            await axios.post("http://localhost:1337/api/ingredients", {
+            await axios.post( `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/ingredients`, {
                 data: ingredientData,
             })
             alert("Ingredient created successfully")
@@ -113,13 +113,13 @@ const CreateIngredient: React.FC = () => {
                                 placeholder="Enter name"
                                 title="Name"
                                 type="text"
-                                value={ingredient.name ?? ""}
+                                value={ingredient.Name ?? ""}
                                 required
                                 customWidth="w-[300px]"
                                 onChange={(e) =>
                                     setIngredient({
                                         ...ingredient,
-                                        name: e.target.value,
+                                        Name: e.target.value,
                                     })
                                 }
                             />
@@ -127,13 +127,13 @@ const CreateIngredient: React.FC = () => {
                                 placeholder="Enter code"
                                 title="Code"
                                 type="text"
-                                value={ingredient.code ?? ""}
+                                value={ingredient.Code ?? ""}
                                 required
                                 customWidth="w-[300px]"
                                 onChange={(e) =>
                                     setIngredient({
                                         ...ingredient,
-                                        code: e.target.value,
+                                        Code: e.target.value,
                                     })
                                 }
                             />
