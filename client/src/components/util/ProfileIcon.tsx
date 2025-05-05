@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Gear, SignOut } from "@phosphor-icons/react"
 import Cookies from "js-cookie"
+import defaultImage from "../../../public/avatarImage.jpeg"
+import SkeletonBox from "./SkeletonLoading"
 
 const ProfileIcon: React.FC = () => {
     const [user, setUser] = useState<{
@@ -72,23 +74,30 @@ const ProfileIcon: React.FC = () => {
                     aria-expanded={open ? "true" : undefined}
                     onClick={handleClick}
                 >
-                    {user.profile_picture ? (
-                        <Image
-                            src={user.profile_picture}
-                            alt="profile"
-                            width={44}
-                            height={44}
-                            className="rounded-full"
-                        />
-                    ) : (
-                        <div className="bg-BlackGreen flex h-11 w-11 items-center justify-center rounded-full">
-                            <span className="font-Poppins text-white">
-                                {user.first_name.charAt(0) +
-                                    "" +
-                                    user.last_name.charAt(0)}
-                            </span>
-                        </div>
-                    )}
+                    {user?.profile_picture ? (
+    <Image
+        src={user.profile_picture}
+        alt="profile"
+        width={44}
+        height={44}
+        className="rounded-full"
+    />
+) : user?.first_name && user?.last_name ? (
+    <div className="bg-BlackGreen flex h-11 w-11 items-center justify-center rounded-full">
+        <span className="font-Poppins text-white">
+            {user.first_name.charAt(0) + user.last_name.charAt(0)}
+        </span>
+    </div>
+) : (
+    <Image
+        src={defaultImage}
+        alt="default profile"
+        width={44}
+        height={44}
+        className="rounded-full"
+    />
+)}
+
                 </button>
                 <Menu
                     open={open}
@@ -138,7 +147,7 @@ const ProfileIcon: React.FC = () => {
             </div>
         )
     } else {
-        return <div>Loading...</div>
+        return <div className="flex w-[44px] h-[44px] rounded-full overflow-clip"><SkeletonBox className="skeleton w-[44px] h-[44px] rounded-full"></SkeletonBox></div>
     }
 }
 

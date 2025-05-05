@@ -11,7 +11,7 @@ import AboutNutritionist from "@/components/nutritionistpage/aboutNutritionist"
 import ContactInformationOrEducation from "@/components/nutritionistpage/contactInformationOrEducation"
 import Testimonial from "@/components/nutritionistpage/testimonial"
 import { cookies } from "next/headers"
-import { authenticateUser } from "@/app/(app-pages)/dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const singleNutritionist = {
     id: 4,

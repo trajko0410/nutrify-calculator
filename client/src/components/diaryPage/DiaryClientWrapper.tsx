@@ -38,9 +38,9 @@ const DiaryClientWrapper:React.FC<diaryEntriesProps>=({diaryEntries})=>{
   }
 
 
-  return  (<div className="flex flex-col gap-6">
+  return  (<div className="flex flex-col gap-4">
   {entries.map((entry) => (
-    <div key={entry.id} className="bg-white p-6 rounded-xl shadow-md">
+    <div key={entry.id} className="shadow-Combined font-Poppins flex min-h-[300px] w-full flex-col gap-4 rounded-xl bg-[#FFFFFF] px-[20px] py-[17px] text-black">
       <DiaryPost DiaryPostProps={entry}/>
     
     </div>

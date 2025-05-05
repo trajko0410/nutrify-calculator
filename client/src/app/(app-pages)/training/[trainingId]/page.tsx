@@ -8,7 +8,7 @@ import AppContainer from "@/components/util/AppContainer"
 import { TrainingCtxProvider } from "@/components/singleTraining/trainingProvider"
 import TrainingClientWrapper from "@/components/singleTraining/trainingClientWrapper"
 import { cookies } from "next/headers"
-import { authenticateUser } from "../../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const fetchedTraining = [
     {

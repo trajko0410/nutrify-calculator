@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import ParametarsExercise from "@/components/exerciseDetailed/parametarsExercise"
 import ExerciseDescription from "@/components/exerciseDetailed/exerciseDescription"
 import { cookies } from "next/headers"
-import { authenticateUser } from "@/app/(app-pages)/dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 /*interface Params {
     trainingId: string | number
