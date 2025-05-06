@@ -1,11 +1,8 @@
 "use client"
 
-<<<<<<< Updated upstream
-import { MealType } from "@/app/api/mealsTest/route"
-=======
+
 import { MealType } from "@/app/enum/enums"
 
->>>>>>> Stashed changes
 import { ShoppingCartSimple } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
 import NutritionistListLoader from "../skeletonLoaders/nutritionistListLoader"
