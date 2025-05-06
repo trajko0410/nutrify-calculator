@@ -62,7 +62,7 @@ const SingleExercisePage = async (/*{ params }: { params: Params }*/) => {
     //}
 
     return (
-        <div className="font-Poppins h-screen w-full bg-[#FAF9F6]">
+        <div className="font-Poppins h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">

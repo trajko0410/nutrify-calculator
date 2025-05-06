@@ -11,7 +11,7 @@ const LoginPage: React.FC =  () => {
     return (
         <>
             <Header />
-            <div className="flex h-screen justify-center md:justify-between">
+            <div className="flex h-full min-h-screen justify-center md:justify-between">
                 <div className="min-h-full w-full bg-[#FAF9F6] pt-52 md:w-1/2">
                     <MainContainer>
                         <div className="flex h-full justify-center md:justify-start">

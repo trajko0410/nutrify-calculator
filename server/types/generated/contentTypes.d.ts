@@ -395,6 +395,151 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCategoryConditionCategoryCondition
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_conditions';
+  info: {
+    displayName: 'Category-Condition';
+    pluralName: 'category-conditions';
+    singularName: 'category-condition';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-condition.category-condition'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCategoryCuisineTypeCategoryCuisineType
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_cuisine_types';
+  info: {
+    displayName: 'Category-Cuisine_Type';
+    pluralName: 'category-cuisine-types';
+    singularName: 'category-cuisine-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-cuisine-type.category-cuisine-type'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCategoryFoodGroupCategoryFoodGroup
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_food_groups';
+  info: {
+    displayName: 'Category-Food_Group';
+    pluralName: 'category-food-groups';
+    singularName: 'category-food-group';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-food-group.category-food-group'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCategoryMacroNutrientCategoryMacroNutrient
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_macro_nutrients';
+  info: {
+    displayName: 'Category-MacroNutrient';
+    pluralName: 'category-macro-nutrients';
+    singularName: 'category-macro-nutrient';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-macro-nutrient.category-macro-nutrient'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCategoryMealCourseCategoryMealCourse
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_meal_courses';
+  info: {
+    displayName: 'Category-Meal_Course';
+    pluralName: 'category-meal-courses';
+    singularName: 'category-meal-course';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-meal-course.category-meal-course'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   collectionName: 'ingredients';
   info: {
@@ -528,35 +673,6 @@ export interface ApiMedicalFoodRecipeMedicalFoodRecipe
   };
 }
 
-export interface ApiRecipeCategoryRecipeCategory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'recipe_categories';
-  info: {
-    displayName: 'Recipe-category';
-    pluralName: 'recipe-categories';
-    singularName: 'recipe-category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::recipe-category.recipe-category'
-    > &
-      Schema.Attribute.Private;
-    Name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   collectionName: 'recipes';
   info: {
@@ -569,6 +685,22 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    category_cuisine_types: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-cuisine-type.category-cuisine-type'
+    >;
+    category_food_groups: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-food-group.category-food-group'
+    >;
+    category_macro_nutrients: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-macro-nutrient.category-macro-nutrient'
+    >;
+    category_meal_courses: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-meal-course.category-meal-course'
+    >;
     Code: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -597,10 +729,6 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       }>;
     Preparation: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
-    Recipe_categories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::recipe-category.recipe-category'
-    >;
     Short_description: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 300;
@@ -1123,10 +1251,14 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog.blog': ApiBlogBlog;
+      'api::category-condition.category-condition': ApiCategoryConditionCategoryCondition;
+      'api::category-cuisine-type.category-cuisine-type': ApiCategoryCuisineTypeCategoryCuisineType;
+      'api::category-food-group.category-food-group': ApiCategoryFoodGroupCategoryFoodGroup;
+      'api::category-macro-nutrient.category-macro-nutrient': ApiCategoryMacroNutrientCategoryMacroNutrient;
+      'api::category-meal-course.category-meal-course': ApiCategoryMealCourseCategoryMealCourse;
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::medical-food-menu.medical-food-menu': ApiMedicalFoodMenuMedicalFoodMenu;
       'api::medical-food-recipe.medical-food-recipe': ApiMedicalFoodRecipeMedicalFoodRecipe;
-      'api::recipe-category.recipe-category': ApiRecipeCategoryRecipeCategory;
       'api::recipe.recipe': ApiRecipeRecipe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

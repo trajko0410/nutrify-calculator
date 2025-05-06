@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_macro_nutrients",
+  "info": {
+    "singularName": "category-macro-nutrient",
+    "pluralName": "category-macro-nutrients",
+    "displayName": "Category-MacroNutrient"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    }
+  }
+}

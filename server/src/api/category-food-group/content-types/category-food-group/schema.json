@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_food_groups",
+  "info": {
+    "singularName": "category-food-group",
+    "pluralName": "category-food-groups",
+    "displayName": "Category-Food_Group"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    }
+  }
+}
