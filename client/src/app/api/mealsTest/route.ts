@@ -1,3 +1,4 @@
+import { MealType } from "@/app/enum/enums"
 import { NextResponse } from "next/server"
 
 /// Only for testing since i dont have database yet
@@ -61,12 +62,6 @@ interface User {
     personId: number
     name: string
     subscribed: boolean
-}
-
-export enum MealType {
-    Breakfast = "breakfast",
-    Lunch = "lunch",
-    Dinner = "dinner",
 }
 
 export interface WaterConsumption {
