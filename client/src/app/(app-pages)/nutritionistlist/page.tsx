@@ -24,7 +24,7 @@ const NutritionistListPage = async () => {
 
 
     return (
-        <div className="min-h-screen w-full bg-[#FAF9F6]">
+        <div className="min-h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="h-full pt-[100px] pb-10">

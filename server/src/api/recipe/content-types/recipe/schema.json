@@ -50,10 +50,25 @@
         "audios"
       ]
     },
-    "Recipe_categories": {
+    "category_meal_courses": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::recipe-category.recipe-category"
+      "target": "api::category-meal-course.category-meal-course"
+    },
+    "category_macro_nutrients": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category-macro-nutrient.category-macro-nutrient"
+    },
+    "category_food_groups": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category-food-group.category-food-group"
+    },
+    "category_cuisine_types": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category-cuisine-type.category-cuisine-type"
     }
   }
 }

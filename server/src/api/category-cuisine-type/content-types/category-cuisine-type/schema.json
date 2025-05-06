@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_cuisine_types",
+  "info": {
+    "singularName": "category-cuisine-type",
+    "pluralName": "category-cuisine-types",
+    "displayName": "Category-Cuisine_Type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    }
+  }
+}
