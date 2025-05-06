@@ -35,7 +35,6 @@ const LoginModal: React.FC = () => {
             toast.error("Email or password is empty")
             return
         }
-
         try {
             const loginRes = await fetch( `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
                 {

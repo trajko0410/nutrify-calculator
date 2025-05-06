@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 // Utility to check protected routes
 const isProtectedRoute = (req: NextRequest) => {
-    return req.nextUrl.pathname.startsWith("/dashboard")
+    return req.nextUrl.pathname.startsWith("/nesto") //should fix this
 }
 
 // Function to validate JWT token with Strapi

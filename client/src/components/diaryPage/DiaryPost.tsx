@@ -34,7 +34,7 @@ const DiaryPost: React.FC<DiaryPostProps> = ({ DiaryPostProps }) => {
         //fetch user1 info
         setUser(userInfo)
         setLoading(false)
-    }, [setUser, userInfo])
+    }, [setUser])
 
     if (loading) {
         return <div className="flex flex-col gap-4">Loading</div>

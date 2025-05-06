@@ -26,7 +26,7 @@ export default function TrainingClientWrapper({
         ) {
             setNextTraining([initialTraining.training], initialTraining.time)
         }
-    }, [])
+    }, [setNextTraining, nextTraining, initialTraining.training, initialTraining.time])
 
     return (
         <>
