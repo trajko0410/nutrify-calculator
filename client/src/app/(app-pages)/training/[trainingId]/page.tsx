@@ -8,7 +8,7 @@ import AppContainer from "@/components/util/AppContainer"
 import { TrainingCtxProvider } from "@/components/singleTraining/trainingProvider"
 import TrainingClientWrapper from "@/components/singleTraining/trainingClientWrapper"
 import { cookies } from "next/headers"
-import { authenticateUser } from "../../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const fetchedTraining = [
     {
@@ -72,7 +72,7 @@ export default async function SingleTraining() {
   
 
     return (
-        <div className="h-screen w-full bg-[#FAF9F6]">
+        <div className="h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">

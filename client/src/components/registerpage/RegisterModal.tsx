@@ -34,7 +34,7 @@ const RegisterModal: React.FC = () => {
 
         try {
             const res = await fetch(
-                "http://localhost:1337/api/auth/local/register",
+                `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local/register`,
                 {
                     method: "POST",
                     headers: {
@@ -80,7 +80,7 @@ const RegisterModal: React.FC = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:1337/api/auth/email-verification/${verificationCode}`,
+                 `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/email-verification/${verificationCode}`,
                 {
                     method: "POST",
                 },

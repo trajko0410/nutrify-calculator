@@ -98,19 +98,23 @@ const TrainingEditModal = () => {
 
     const saveEditHandler = () => {
         //console.log("Before saving:", nextTraining) // Log current training
-
-        const updatedTraining = {
-            ...nextTraining?.training,
-            name: trainingName,
-            description: trainingDescription,
-            longDescription: trainingLongDescription,
-            duration: trainingTimeDuration,
-            caloriesBurned: trainingCalorisBurned,
-            image: trainingImage,
+        if (nextTraining?.training?.id !== undefined) {
+            const updatedTraining = {
+                ...nextTraining.training,
+                id: nextTraining.training.id!, // now guaranteed to exist
+                name: trainingName,
+                description: trainingDescription,
+                longDescription: trainingLongDescription,
+                duration: trainingTimeDuration,
+                caloriesBurned: trainingCalorisBurned,
+                image: trainingImage,
+            }
+        
+            handleCloseModal()
+            updateTraining(updatedTraining, "2025-04-02T19:30:00Z")
         }
 
-        handleCloseModal()
-        updateTraining(updatedTraining, "2025-04-02T19:30:00Z")
+  
     }
 
     return (

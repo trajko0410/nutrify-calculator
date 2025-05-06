@@ -11,11 +11,14 @@ async function validateStrapiToken(token: string | undefined) {
     if (!token) return null
 
     try {
-        const res = await fetch("http://localhost:1337/api/users/me", {
-            headers: {
-                Authorization: `Bearer ${token}`,
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/users/me`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             },
-        })
+        )
 
         if (!res.ok) return null
 

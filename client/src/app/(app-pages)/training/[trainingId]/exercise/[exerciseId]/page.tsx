@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import ParametarsExercise from "@/components/exerciseDetailed/parametarsExercise"
 import ExerciseDescription from "@/components/exerciseDetailed/exerciseDescription"
 import { cookies } from "next/headers"
-import { authenticateUser } from "@/app/(app-pages)/dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 /*interface Params {
     trainingId: string | number
@@ -62,7 +62,7 @@ const SingleExercisePage = async (/*{ params }: { params: Params }*/) => {
     //}
 
     return (
-        <div className="font-Poppins h-screen w-full bg-[#FAF9F6]">
+        <div className="font-Poppins h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">

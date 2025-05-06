@@ -10,8 +10,7 @@ import { NutritionPageCtxProvider } from "@/components/nutritionpage/nutritionPa
 import NutritionPageClientWrapper from "@/components/nutritionpage/nutritionPageClientWrapper"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { authenticateUser } from "../dashboard/page"
-
+import { authenticateUser } from "@/utils/authenticateUser"
 
 
 
@@ -42,7 +41,7 @@ export default async function NutritionPage() {
 
  
     return (
-        <div className="h-screen w-full bg-[#FAF9F6]">
+        <div className="h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">

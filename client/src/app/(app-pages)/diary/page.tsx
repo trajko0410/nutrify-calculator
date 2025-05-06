@@ -9,7 +9,7 @@ import DashboardContainer from "@/components/util/AppContainer"
 import DiaryClientWrapper from "@/components/diaryPage/DiaryClientWrapper"
 import { DiaryPageCtxProvider } from "@/components/diaryPage/diaryPageProvider"
 import { cookies } from "next/headers"
-import { authenticateUser } from "../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 export interface DiaryEntry {
     id: string
@@ -18,7 +18,7 @@ export interface DiaryEntry {
     createdAt: Date
     authorId: string // nutritionistId
     foruserId: string // id korisnika
-
+    file?: string,
     diaryComments: DiaryReply[]
 }
 
@@ -27,6 +27,7 @@ export interface DiaryReply {
     content: string
     creatorId: string
     createdAt: Date
+    file?:string
 }
 
 
@@ -40,6 +41,7 @@ const diaryEntrie = [
         authorId: "Nutricionista1",
         createdAt: new Date("2024-03-20"),
         foruserId: "user1",
+        file: "nekifile.pdf",
         diaryComments: [
             {
                 commentId: "1",
@@ -69,7 +71,7 @@ const diaryEntrie = [
 ]
 
 export default async function DiaryPage() {
-          const cookieStore = await cookies()
+         const cookieStore = await cookies()
                         const token = cookieStore.get("jwtNutrifyS")?.value
                     
                         if (!token) {
@@ -79,14 +81,13 @@ export default async function DiaryPage() {
                         const user = await authenticateUser(token)
                         if (!user) {
                             redirect("/login")
-                        }
-    
+                        }    
 
     //fetch diary
 
 
     return (
-        <div className="h-screen w-full bg-[#FAF9F6]">
+        <div className="h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
@@ -99,7 +100,7 @@ export default async function DiaryPage() {
                                 />
                             </DiaryPageCtxProvider>
                         </div>
-                        <div className="flex w-full flex-col gap-6 lg:w-3/12 lg:pr-[24px]">
+                        <div className="flex w-full flex-col gap-6 lg:w-3/12 ">
                             <div className="shadow-Combined font-Poppins text-p-[10px] hidden min-h-[260px] w-full min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#FFFFFF] text-[#2D3748] lg:flex lg:h-fit">
                                 Reklama
                             </div>

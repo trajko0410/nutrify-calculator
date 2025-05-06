@@ -11,7 +11,7 @@ import { MealType } from "@/app/api/mealsTest/route"
 import HowToMakeMeal from "@/components/singleMeal/HowToMakeMeal"
 import NecessaryGroceries from "@/components/singleMeal/NecessaryGroceries"
 import ContentOfMeal from "@/components/singleMeal/ContentOfMeal"
-import { authenticateUser } from "../../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const fetchedMeal = [
     {
@@ -72,7 +72,7 @@ export default async function SingleMeal() {
 
 
     return (
-        <div className="h-screen w-full bg-[#FAF9F6]">
+        <div className="h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">

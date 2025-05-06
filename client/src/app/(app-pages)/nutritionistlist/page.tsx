@@ -7,7 +7,7 @@ import AppContainer from "@/components/util/AppContainer"
 import NutritionistListClientWrapper from "@/components/nutritionlistpage/nutritionistListClientWraper"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { authenticateUser } from "../dashboard/page"
+import { authenticateUser } from "@/utils/authenticateUser"
 
 const NutritionistListPage = async () => {
           const cookieStore = await cookies()
@@ -24,7 +24,7 @@ const NutritionistListPage = async () => {
 
 
     return (
-        <div className="min-h-screen w-full bg-[#FAF9F6]">
+        <div className="min-h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="h-full pt-[100px] pb-10">

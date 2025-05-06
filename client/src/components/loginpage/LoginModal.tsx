@@ -37,8 +37,7 @@ const LoginModal: React.FC = () => {
         }
 
         try {
-            const loginRes = await fetch(
-                "http://localhost:1337/api/auth/local",
+            const loginRes = await fetch( `${process.env.NEXT_PUBLIC_STRAPI_URL}/auth/local`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -55,7 +54,7 @@ const LoginModal: React.FC = () => {
             const jwt = loginData.jwt
 
             const client = strapi({
-                baseURL: "http://localhost:1337/api",
+                baseURL: `${process.env.NEXT_PUBLIC_STRAPI_URL}`,
                 auth: jwt,
             })
 
