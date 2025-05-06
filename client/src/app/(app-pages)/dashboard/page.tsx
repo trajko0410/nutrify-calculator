@@ -79,7 +79,7 @@ export default async function DashboardPage() {
     ].sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
 
     return (
-        <div className="h-screen w-full bg-[#FAF9F6]">
+        <div className="h-full min-h-screen w-full bg-[#FAF9F6]">
             <SideMenu />
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">

@@ -7,7 +7,7 @@ const RegisterPage: React.FC = () => {
     return (
         <div>
             <Header />
-            <div className="flex h-screen justify-center md:justify-between">
+            <div className="flex h-full min-h-screen justify-center md:justify-between">
                 <div className="flex min-h-full w-full items-center overflow-y-scroll bg-[#FAF9F6] pt-24 md:w-1/2">
                     <MainContainer>
                         <div className="flex h-full justify-center md:justify-start">
