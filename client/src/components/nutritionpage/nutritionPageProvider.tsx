@@ -1,6 +1,7 @@
 "use client"
-import { Meal, MealType, WaterConsumption } from "@/app/api/mealsTest/route"
+import { Meal, WaterConsumption } from "@/app/api/mealsTest/route"
 import { createContext, useContext, useState, ReactNode } from "react"
+import { MealType } from "@/app/enum/enums"
 
 type NutritionPageCtxType = {
     meals: { meal: Meal; time: string; mealType: MealType }[] | null

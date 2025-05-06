@@ -128,3 +128,7 @@ body {
   );
   animation: shimmer 1.5s infinite;
 }
+
+.custom-select option {
+  color: black;
+}

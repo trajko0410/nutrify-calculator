@@ -1,12 +1,12 @@
 "use client"
 
-import { Meal, MealType } from "@/app/api/mealsTest/route"
+import { Meal } from "@/app/api/mealsTest/route"
 import { useState, useEffect } from "react"
 import ParametarsIcon from "../util/ParametarsIcon"
 import Link from "next/link"
 import { ForkKnife, ArrowDown, Eraser } from "@phosphor-icons/react"
 import Image from "next/image"
-
+import { MealType } from "@/app/enum/enums"
 import YourNextMealLoader from "../skeletonLoaders/yourNextMealLoader"
 
 //import slika from "../../../public/work2.png"

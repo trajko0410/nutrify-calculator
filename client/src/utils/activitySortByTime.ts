@@ -1,5 +1,6 @@
 // utils/sortMeals.ts
-import { Meal, MealType, Training } from "@/app/api/mealsTest/route"
+import { Meal, Training } from "@/app/api/mealsTest/route"
+import { MealType } from "@/app/enum/enums"
 
 export function mealsSortedByTime(
     nextMeals: { meal: Meal; mealType: MealType; time: string }[],

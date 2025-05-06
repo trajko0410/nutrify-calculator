@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect } from "react"
 
-import { Meal, MealType } from "@/app/api/mealsTest/route"
+import { Meal } from "@/app/api/mealsTest/route"
 
 import { useNutritionPageCtx } from "./nutritionPageProvider"
 import SingleActivityFromTimeline from "../dashboardpage/singleActivityFromTimeline"
 import { ListPlus } from "@phosphor-icons/react"
 import AddMealModal from "./addMealModal"
 import TodayTimelineLoader from "../skeletonLoaders/todayTimelineLoader"
+import { MealType } from "@/app/enum/enums"
 
 const MealTimeline = () => {
     const { meals, setAddMealModalOpen, addMealModalOpen } =

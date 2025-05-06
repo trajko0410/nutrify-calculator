@@ -9,7 +9,7 @@ import { useTrainingCtx } from "./trainingProvider"
 
 
 const ExerciseEditModal= () => {
-    const { singleExercise, closeEditExerciseModal, updateExercise } = useTrainingCtx()
+    const { singleExercise, closeEditExerciseModal } = useTrainingCtx()
 
     const exercise = singleExercise || {
     name: "",
@@ -102,19 +102,25 @@ const ExerciseEditModal= () => {
         formData.append("imageHero", exerciseImageHero || "")
         //post formmdata wait for new data and uplooad(data) da bi pormenio front
 
+        if (!singleExercise?.id) {
+            console.error("Exercise ID is missing.");
+            return;
+        }
+
         const updatedTraining = {
             ...singleExercise,
+            id: singleExercise.id, // Ensure id is defined
             name: exerciseName,
             description: exerciseDescription,
             pause: exercisePauseDuration,
             sets: exerciseSets,
             reps: exerciseReps,
             imageHero: exerciseImageHero,
-        }
+        };
 
-        handleCloseModal()
-        console.log("Updated training:", updatedTraining) // Log updated training
-        updateExercise(updatedTraining)
+        handleCloseModal();
+        console.log("Updated training:", updatedTraining); // Log updated training
+        //updateExercise(updatedTraining);
     }
 
     return (

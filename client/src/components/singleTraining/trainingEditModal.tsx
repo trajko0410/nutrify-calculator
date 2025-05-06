@@ -111,7 +111,9 @@ const TrainingEditModal = () => {
             }
         
             handleCloseModal()
-            updateTraining(updatedTraining, "2025-04-02T19:30:00Z")
+            //updateTraining(updatedTraining, "2025-04-02T19:30:00Z")
+            console.log(updatedTraining)
+            //updateTraining(updatedTraining, "2025-04-02T19:30:00Z")
         }
 
   
