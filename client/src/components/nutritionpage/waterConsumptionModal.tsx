@@ -86,7 +86,7 @@ const WaterConsumptionModal: React.FC<waterConsumptionModalProp> = ({
                 className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
             >
                 <div
-                    className={`font-Poppins relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 ease-in-out md:w-[40vw] ${
+                    className={`font-Poppins relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] rounded-b-none rounded-t-xl md:rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 ease-in-out md:w-[40vw] ${
                         isClosing
                             ? "translate-y-full opacity-0"
                             : isOpening

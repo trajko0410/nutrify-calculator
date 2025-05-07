@@ -12,7 +12,7 @@ type SingleMealPlanProp = {
     mealInfo: Meal
 }
 
-type Author = {
+export type Author = {
     id: string
     name: string
     image: string

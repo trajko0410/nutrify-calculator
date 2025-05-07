@@ -7,6 +7,7 @@ import { ShoppingCartSimple } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
 import NutritionistListLoader from "../skeletonLoaders/nutritionistListLoader"
 import SingleMealPlan from "./singleMealPlan"
+import SingleWeaklyPlan from "./singleWeaklyPlan"
 //import SingleWeaklyPlan from "./singleWeaklyPlan"
 
 const fetchedRecipes = [
@@ -101,6 +102,8 @@ const fetchedWeaklyPlanRecipes: listOfPlans[] = [
         weeklyPlan: {
             title: "Weakly Plan 1",
             authorId: "23",
+            days: "7",
+            mealsPerDay: "3",
             authorName: "Marko Markovic",
             description: "Neki opiis",
             meals: {
@@ -177,6 +180,8 @@ export interface WeaklyPlan {
     authorId: string
     authorName: string
     description: string
+    days: string, 
+    mealsPerDay: string
     meals: DailyMeals
 }
 
@@ -253,7 +258,7 @@ const RecipesClientWrapper = () => {
                 <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                     {listOfPlans.map((plan, index) => (
                         <div key={index}>
-                            div
+                            <SingleWeaklyPlan weaklyPlan={plan.weeklyPlan}/>
                         </div>
                     ))}
                 </div>

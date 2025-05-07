@@ -28,7 +28,8 @@ const ParametarsIcon:React.FC<FoodIntakeParametarsIcon>=({parametarName, iconSiz
         Mail: <Envelope size={iconSize} color="white" />,
         Phone: <Phone size={iconSize} color="white"  />,
         Languages: <Translate size={iconSize} color="white" />,
-        Education: <BookOpenText size={iconSize} color="white" />
+        Education: <BookOpenText size={iconSize} color="white" />,
+        Calendar: <Calendar size={iconSize} color="white"/>
     };
   
   return  <div
