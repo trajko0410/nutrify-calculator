@@ -4,8 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NutrifyS Calculator",
-  description: "NutrifyS Calculator - Calculate your daily nutrition",
+  title: "NutrifyS",
+  description: "NutrifyS - Manage your Healthy Habits",
 };
 
 export default function RootLayout({
