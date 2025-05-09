@@ -62,19 +62,20 @@ export const Navigation: React.FC = () => {
                 <div className="flex items-center">
                     <Link href="/" className="text-lg font-bold text-gray-800">
                         <Image
-                            src="/next.svg"
+                            src="https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b"
                             alt="logo"
-                            width={40}
-                            height={40}
+                            width={128}
+                            height={128}
                         />
                     </Link>
                 </div>
                 {!isSignedIn && (
+                    // Need to add pages and routes
                     <div className="flex shrink items-center gap-4 px-4 text-sm text-[#00473C]! lg:gap-10">
-                        <Link href="/contact" className="text-gray-800">
+                        <Link href="/" className="text-gray-800">
                             Why NutrifyS
                         </Link>
-                        <Link href="/contact" className="text-gray-800">
+                        <Link href="/" className="text-gray-800">
                             About
                         </Link>
                         <DropDown
@@ -91,7 +92,7 @@ export const Navigation: React.FC = () => {
                             id="support"
                             title="Support"
                         />
-                        <Link href="/contact" className="ml-4 text-gray-800">
+                        <Link href="/" className="ml-4 text-gray-800">
                             Contact
                         </Link>
                     </div>

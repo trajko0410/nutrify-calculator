@@ -107,12 +107,12 @@ const SideMenu: React.FC = () => {
         <>
             <div className="fixed right-0 bottom-0 left-0 z-40 flex h-[72px] w-full flex-row items-center justify-between bg-white p-[24px] shadow-[0_0_8px_rgba(0,0,0,0.25)] md:top-0 md:left-0 md:h-screen md:w-[92px] md:flex-col md:gap-6 md:p-6">
                 <div className="flex w-full flex-row items-center justify-between gap-6 md:flex-col md:justify-baseline">
-                    <div className="hidden h-11 w-11 items-center justify-center md:flex">
+                    <div className="hidden h-16 w-16 items-center justify-center md:flex">
                         <Image
-                            src="/Vector.svg"
+                            src="https://res.cloudinary.com/dwiuj7jqw/image/upload/t_upscale_and_bmp/Screenshot_2025_05_08_at_13_42_03_e0cc206919"
                             alt="logo"
-                            width={32}
-                            height={32}
+                            width={128}
+                            height={128}
                         />
                     </div>
                     <div className="hidden h-[2px] w-full bg-[#F6F6F6] md:block"></div>

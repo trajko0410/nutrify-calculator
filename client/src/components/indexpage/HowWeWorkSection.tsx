@@ -44,7 +44,12 @@ const ExplainCard: React.FC<ExplainCardProps> = ({
                 </a>
             </div>
             <div className="flex w-full items-center md:max-w-1/2">
-                <ImageCustom src={image} alt="image" width={1000} height={486} />
+                <ImageCustom
+                    src={image}
+                    alt="image"
+                    width={1000}
+                    height={486}
+                />
             </div>
         </div>
     )
@@ -64,7 +69,7 @@ const HowWeWorkSection = () => {
                 <div className="flex flex-col py-24 md:gap-10 lg:px-32">
                     <ExplainCard
                         title="Start your journey as a Nutritionist"
-                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis gravida neque convallis a cras semper auctor neque vitae. "
+                        description="Join our network to offer your expertise to a broader audience. Utilize our tools to manage clients, create meal plans, and track progress efficiently."
                         image="/work1.png"
                         link="/"
                         linkText="Register as a Nutritionist"
@@ -72,7 +77,7 @@ const HowWeWorkSection = () => {
                     />
                     <ExplainCard
                         title="Start your journey as a Patient"
-                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis gravida neque convallis a cras semper auctor neque vitae."
+                        description="Embark on a personalized health journey with guidance from certified nutritionists. Access customized plans and track your improvements over time."
                         image="/work2.png"
                         link="/"
                         linkText="Register as a Patient"

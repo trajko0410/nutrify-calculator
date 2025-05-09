@@ -4,7 +4,6 @@ import Link from "next/link"
 import { StaticImageData } from "next/image"
 import Image from "next/image"
 
-import LogoImage from "../../../public/next.svg"
 import LinkedinImage from "../../../public/LinkedinImage.png"
 
 type LinkItem = {
@@ -26,7 +25,7 @@ type FooterLinksProps = {
 
 const FooterLinks: React.FC<FooterLinksProps> = ({ title, links, socials }) => {
     return (
-        <div className="font-Poppins flex flex-1/6 flex-col gap-7.5 text-sm font-medium ">
+        <div className="font-Poppins flex flex-1/6 flex-col gap-7.5 text-sm font-medium">
             <h4 className="text-[#6B9C6F]">{title}</h4>
             <ul>
                 {links.map((link, index) => (
@@ -67,7 +66,7 @@ const FooterLinks: React.FC<FooterLinksProps> = ({ title, links, socials }) => {
 
 const Footer = () => {
     return (
-        <footer className="font-Poppins flex flex-col items-center bg-[url('/shape3.png')] bg-cover bg-center pb-[32px] bg-DarkGreen">
+        <footer className="font-Poppins bg-DarkGreen flex flex-col items-center bg-[url('/shape3.png')] bg-cover bg-center pb-[32px]">
             <div className="flex max-w-[500px] flex-col items-center gap-6 pt-[130px] pb-[140px] text-center">
                 <h2 className="text-5xl font-normal tracking-[-0.58px] text-white">
                     Get started today
@@ -162,7 +161,10 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col items-center justify-between pt-[50px] sm:flex-row">
                     <Image
-                        src={LogoImage}
+                        className="bg-current"
+                        src={
+                            "https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b"
+                        }
                         alt="LogoImage"
                         width={140}
                         height={22}

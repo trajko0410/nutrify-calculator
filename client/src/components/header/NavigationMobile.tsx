@@ -65,7 +65,7 @@ export const NavigationMobile: React.FC = () => {
             {/* Mobile Top Bar */}
             <div className="flex items-center justify-between bg-white px-4 py-4 text-sm text-[#00473C] md:hidden">
                 <Link href="/">
-                    <Image src="/next.svg" alt="logo" width={40} height={40} />
+                    <Image src="https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b" alt="logo" width={40} height={40} />
                 </Link>
                 <button onClick={handleHamburgerMenuToggle}>
                     {hamburgerMenuOpen ? (

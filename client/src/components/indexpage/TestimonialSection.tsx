@@ -75,7 +75,7 @@ const TestimonialSection = () => {
                 <div className="flex max-w-[500px] flex-col items-center gap-8 p-8 text-center">
                     <h2 className="text-DarkGreen text-5xl font-medium">
                         What you get from
-                        <span className="text-LightGreen"> NutrysApp</span>
+                        <span className="text-LightGreen"> NutrifyS</span>
                     </h2>
                 </div>
             </div>
@@ -84,10 +84,10 @@ const TestimonialSection = () => {
                     <MainTestimonialSection
                         title={"Knowledge is power"}
                         text={
-                            "Studies show that people who keep a food diary are more likely to achieve their goals. NutrysApp simplifies nutrition tracking, healthy living, and workouts, provides meal plans and the data you need, and helps you make sense of it all. Healthy eating and an active lifestyle are a continuous journey of self-discovery. The more you track, the more empowered you’ll become to make healthy choices that support your goals."
+                            "Studies show that people who keep a food diary are more likely to achieve their goals. NutrifyS simplifies nutrition tracking, healthy living, and workouts, provides meal plans and the data you need, and helps you make sense of it all. Healthy eating and an active lifestyle are a continuous journey of self-discovery. The more you track, the more empowered you’ll become to make healthy choices that support your goals."
                         }
                         image={testimonialImage1}
-                        author={"John Doe, NutrysApp CEO"}
+                        author={"John Doe, NutrifyS CEO"}
                     />
                 </div>
                 <div className="flex flex-col items-center gap-15 px-15 py-19">

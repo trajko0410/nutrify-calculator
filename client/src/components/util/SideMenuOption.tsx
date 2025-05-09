@@ -29,7 +29,7 @@ const SideMenuOption: React.FC<SideMenuOptionProps> = ({
         }
 
         if (path === "/calculator") {
-            router.push("/calculator/create-ingredient")
+            router.push("/calculator/meal")
         } else {
             router.push(path)
         }
