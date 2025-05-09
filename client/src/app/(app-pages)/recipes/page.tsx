@@ -8,6 +8,7 @@ import { redirect } from "next/navigation"
 import AppContainer from "@/components/util/AppContainer"
 import { authenticateUser } from "@/utils/authenticateUser"
 import RecipesClientWrapper from "@/components/recipes/recipedClientWrapper"
+import { CartModalProvider } from "@/components/recipes/cartModalCtx"
 
 
 
@@ -32,10 +33,11 @@ export default async function Recipes() {
             <Header />
             <div className="bg-[#FAF9F6] pt-[100px] pb-10">
                 <AppContainer>
-                    <div className="flex flex-col gap-6">
+                  
+                    <CartModalProvider>  <div className="flex flex-col gap-6">
                     <RecipesClientWrapper/>
         
-                    </div>
+                    </div></CartModalProvider>
                 </AppContainer>
             </div>
         </div>

@@ -7,6 +7,8 @@ import ParametarsIcon from "../util/ParametarsIcon"
 import { useEffect, useState } from "react"
 
 import avatarImage from "../../../public/avatarImage.jpeg"
+import { useCartModal as useCartModalCtx } from "./cartModalCtx"
+
 
 type SingleMealPlanProp = {
     mealInfo: Meal
@@ -21,6 +23,8 @@ export type Author = {
 const authorFetch = { id: "23", name: "Filip", image: "" }
 
 const SingleMealPlan: React.FC<SingleMealPlanProp> = ({ mealInfo }) => {
+    const { addMealToPlan } = useCartModalCtx()
+
     const [author, setAuthor] = useState<Author | null>(null)
 
     //FETCH AUTHOR BY HIS ID
@@ -110,7 +114,7 @@ const SingleMealPlan: React.FC<SingleMealPlanProp> = ({ mealInfo }) => {
                 </div>
             </div>
             <div className="my-2 h-[1px] w-full bg-[#D9D9D9]"></div>
-            <button className="bg-LightGreen flex h-[40px] w-full items-center justify-center rounded-lg px-[24px] py-[8px] text-sm text-[#FFFFFF]">
+            <button className="bg-LightGreen flex h-[40px] w-full items-center justify-center rounded-lg px-[24px] py-[8px] text-sm text-[#FFFFFF]" onClick={()=>addMealToPlan(mealInfo)}>
                 Add Meall +
             </button>
         </div>

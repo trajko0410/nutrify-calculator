@@ -9,6 +9,9 @@ import NutritionistListLoader from "../skeletonLoaders/nutritionistListLoader"
 import SingleMealPlan from "./singleMealPlan"
 import SingleWeaklyPlan from "./singleWeaklyPlan"
 //import SingleWeaklyPlan from "./singleWeaklyPlan"
+import { useCartModal as useCartModalCtx } from "./cartModalCtx"
+import CartModal from "./cartModal"
+
 
 const fetchedRecipes = [
     {
@@ -191,6 +194,8 @@ interface listOfPlans {
 }
 
 const RecipesClientWrapper = () => {
+    const { cartModalIsOpen, openModal } = useCartModalCtx()
+    
     const [listOfPlans, setListOfPlans] = useState<listOfPlans[]>([])
 
     const [loading, setLoading] = useState(true)
@@ -235,7 +240,7 @@ const RecipesClientWrapper = () => {
                             <option value="weaklyPlan">Weakly Plan</option>
                         </select>
                     </div>
-                    <button className="bg-DarkGreen flex h-[42px] w-[42px] items-center justify-center rounded-xl">
+                    <button className="bg-DarkGreen flex h-[42px] w-[42px] items-center justify-center rounded-xl" onClick={()=>openModal()}>
                         <ShoppingCartSimple size={16} />
                     </button>
                 </div>
@@ -263,8 +268,10 @@ const RecipesClientWrapper = () => {
                     ))}
                 </div>
             )}
+            {cartModalIsOpen && <CartModal/>}
         </>
     )
 }
 
 export default RecipesClientWrapper
+
