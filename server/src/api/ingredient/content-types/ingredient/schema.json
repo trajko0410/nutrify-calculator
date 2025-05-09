@@ -142,6 +142,9 @@
         "videos",
         "audios"
       ]
+    },
+    "Fiber": {
+      "type": "decimal"
     }
   }
 }

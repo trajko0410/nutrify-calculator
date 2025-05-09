@@ -630,6 +630,7 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     Fat_saturated: Schema.Attribute.Decimal;
     Fat_total: Schema.Attribute.Decimal;
     Fat_unsaturated: Schema.Attribute.Decimal & Schema.Attribute.Private;
+    Fiber: Schema.Attribute.Decimal;
     Glycemic_index: Schema.Attribute.Decimal;
     Ingredient_Image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
