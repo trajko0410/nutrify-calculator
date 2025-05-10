@@ -665,6 +665,7 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     Vitamin_E: Schema.Attribute.Float;
     Vitamin_PP: Schema.Attribute.Float;
     Vitamin_RE: Schema.Attribute.Float;
+    Volume_per_Unit: Schema.Attribute.Decimal;
     Water: Schema.Attribute.Decimal;
   };
 }
