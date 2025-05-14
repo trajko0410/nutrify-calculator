@@ -39,6 +39,8 @@ export async function middleware(req: NextRequest) {
         const user = await validateStrapiToken(token)
         if (!user) {
             return NextResponse.redirect(new URL("/login", req.url))
+        } else {
+            return NextResponse.redirect(new URL("/dashboard", req.url))
         }
 
         // You can attach user to request if needed via headers or rewrites
