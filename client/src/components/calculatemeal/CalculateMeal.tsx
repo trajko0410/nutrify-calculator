@@ -1,5 +1,5 @@
 "use client"
-import { Ingredient, Meal } from "@/utils/types"
+import { Ingredient, Meal, Recipe } from "@/utils/types"
 import { Autocomplete, Button, Input, Stack, TextField } from "@mui/material"
 import React, { useState } from "react"
 import Cookies from "js-cookie"
@@ -7,7 +7,11 @@ import { Check, Minus, PencilSimple } from "@phosphor-icons/react"
 
 const CalculateMeal: React.FC = () => {
     const token = Cookies.get("jwtNutrifyS")
-    const [search, setSearch] = useState<Ingredient[] | null>([])
+    const [searchIngredients, setSearchIngredients] = useState<
+        Ingredient[] | null
+    >([])
+    const [searchRecipes, setSearchRecipes] = useState<Recipe[] | null>([])
+
     const [editMealName, setEditMealName] = useState<{
         [key: number]: boolean
     }>({})
@@ -15,11 +19,22 @@ const CalculateMeal: React.FC = () => {
     const [meals, setMeals] = useState<Meal[]>([
         {
             name: "Meal #1",
-            ingredients: [
+            recipes: [
                 {
                     Name: "",
-                    Code: "",
-                    Amount: 100,
+                    carbohydrates: 0,
+                    fat: 0,
+                    glycemicLoad: 0,
+                    kcal: 0,
+                    protein: 0,
+                    preparation: "",
+                    Ingredients: [
+                        {
+                            Name: "",
+                            Code: "",
+                            Amount: 100,
+                        },
+                    ],
                 },
             ],
             kcal: 0,
@@ -35,7 +50,7 @@ const CalculateMeal: React.FC = () => {
         e: React.ChangeEvent<HTMLInputElement>,
     ) => {
         const searchValue = e.target.value.toLowerCase()
-        setSearch(null)
+        setSearchIngredients(null)
         if (searchValue.length > 2) {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_STRAPI_URL}/ingredients?filters[Name][$contains]=${searchValue}`,
@@ -47,23 +62,56 @@ const CalculateMeal: React.FC = () => {
             const data = await res.json()
             console.log("Data from search:", data)
 
-            setSearch(data.data)
+            setSearchIngredients(data.data)
         } else {
-            setSearch([])
+            setSearchIngredients([])
         }
     }
+
+    const handleRecipeSearch = async (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const searchValue = e.target.value.toLowerCase()
+        setSearchRecipes(null)
+        if (searchValue.length > 2) {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_STRAPI_URL}/recipes?filters[Name][$contains]=${searchValue}&populate=Ingredients`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                    cache: "no-store",
+                },
+            )
+            const data = await res.json()
+            console.log("Data from search:", data)
+
+            setSearchRecipes(data.data)
+        } else {
+            setSearchRecipes([])
+        }
+    }
+
     const handleAddNewMeal = () => {
         setMeals((prev) => [
             ...prev,
             {
-                name: `Meal #${prev.length + 1}`,
-                ingredients: [
+                recipes: [
                     {
-                        Name: "",
-                        Code: "",
-                        Amount: 100,
+                        Name: "Recipe #1",
+                        Ingredients: [
+                            {
+                                Name: "",
+                                Code: "",
+                                Amount: 100,
+                            },
+                        ],
+                        kcal: 0,
+                        protein: 0,
+                        fat: 0,
+                        carbohydrates: 0,
+                        glycemicLoad: 0,
                     },
                 ],
+                name: `Meal #${prev.length + 1}`,
                 kcal: 0,
                 protein: 0,
                 fat: 0,
@@ -72,9 +120,9 @@ const CalculateMeal: React.FC = () => {
             },
         ])
     }
-    const handleAddNewIngredient = (mealIndex: number) => {
+    const handleAddNewIngredient = (mealIndex: number, recIndex: number) => {
         const newMeals = [...meals]
-        newMeals[mealIndex].ingredients.push({
+        newMeals[mealIndex].recipes[recIndex].Ingredients.push({
             Name: "",
             Code: "",
             Amount: 100,
@@ -82,15 +130,21 @@ const CalculateMeal: React.FC = () => {
         })
         setMeals(newMeals)
     }
-    const handleRemoveIngredient = (mealIndex: number, ingIndex: number) => {
+    const handleRemoveIngredient = (
+        mealIndex: number,
+        recIndex: number,
+        ingIndex: number,
+    ) => {
         setMeals((prevMeals) => {
             const updatedMeals = [...prevMeals]
             const updatedMeal = { ...updatedMeals[mealIndex] }
-            const updatedIngredients = [...updatedMeal.ingredients]
+            const updatedIngredients = [
+                ...updatedMeal.recipes[recIndex].Ingredients,
+            ]
 
             updatedIngredients.splice(ingIndex, 1)
 
-            updatedMeal.ingredients = updatedIngredients
+            updatedMeal.recipes[recIndex].Ingredients = updatedIngredients
             updatedMeals[mealIndex] = calculateMealNutrition(updatedMeal)
 
             return updatedMeals
@@ -105,15 +159,18 @@ const CalculateMeal: React.FC = () => {
             glycemicLoad: 0,
         }
 
-        for (const ingredient of meal.ingredients) {
-            const amount = ingredient.Amount ?? 0
-            totals.kcal += ((ingredient.Kcal ?? 0) / 100) * amount
-            totals.protein += ((ingredient.Protein_total ?? 0) / 100) * amount
-            totals.fat += ((ingredient.Fat_total ?? 0) / 100) * amount
-            totals.carbohydrates +=
-                ((ingredient.Carbohydrates_total ?? 0) / 100) * amount
-            totals.glycemicLoad +=
-                ((ingredient.Glycemic_load ?? 0) / 100) * amount
+        for (const recipe of meal.recipes) {
+            for (const ingredient of recipe.Ingredients) {
+                const amount = ingredient.Amount ?? 0
+                totals.kcal += ((ingredient.Kcal ?? 0) / 100) * amount
+                totals.protein +=
+                    ((ingredient.Protein_total ?? 0) / 100) * amount
+                totals.fat += ((ingredient.Fat_total ?? 0) / 100) * amount
+                totals.carbohydrates +=
+                    ((ingredient.Carbohydrates_total ?? 0) / 100) * amount
+                totals.glycemicLoad +=
+                    ((ingredient.Glycemic_load ?? 0) / 100) * amount
+            }
         }
 
         return {
@@ -192,7 +249,7 @@ const CalculateMeal: React.FC = () => {
                                 >
                                     <div className="flex w-full">
                                         <div className="flex w-full justify-between">
-                                            <div className="flex items-center">
+                                            <div className="flex items-center gap-3">
                                                 {editMealName[index] ? (
                                                     <TextField
                                                         label="Meal Name"
@@ -276,7 +333,7 @@ const CalculateMeal: React.FC = () => {
                                                 )}
                                                 {meals.length > 1 && (
                                                     <Button
-                                                        className="bg-DarkGreen! hover:bg-DarkGreen/80 block! min-w-0! px-2! py-2!"
+                                                        className="bg-DarkGreen! hover:bg-DarkGreen/80 flex! h-9 w-9 min-w-0! justify-center px-0! py-0!"
                                                         onClick={() => {
                                                             const newMeals = [
                                                                 ...meals,
@@ -295,41 +352,252 @@ const CalculateMeal: React.FC = () => {
                                                         ></Minus>
                                                     </Button>
                                                 )}
+                                                <Button
+                                                    variant="contained"
+                                                    className="bg-DarkGreen! hover:bg-DarkGreen/80"
+                                                    onClick={() => {}}
+                                                >
+                                                    Add Recipe
+                                                </Button>
                                             </div>
                                         </div>
                                     </div>
-                                    {meal.ingredients.map(
-                                        (ingredient, ingIndex) => (
-                                            <div
-                                                key={ingIndex + ingredient.Name}
-                                                className="flex gap-1"
-                                            >
-                                                <div className="flex w-full flex-col">
-                                                    <Stack spacing={2}>
-                                                        <Autocomplete
-                                                            freeSolo
-                                                            id={`autocomplete-${index}`}
-                                                            disableClearable
-                                                            options={
-                                                                search || []
+                                    {meal.recipes.map((recipe, recIndex) => (
+                                        <div
+                                            key={recIndex + recipe.Name}
+                                            className="flex w-full flex-col gap-3"
+                                        >
+                                            <div className="flex w-full flex-col">
+                                                <Stack spacing={2}>
+                                                    <Autocomplete
+                                                        freeSolo
+                                                        id={`autocomplete-${index}`}
+                                                        disableClearable
+                                                        options={
+                                                            searchRecipes || []
+                                                        }
+                                                        getOptionLabel={(
+                                                            option,
+                                                        ) =>
+                                                            typeof option ===
+                                                            "string"
+                                                                ? option
+                                                                : option.Name
+                                                        }
+                                                        onChange={(
+                                                            event,
+                                                            value,
+                                                        ) => {
+                                                            if (
+                                                                value &&
+                                                                typeof value !==
+                                                                    "string"
+                                                            ) {
+                                                                setMeals(
+                                                                    (prev) => {
+                                                                        return prev.map(
+                                                                            (
+                                                                                meal,
+                                                                                mealIdx,
+                                                                            ) => {
+                                                                                if (
+                                                                                    mealIdx !==
+                                                                                    index
+                                                                                )
+                                                                                    return meal
+
+                                                                                const updatedRecipes =
+                                                                                    meal.recipes.map(
+                                                                                        (
+                                                                                            r,
+                                                                                            rIdx,
+                                                                                        ) => {
+                                                                                            if (
+                                                                                                rIdx !==
+                                                                                                recIndex
+                                                                                            )
+                                                                                                return r
+
+                                                                                            return {
+                                                                                                ...value,
+                                                                                                Ingredients:
+                                                                                                    value.Ingredients ??
+                                                                                                    [],
+                                                                                                kcal:
+                                                                                                    value.kcal ??
+                                                                                                    0,
+                                                                                                protein:
+                                                                                                    value.protein ??
+                                                                                                    0,
+                                                                                                fat:
+                                                                                                    value.fat ??
+                                                                                                    0,
+                                                                                                carbohydrates:
+                                                                                                    value.carbohydrates ??
+                                                                                                    0,
+                                                                                                glycemicLoad:
+                                                                                                    value.glycemicLoad ??
+                                                                                                    0,
+                                                                                                preparation:
+                                                                                                    value.preparation ??
+                                                                                                    "",
+                                                                                                Name:
+                                                                                                    value.Name ??
+                                                                                                    "Recipe",
+                                                                                            }
+                                                                                        },
+                                                                                    )
+
+                                                                                const updatedMeal: Meal =
+                                                                                    {
+                                                                                        ...meal,
+                                                                                        recipes:
+                                                                                            updatedRecipes,
+                                                                                    }
+
+                                                                                return calculateMealNutrition(
+                                                                                    updatedMeal,
+                                                                                )
+                                                                            },
+                                                                        )
+                                                                    },
+                                                                )
                                                             }
-                                                            getOptionLabel={(
-                                                                option,
-                                                            ) =>
-                                                                typeof option ===
-                                                                "string"
-                                                                    ? option
-                                                                    : option.Name
-                                                            }
-                                                            onChange={(
-                                                                event,
-                                                                value,
-                                                            ) => {
-                                                                if (
-                                                                    value &&
-                                                                    typeof value !==
+                                                        }}
+                                                        renderInput={(
+                                                            params,
+                                                        ) => (
+                                                            <TextField
+                                                                {...params}
+                                                                label={
+                                                                    recipe.Name ||
+                                                                    "Recipe #" +
+                                                                        (recIndex +
+                                                                            1)
+                                                                }
+                                                                onChange={
+                                                                    handleRecipeSearch
+                                                                }
+                                                                slotProps={{
+                                                                    input: {
+                                                                        ...params.InputProps,
+                                                                        type: "search",
+                                                                    },
+                                                                }}
+                                                            />
+                                                        )}
+                                                    />
+                                                </Stack>
+                                            </div>
+                                            {recipe.Ingredients.map(
+                                                (ingredient, ingIndex) => (
+                                                    <div
+                                                        key={
+                                                            ingIndex +
+                                                            recipe.Name +
+                                                            ingredient.Name
+                                                        }
+                                                        className="flex gap-1"
+                                                    >
+                                                        <div className="flex w-full flex-col">
+                                                            <Stack spacing={2}>
+                                                                <Autocomplete
+                                                                    freeSolo
+                                                                    id={`autocomplete-${index}`}
+                                                                    disableClearable
+                                                                    options={
+                                                                        searchIngredients ||
+                                                                        []
+                                                                    }
+                                                                    getOptionLabel={(
+                                                                        option,
+                                                                    ) =>
+                                                                        typeof option ===
                                                                         "string"
-                                                                ) {
+                                                                            ? option
+                                                                            : option.Name
+                                                                    }
+                                                                    onChange={(
+                                                                        event,
+                                                                        value,
+                                                                    ) => {
+                                                                        if (
+                                                                            value &&
+                                                                            typeof value !==
+                                                                                "string"
+                                                                        ) {
+                                                                            setMeals(
+                                                                                (
+                                                                                    prev,
+                                                                                ) => {
+                                                                                    const newMeals =
+                                                                                        [
+                                                                                            ...prev,
+                                                                                        ]
+                                                                                    newMeals[
+                                                                                        index
+                                                                                    ].recipes[
+                                                                                        recIndex
+                                                                                    ].Ingredients[
+                                                                                        ingIndex
+                                                                                    ] =
+                                                                                        {
+                                                                                            ...value,
+                                                                                            Name: ingredient.Name,
+                                                                                            Amount:
+                                                                                                ingredient.Amount ??
+                                                                                                100,
+                                                                                        }
+                                                                                    newMeals[
+                                                                                        index
+                                                                                    ] =
+                                                                                        calculateMealNutrition(
+                                                                                            newMeals[
+                                                                                                index
+                                                                                            ],
+                                                                                        )
+                                                                                    return newMeals
+                                                                                },
+                                                                            )
+                                                                        }
+                                                                    }}
+                                                                    renderInput={(
+                                                                        params,
+                                                                    ) => (
+                                                                        <TextField
+                                                                            {...params}
+                                                                            label={
+                                                                                ingredient.Name ||
+                                                                                "Ingredient #" +
+                                                                                    (ingIndex +
+                                                                                        1)
+                                                                            }
+                                                                            onChange={
+                                                                                handleIngredientSearch
+                                                                            }
+                                                                            slotProps={{
+                                                                                input: {
+                                                                                    ...params.InputProps,
+                                                                                    type: "search",
+                                                                                },
+                                                                            }}
+                                                                        />
+                                                                    )}
+                                                                />
+                                                            </Stack>
+                                                        </div>
+                                                        <div className="flex flex-col gap-1">
+                                                            <TextField
+                                                                label="Amount"
+                                                                onChange={(
+                                                                    e,
+                                                                ) => {
+                                                                    const amount =
+                                                                        parseInt(
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        ) || 0
                                                                     setMeals(
                                                                         (
                                                                             prev,
@@ -340,15 +608,12 @@ const CalculateMeal: React.FC = () => {
                                                                                 ]
                                                                             newMeals[
                                                                                 index
-                                                                            ].ingredients[
+                                                                            ].recipes[
+                                                                                recIndex
+                                                                            ].Ingredients[
                                                                                 ingIndex
-                                                                            ] =
-                                                                                {
-                                                                                    ...value,
-                                                                                    Amount:
-                                                                                        ingredient.Amount ??
-                                                                                        100,
-                                                                                }
+                                                                            ].Amount =
+                                                                                amount
                                                                             newMeals[
                                                                                 index
                                                                             ] =
@@ -360,101 +625,52 @@ const CalculateMeal: React.FC = () => {
                                                                             return newMeals
                                                                         },
                                                                     )
-                                                                }
-                                                            }}
-                                                            renderInput={(
-                                                                params,
-                                                            ) => (
-                                                                <TextField
-                                                                    {...params}
-                                                                    label={
-                                                                        ingredient.Name ||
-                                                                        "Ingredient #" +
-                                                                            (ingIndex +
-                                                                                1)
-                                                                    }
-                                                                    onChange={
-                                                                        handleIngredientSearch
-                                                                    }
-                                                                    slotProps={{
-                                                                        input: {
-                                                                            ...params.InputProps,
-                                                                            type: "search",
-                                                                        },
-                                                                    }}
-                                                                />
-                                                            )}
-                                                        />
-                                                    </Stack>
-                                                </div>
-                                                <div className="flex flex-col gap-1">
-                                                    <TextField
-                                                        label="Amount"
-                                                        onChange={(e) => {
-                                                            const amount =
-                                                                parseInt(
-                                                                    e.target
-                                                                        .value,
-                                                                ) || 0
-                                                            setMeals((prev) => {
-                                                                const newMeals =
-                                                                    [...prev]
-                                                                newMeals[
-                                                                    index
-                                                                ].ingredients[
-                                                                    ingIndex
-                                                                ].Amount =
-                                                                    amount
-                                                                newMeals[
-                                                                    index
-                                                                ] =
-                                                                    calculateMealNutrition(
-                                                                        newMeals[
-                                                                            index
-                                                                        ],
+                                                                }}
+                                                                slotProps={{
+                                                                    input: {
+                                                                        type: "number",
+                                                                        value: ingredient.Amount,
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        {recipe.Ingredients
+                                                            .length > 1 && (
+                                                            <Button
+                                                                variant="contained"
+                                                                className="bg-DarkGreen! hover:bg-DarkGreen/80"
+                                                                onClick={() =>
+                                                                    handleRemoveIngredient(
+                                                                        index,
+                                                                        recIndex,
+                                                                        ingIndex,
                                                                     )
-                                                                return newMeals
-                                                            })
-                                                        }}
-                                                        slotProps={{
-                                                            input: {
-                                                                type: "number",
-                                                                value: ingredient.Amount,
-                                                            },
-                                                        }}
-                                                    />
-                                                </div>
-                                                {meal.ingredients.length >
-                                                    1 && (
-                                                    <Button
-                                                        variant="contained"
-                                                        className="bg-DarkGreen! hover:bg-DarkGreen/80"
-                                                        onClick={() =>
-                                                            handleRemoveIngredient(
-                                                                index,
-                                                                ingIndex,
-                                                            )
-                                                        }
-                                                    >
-                                                        <Minus
-                                                            size={24}
-                                                            color="#FAF9F6"
-                                                            weight="regular"
-                                                        ></Minus>
-                                                    </Button>
-                                                )}
-                                            </div>
-                                        ),
-                                    )}
-                                    <Button
-                                        variant="contained"
-                                        className="bg-DarkGreen! hover:bg-DarkGreen/80"
-                                        onClick={() =>
-                                            handleAddNewIngredient(index)
-                                        }
-                                    >
-                                        Add Ingredient
-                                    </Button>
+                                                                }
+                                                            >
+                                                                <Minus
+                                                                    size={24}
+                                                                    color="#FAF9F6"
+                                                                    weight="regular"
+                                                                ></Minus>
+                                                            </Button>
+                                                        )}
+                                                    </div>
+                                                ),
+                                            )}
+                                            <Button
+                                                variant="contained"
+                                                className="bg-DarkGreen! hover:bg-DarkGreen/80"
+                                                onClick={() =>
+                                                    handleAddNewIngredient(
+                                                        index,
+                                                        recIndex,
+                                                    )
+                                                }
+                                            >
+                                                Add Ingredient
+                                            </Button>
+                                        </div>
+                                    ))}
                                 </div>
                             ))}
                         </form>

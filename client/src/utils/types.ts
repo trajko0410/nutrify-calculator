@@ -15,8 +15,8 @@ export type Meal = {
 }
 
 export type Recipe = {
-    name: string
-    ingredients: Ingredient[]
+    Name: string
+    Ingredients: Ingredient[]
     kcal: number
     protein: number
     fat: number
