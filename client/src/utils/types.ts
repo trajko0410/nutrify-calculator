@@ -5,24 +5,13 @@ export type MenuOption = {
 }
 
 export type Meal = {
-    name: string
-    recipes: Recipe[]
-    kcal: number
-    protein: number
-    fat: number
-    carbohydrates: number
-    glycemicLoad: number
-}
-
-export type Recipe = {
-    Name: string
-    Ingredients: Ingredient[]
-    kcal: number
-    protein: number
-    fat: number
-    carbohydrates: number
-    glycemicLoad: number
-    preparation?: string
+    name: string,
+    ingredients: Ingredient[],
+    kcal: number,
+    protein: number,
+    fat: number,
+    carbohydrates: number,
+    glycemicLoad: number,
 }
 
 export type Ingredient = {

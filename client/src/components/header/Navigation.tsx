@@ -5,11 +5,11 @@ import Image from "next/image"
 import DropDown from "../util/DropDown"
 import { useRouter } from "next/navigation"
 import Cookies from "js-cookie"
-import ProfileIcon from "../util/ProfileIcon"
 
 export const Navigation: React.FC = () => {
     const router = useRouter()
     const [isSignedIn, setIsSignedIn] = useState(false)
+    const [user, setUser] = useState<{ imageUrl: string } | null>(null)
 
     useEffect(() => {
         const token = Cookies.get("jwtNutrifyS")
@@ -26,6 +26,10 @@ export const Navigation: React.FC = () => {
                 )
 
                 if (res.ok) {
+                    const data = await res.json()
+                    setUser({
+                        imageUrl: data.avatar?.url || null,
+                    })
                     setIsSignedIn(true)
                 } else {
                     setIsSignedIn(false)
@@ -38,6 +42,9 @@ export const Navigation: React.FC = () => {
         if (token) fetchUser()
     }, [])
 
+
+   
+
     const handleSignOut = () => {
         Cookies.remove("jwtNutrifyS")
 
@@ -45,6 +52,7 @@ export const Navigation: React.FC = () => {
         // Otherwise, you might just "fake logout" by clearing state
 
         setIsSignedIn(false)
+        setUser(null)
         router.push("/login")
     }
 
@@ -97,7 +105,15 @@ export const Navigation: React.FC = () => {
                         >
                             Logout
                         </button>
-                        <ProfileIcon />
+                        <Link href="/profile" className="text-gray-800">
+                            <Image
+                                src={user?.imageUrl || "/default-profile.png"}
+                                alt="profile"
+                                width={40}
+                                height={40}
+                                className="rounded-full"
+                            />
+                        </Link>
                     </div>
                 ) : (
                     <div className="flex items-center gap-2 text-center">
