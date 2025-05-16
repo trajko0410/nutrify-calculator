@@ -13,13 +13,18 @@ export default function Home() {
             <Header />
             <TitleSection />
             <SponsorSection
-                logos={["/next.svg", "/next.svg", "/next.svg", "/next.svg"]}
+                logos={[
+                    "https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b",
+                    "https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b",
+                    "https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b",
+                    "https://res.cloudinary.com/dwiuj7jqw/image/upload/q_auto:best/f_bmp/e_background_removal/c_crop,w_0.54/Nutrify_S_Watermark_da9350594b",
+                ]}
             />
             <HookSection />
             <HowWeWorkSection />
-            <WhatYouGetSection/>
-            <TestimonialSection/>
-            <Footer/>
+            <WhatYouGetSection />
+            <TestimonialSection />
+            <Footer />
         </div>
     )
 }

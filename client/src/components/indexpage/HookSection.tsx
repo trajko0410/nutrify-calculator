@@ -48,27 +48,27 @@ const HookSection: React.FC = () => {
                     <p className="z-10 mb-8">
                         Facilitate payments from users to your customers
                     </p>
-                    <div className="z-10 mb-10 flex items-center gap-4 cursor-pointer">
+                    <div className="z-10 mb-10 flex cursor-pointer items-center gap-4">
                         See documentation
-                        <ArrowCircleRightIcon weight="fill" size={24}  />
+                        <ArrowCircleRightIcon weight="fill" size={24} />
                     </div>
                     <div className="z-10 flex flex-wrap justify-between gap-10 md:flex-nowrap">
                         <HookCard
                             number={1}
                             title="Track food, fitness & fasting"
-                            desc="Ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Arcu odio ut sem nulla pharetra."
+                            desc="Monitor your meals, workouts, and fasting periods effortlessly. Our intuitive tracking system helps you stay on top of your health routines."
                             image="/picture1.png"
                         />
                         <HookCard
                             number={2}
                             title="Get personalized insights"
-                            desc="Ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Arcu odio ut sem nulla pharetra."
+                            desc="Receive tailored recommendations based on your unique goals and progress. Our analytics provide actionable feedback to optimize your wellness plan."
                             image="/picture2.png"
                         />
                         <HookCard
                             number={3}
                             title="Stay motivated"
-                            desc="Ullamcorper morbi tincidunt ornare massa eget egestas purus viverra. Arcu odio ut sem nulla pharetra."
+                            desc="Set achievable milestones and celebrate your successes. Our community and support features keep you inspired every step of the way."
                             image="/picture3.png"
                         />
                     </div>

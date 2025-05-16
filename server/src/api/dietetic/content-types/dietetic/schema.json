@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dietetics",
+  "info": {
+    "singularName": "dietetic",
+    "pluralName": "dietetics",
+    "displayName": "Dietetic",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Text": {
+      "type": "richtext"
+    },
+    "category_dietetics": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::category-dietetic.category-dietetic"
+    }
+  }
+}

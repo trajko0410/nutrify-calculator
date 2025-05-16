@@ -453,6 +453,35 @@ export interface ApiCategoryCuisineTypeCategoryCuisineType
   };
 }
 
+export interface ApiCategoryDieteticCategoryDietetic
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_dietetics';
+  info: {
+    displayName: 'Category-Dietetic';
+    pluralName: 'category-dietetics';
+    singularName: 'category-dietetic';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-dietetic.category-dietetic'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategoryFoodGroupCategoryFoodGroup
   extends Struct.CollectionTypeSchema {
   collectionName: 'category_food_groups';
@@ -540,6 +569,40 @@ export interface ApiCategoryMealCourseCategoryMealCourse
   };
 }
 
+export interface ApiDieteticDietetic extends Struct.CollectionTypeSchema {
+  collectionName: 'dietetics';
+  info: {
+    description: '';
+    displayName: 'Dietetic';
+    pluralName: 'dietetics';
+    singularName: 'dietetic';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category_dietetics: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-dietetic.category-dietetic'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::dietetic.dietetic'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Text: Schema.Attribute.RichText;
+    Title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   collectionName: 'ingredients';
   info: {
@@ -567,6 +630,7 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     Fat_saturated: Schema.Attribute.Decimal;
     Fat_total: Schema.Attribute.Decimal;
     Fat_unsaturated: Schema.Attribute.Decimal & Schema.Attribute.Private;
+    Fiber: Schema.Attribute.Decimal;
     Glycemic_index: Schema.Attribute.Decimal;
     Ingredient_Image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -601,6 +665,7 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     Vitamin_E: Schema.Attribute.Float;
     Vitamin_PP: Schema.Attribute.Float;
     Vitamin_RE: Schema.Attribute.Float;
+    Volume_per_Unit: Schema.Attribute.Decimal;
     Water: Schema.Attribute.Decimal;
   };
 }
@@ -1253,9 +1318,11 @@ declare module '@strapi/strapi' {
       'api::blog.blog': ApiBlogBlog;
       'api::category-condition.category-condition': ApiCategoryConditionCategoryCondition;
       'api::category-cuisine-type.category-cuisine-type': ApiCategoryCuisineTypeCategoryCuisineType;
+      'api::category-dietetic.category-dietetic': ApiCategoryDieteticCategoryDietetic;
       'api::category-food-group.category-food-group': ApiCategoryFoodGroupCategoryFoodGroup;
       'api::category-macro-nutrient.category-macro-nutrient': ApiCategoryMacroNutrientCategoryMacroNutrient;
       'api::category-meal-course.category-meal-course': ApiCategoryMealCourseCategoryMealCourse;
+      'api::dietetic.dietetic': ApiDieteticDietetic;
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::medical-food-menu.medical-food-menu': ApiMedicalFoodMenuMedicalFoodMenu;
       'api::medical-food-recipe.medical-food-recipe': ApiMedicalFoodRecipeMedicalFoodRecipe;

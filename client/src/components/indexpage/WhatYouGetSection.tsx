@@ -14,7 +14,7 @@ const WhatYouGetSection = () => {
                 <div className="flex max-w-[500px] flex-col items-center gap-8 text-center">
                     <h1 className="text-DarkGreen text-5xl font-medium">
                         What you get from
-                        <span className="text-LightGreen"> NutrysApp</span>
+                        <span className="text-LightGreen"> NutrifyS</span>
                     </h1>
                 </div>
                 <MainContainer>

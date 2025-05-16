@@ -17,11 +17,11 @@ const TitleSection = () => {
                                 Healthy Living Starts Here!
                             </h1>
                             <p className="">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit —sed do eiusmod tempor
-                                incididunt ut labore et dolore magna.Ut enim ad
-                                minim veniam, quis nostrud exercitation ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat.
+                                At NutrifyS, we believe that a balanced
+                                lifestyle is the cornerstone of well-being. Our
+                                platform empowers you to take control of your
+                                health journey with personalized tools and
+                                insights..
                             </p>
                             <Button className="bg-LightGreen! max-w-[116px] px-4! py-[14px]! text-sm! text-white! normal-case!">
                                 Start Now

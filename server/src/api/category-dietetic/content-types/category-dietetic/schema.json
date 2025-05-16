@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_dietetics",
+  "info": {
+    "singularName": "category-dietetic",
+    "pluralName": "category-dietetics",
+    "displayName": "Category-Dietetic"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    }
+  }
+}
