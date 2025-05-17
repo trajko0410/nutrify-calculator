@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recipe_tests",
+  "info": {
+    "singularName": "recipe-test",
+    "pluralName": "recipe-tests",
+    "displayName": "RecipeTest"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "RecipeName": {
+      "type": "string",
+      "maxLength": 20,
+      "required": true,
+      "minLength": 2
+    },
+    "shortDescription": {
+      "type": "string",
+      "required": false,
+      "default": "Description of a meal",
+      "maxLength": 255
+    },
+    "calories": {
+      "default": 0,
+      "required": true,
+      "min": 0,
+      "type": "integer"
+    },
+    "protein": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "fats": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    },
+    "carohydrates": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
+    }
+  }
+}
