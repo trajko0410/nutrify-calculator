@@ -35,7 +35,7 @@ export default async function Recipes() {
                 <AppContainer>
                   
                     <CartModalProvider>  <div className="flex flex-col gap-6">
-                    <RecipesClientWrapper/>
+                    <RecipesClientWrapper />
         
                     </div></CartModalProvider>
                 </AppContainer>

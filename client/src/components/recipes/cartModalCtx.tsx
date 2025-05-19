@@ -1,11 +1,11 @@
 // context/CartModalContext.tsx
 "use client"
 import { createContext, useContext, useState } from "react"
-import { Meal } from "./recipedClientWrapper"
+import { Recipe } from "@/utils/types"
 
 type mealPlaned = 
 {
-  meal:Meal
+  meal:Recipe
   dateWhenPlanned: Date
 }
 type CartModalContextType = {
@@ -14,7 +14,7 @@ type CartModalContextType = {
     openModal: () => void
     closeModal: () => void
     mealsInPlan: mealPlaned[]
-    addMealToPlan: (meal: Meal) => void
+    addMealToPlan: (meal: Recipe) => void
     removeMealFromPlan: (mealId:  number)=> void
     updateMealDate: (index: number, newDate: Date) => void
     resetCart: () => void
@@ -40,7 +40,7 @@ export const CartModalProvider = ({ children }: { children: React.ReactNode }) =
       setMealsInPlan([])
     }
 
-    const addMealToPlan =(meal:Meal)=>{
+    const addMealToPlan =(meal:Recipe)=>{
       setMealsInPlan((prev)=> [...prev, { meal, dateWhenPlanned: new Date() }])
     }
     const removeMealFromPlan = (indexToRemove: number) => {

@@ -1,6 +1,5 @@
 "use client"
 
-
 import { MealType } from "@/app/enum/enums"
 
 import { ShoppingCartSimple } from "@phosphor-icons/react"
@@ -8,10 +7,9 @@ import { useEffect, useState } from "react"
 import NutritionistListLoader from "../skeletonLoaders/nutritionistListLoader"
 import SingleMealPlan from "./singleMealPlan"
 import SingleWeaklyPlan from "./singleWeaklyPlan"
-//import SingleWeaklyPlan from "./singleWeaklyPlan"
 import { useCartModal as useCartModalCtx } from "./cartModalCtx"
 import CartModal from "./cartModal"
-
+import { fetchData } from "@/utils/fetchData"
 
 const fetchedRecipes = [
     {
@@ -183,7 +181,7 @@ export interface WeaklyPlan {
     authorId: string
     authorName: string
     description: string
-    days: string, 
+    days: string
     mealsPerDay: string
     meals: DailyMeals
 }
@@ -195,13 +193,28 @@ interface listOfPlans {
 
 const RecipesClientWrapper = () => {
     const { cartModalIsOpen, openModal } = useCartModalCtx()
-    
+
     const [listOfPlans, setListOfPlans] = useState<listOfPlans[]>([])
 
     const [loading, setLoading] = useState(true)
     const [activeOption, setActiveOption] = useState("dailyPlan")
 
-    console.log(listOfPlans, "lista planoiva")
+    const [recipes, setRecipes] = useState([])
+    //const [weaklyPlan, setWeaklyPlan] = useState([])
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await fetchData(
+                "/recipes?populate[Ingredients][populate]=*",
+            )
+            if (data) {
+                setRecipes(data.data)
+            }
+        }
+        getData()
+    }, [])
+
+    console.log(recipes, "ovo su recepti")
 
     useEffect(() => {
         setLoading(true)
@@ -240,38 +253,38 @@ const RecipesClientWrapper = () => {
                             <option value="weaklyPlan">Weakly Plan</option>
                         </select>
                     </div>
-                    <button className="bg-DarkGreen flex h-[42px] w-[42px] items-center justify-center rounded-xl" onClick={()=>openModal()}>
+                    <button
+                        className="bg-DarkGreen flex h-[42px] w-[42px] items-center justify-center rounded-xl"
+                        onClick={() => openModal()}
+                    >
                         <ShoppingCartSimple size={16} />
                     </button>
                 </div>
             </div>
             {loading ? (
                 <NutritionistListLoader /> // Loader se prikazuje dok se podaci učitavaju
-            ) : listOfPlans.length === 0 ? (
+            ) : recipes.length === 0 ? (
                 <div className="text-black">Trenutno nema recepata</div> // Poruka kad nema podataka
             ) : activeOption === "dailyPlan" ? (
                 <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {fetchedSingleRecipes.flatMap((plan, planIndex) =>
-                        plan.meals.map((meal, mealIndex) => (
-                            <div key={`${planIndex}-${mealIndex}`}>
-                                <SingleMealPlan mealInfo={meal} />
-                            </div>
-                        )),
-                    )}
+                    {recipes.map((recipe, planIndex) => (
+                        <div key={planIndex}>
+                            <SingleMealPlan recipe={recipe} />
+                        </div>
+                    ))}
                 </div>
             ) : (
                 <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                     {listOfPlans.map((plan, index) => (
                         <div key={index}>
-                            <SingleWeaklyPlan weaklyPlan={plan.weeklyPlan}/>
+                            <SingleWeaklyPlan weaklyPlan={plan.weeklyPlan} />
                         </div>
                     ))}
                 </div>
             )}
-            {cartModalIsOpen && <CartModal/>}
+            {cartModalIsOpen && <CartModal />}
         </>
     )
 }
 
 export default RecipesClientWrapper
-

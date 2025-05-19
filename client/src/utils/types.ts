@@ -5,13 +5,13 @@ export type MenuOption = {
 }
 
 export type Meal = {
-    name: string,
-    ingredients: Ingredient[],
-    kcal: number,
-    protein: number,
-    fat: number,
-    carbohydrates: number,
-    glycemicLoad: number,
+    name: string
+    ingredients: Ingredient[]
+    kcal: number
+    protein: number
+    fat: number
+    carbohydrates: number
+    glycemicLoad: number
 }
 
 export type Ingredient = {
@@ -49,4 +49,23 @@ export type Ingredient = {
     Glycemic_index?: number
     Glycemic_load?: number
     Atherogenic_index?: number
+}
+
+export type Recipe = {
+    Code: string
+    Name: string
+    Preparation: string
+    ShortDescription: string
+    Ingredients: [{ Amount: number; ingredient: Ingredient }]
+
+    createdAt: string
+    documentId: string
+    id: string
+    publishedAt: string
+    updatedAt: string
+    image?: string
+    category_meal_courses?: string
+    categorry_macro_nutrients?: string
+    category_food_groups?: string
+    category_cusine_types?: string
 }

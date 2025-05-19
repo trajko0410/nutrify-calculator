@@ -92,13 +92,13 @@ const CartModal = ({}) => {
                                     className="mt-4 flex flex-col gap-4"
                                 >
                                     <h3 className="text-DarkGreen text-lg font-medium">
-                                        {meal.meal.mealType}
+                                        {meal.meal.category_food_groups ?? "Meal Category"}
                                     </h3>
                                     <div className="relative h-[190px] w-full overflow-clip rounded-xl">
-                                        {meal.meal.recipe.image ? (
+                                        {meal.meal.image ? (
                                             <Image
-                                                src={meal.meal.recipe.image}
-                                                alt={meal.meal.recipe.name}
+                                                src={meal.meal.image}
+                                                alt={meal.meal.Name}
                                                 fill
                                                 className="object-cover"
                                             />
@@ -112,7 +112,7 @@ const CartModal = ({}) => {
                                         )}
                                     </div>
                                     <h2 className="text-DarkGreen text-xl font-medium">
-                                        {meal.meal.recipe.name}
+                                        {meal.meal.Name}
                                     </h2>
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="flex flex-row items-center">
@@ -122,7 +122,7 @@ const CartModal = ({}) => {
                                                 containerSize={24}
                                             />
                                             <p className="ml-2 text-sm font-medium text-[#2D3748]">
-                                                {meal?.meal.recipe?.calories ??
+                                                {
                                                     0}
                                                 kcal
                                             </p>
@@ -134,7 +134,7 @@ const CartModal = ({}) => {
                                                 containerSize={24}
                                             />
                                             <p className="ml-2 text-sm font-medium text-[#2D3748]">
-                                                {meal?.meal.recipe?.proteins ??
+                                                {
                                                     0}
                                                 g
                                             </p>
@@ -146,7 +146,7 @@ const CartModal = ({}) => {
                                                 containerSize={24}
                                             />
                                             <p className="ml-2 text-sm font-medium text-[#2D3748]">
-                                                {meal?.meal.recipe?.fats ?? 0}g
+                                                { 0}g
                                             </p>
                                         </div>
                                         <div className="flex flex-row items-center">
@@ -156,8 +156,7 @@ const CartModal = ({}) => {
                                                 containerSize={24}
                                             />
                                             <p className="ml-2 text-sm font-medium text-[#2D3748]">
-                                                {meal?.meal.recipe
-                                                    ?.carbohydrates ?? 0}
+                                                {  0}
                                                 g
                                             </p>
                                         </div>

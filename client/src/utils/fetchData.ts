@@ -2,7 +2,7 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { toast } from "react-toastify"
 
-export const fetchRecipes = async () => {
+export const fetchData = async (url: string) => {
     try {
         const jwt = Cookies.get("jwtNutrifyS")
 
@@ -12,7 +12,7 @@ export const fetchRecipes = async () => {
         }
 
         const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_URL}/recipes?populate=Ingredients`,
+            `${process.env.NEXT_PUBLIC_STRAPI_URL}${url}`,
             {
                 headers: {
                     Authorization: `Bearer ${jwt}`,
@@ -20,7 +20,7 @@ export const fetchRecipes = async () => {
             },
         )
 
-        toast.success("Recipes fetched successfully.")
+        toast.success("Data fetched successfully.")
 
         return res.data
 
@@ -33,7 +33,7 @@ export const fetchRecipes = async () => {
         } else if (error.response?.status === 401) {
             toast.error("Unauthorized. Please log in again.")
         } else {
-            toast.error("Failed to fetch recipes.")
+            toast.error("Failed to fetch data.")
         }
 
         return null
