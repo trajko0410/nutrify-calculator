@@ -261,7 +261,7 @@ const RecipesClientWrapper = () => {
                     </button>
                 </div>
             </div>
-            {!loading ? (
+            {loading ? (
                 <RecipesLoader /> // Loader se prikazuje dok se podaci učitavaju
             ) : recipes.length === 0 ? (
                 <div className="text-black">Trenutno nema recepata</div> // Poruka kad nema podataka
