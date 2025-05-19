@@ -2,7 +2,7 @@
 
 import { MealType } from "@/app/enum/enums"
 
-import { ShoppingCartSimple } from "@phosphor-icons/react"
+import { ShoppingCartSimple, MagnifyingGlass } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
 import SingleMealPlan from "./singleMealPlan"
 import SingleWeaklyPlan from "./singleWeaklyPlan"
@@ -10,6 +10,7 @@ import { useCartModal as useCartModalCtx } from "./cartModalCtx"
 import CartModal from "./cartModal"
 import { fetchData } from "@/utils/fetchData"
 import RecipesLoader from "../skeletonLoaders/recipesLoader"
+import SearchModal from "./searchModal"
 
 const fetchedRecipes = [
     {
@@ -192,43 +193,48 @@ interface listOfPlans {
 }
 
 const RecipesClientWrapper = () => {
-    const { cartModalIsOpen, openModal } = useCartModalCtx()
+    const { cartModalIsOpen, openModal, searchTerm, openSearchModal, searchModalIsOpen } = useCartModalCtx()
 
     const [listOfPlans, setListOfPlans] = useState<listOfPlans[]>([])
 
     const [loading, setLoading] = useState(true)
     const [activeOption, setActiveOption] = useState("dailyPlan")
 
+
+
     const [recipes, setRecipes] = useState([])
     //const [weaklyPlan, setWeaklyPlan] = useState([])
 
     useEffect(() => {
         const getData = async () => {
+            setLoading(true)
+
+            const query = searchTerm ? `/recipes?filters[Name][$contains]=${searchTerm}&populate[Ingredients][populate]=*` : "/recipes?populate[Ingredients][populate]=*"
             const data = await fetchData(
-                "/recipes?populate[Ingredients][populate]=*",
+                `${query}`,
             )
             if (data) {
                 setRecipes(data.data)
             }
+            setLoading(false)
+
         }
         getData()
-    }, [])
+    }, [searchTerm])
 
     console.log(recipes, "ovo su recepti")
 
     useEffect(() => {
         setLoading(true)
 
-        const timeout = setTimeout(() => {
+        
             if (activeOption === "dailyPlan") {
                 setListOfPlans(fetchedSingleRecipes)
             } else {
                 setListOfPlans(fetchedWeaklyPlanRecipes)
             }
             setLoading(false)
-        }, 1000) // simulate 1s delay
 
-        return () => clearTimeout(timeout)
     }, [activeOption])
 
     return (
@@ -254,10 +260,16 @@ const RecipesClientWrapper = () => {
                         </select>
                     </div>
                     <button
-                        className="bg-DarkGreen flex h-[42px] w-[42px] items-center justify-center rounded-xl"
+                        className="bg-DarkGreen flex h-[42px] min-w-[42px] items-center justify-center rounded-xl"
                         onClick={() => openModal()}
                     >
                         <ShoppingCartSimple size={16} />
+                    </button>
+                    <button
+                        className="bg-DarkGreen flex h-[42px] min-w-[42px] items-center justify-center rounded-xl"
+                        onClick={() => openSearchModal()}
+                    >
+                        <MagnifyingGlass size={16} />
                     </button>
                 </div>
             </div>
@@ -283,6 +295,7 @@ const RecipesClientWrapper = () => {
                 </div>
             )}
             {cartModalIsOpen && <CartModal />}
+            {searchModalIsOpen && <SearchModal/>}
         </>
     )
 }

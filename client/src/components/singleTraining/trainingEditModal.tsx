@@ -125,12 +125,12 @@ const TrainingEditModal = () => {
             className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
         >
             <div
-                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-b-none rounded-t-xl md:rounded-xl bg-white px-[32px] py-[24px] transition-transform duration-500 md:h-[80vh] md:w-[80vw] scrollbar-thin-mobile ${
+                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-b-none rounded-t-xl md:rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 md:h-[80vh] md:w-[80vw] scrollbar-thin-mobile ${
                     isClosing
-                        ? "translate-y-full"
-                        : isOpening
-                          ? "translate-y-0"
-                          : "translate-y-full"
+                    ? "translate-y-full opacity-0"
+                    : isOpening
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-full opacity-0"
                 }`}
             >
                 <div className="flex flex-col gap-2">

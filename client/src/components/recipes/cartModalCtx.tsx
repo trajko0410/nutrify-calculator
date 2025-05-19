@@ -18,6 +18,11 @@ type CartModalContextType = {
     removeMealFromPlan: (mealId:  number)=> void
     updateMealDate: (index: number, newDate: Date) => void
     resetCart: () => void
+    openSearchModal: () => void
+    closeSearchModal: () => void
+    searchModalIsOpen: boolean
+    searchTerm: string
+    handleSearchTermChange: (term: string) => void
 }
 
 const CartModalContext = createContext<CartModalContextType | undefined>(undefined)
@@ -27,6 +32,18 @@ export const CartModalProvider = ({ children }: { children: React.ReactNode }) =
     //const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null)
     const [mealsInPlan, setMealsInPlan] = useState<mealPlaned[]>([])
 
+    const [searchModalIsOpen, setSearchModalIsOpen] = useState(false)
+
+    const [searchTerm, setSearchTerm] = useState("")
+
+    const handleSearchTermChange = (term: string) => {
+        setSearchTerm(term)
+    }
+
+    const openSearchModal = () => {
+        setSearchModalIsOpen(true)}
+    const closeSearchModal = () => {
+        setSearchModalIsOpen(false)}
 
     const openModal = () => {
         setCartModalIsOpen(true)
@@ -58,7 +75,7 @@ export const CartModalProvider = ({ children }: { children: React.ReactNode }) =
     }
 
     return (
-        <CartModalContext.Provider value={{ cartModalIsOpen,  openModal, closeModal, mealsInPlan,resetCart, addMealToPlan, removeMealFromPlan, updateMealDate }}>
+        <CartModalContext.Provider value={{ cartModalIsOpen,  openModal, closeModal, mealsInPlan,resetCart, addMealToPlan, removeMealFromPlan, updateMealDate, openSearchModal, closeSearchModal, searchModalIsOpen, searchTerm, handleSearchTermChange }}>
             {children}
         </CartModalContext.Provider>
     )
