@@ -4,12 +4,12 @@ import { MealType } from "@/app/enum/enums"
 
 import { ShoppingCartSimple } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
-import NutritionistListLoader from "../skeletonLoaders/nutritionistListLoader"
 import SingleMealPlan from "./singleMealPlan"
 import SingleWeaklyPlan from "./singleWeaklyPlan"
 import { useCartModal as useCartModalCtx } from "./cartModalCtx"
 import CartModal from "./cartModal"
 import { fetchData } from "@/utils/fetchData"
+import RecipesLoader from "../skeletonLoaders/recipesLoader"
 
 const fetchedRecipes = [
     {
@@ -261,8 +261,8 @@ const RecipesClientWrapper = () => {
                     </button>
                 </div>
             </div>
-            {loading ? (
-                <NutritionistListLoader /> // Loader se prikazuje dok se podaci učitavaju
+            {!loading ? (
+                <RecipesLoader /> // Loader se prikazuje dok se podaci učitavaju
             ) : recipes.length === 0 ? (
                 <div className="text-black">Trenutno nema recepata</div> // Poruka kad nema podataka
             ) : activeOption === "dailyPlan" ? (
