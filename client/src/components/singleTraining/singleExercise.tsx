@@ -3,7 +3,6 @@ import { ArrowDown, Barbell, Eraser } from "@phosphor-icons/react"
 
 import Image from "next/image"
 import ParametarsIcon from "../util/ParametarsIcon"
-import Link from "next/link"
 import { useTrainingCtx } from "./trainingProvider"
 type SingleEcerciseProp = {
     exercise: Exercise
@@ -19,13 +18,14 @@ const SingleExercise: React.FC<SingleEcerciseProp> = ({
     userId,
 }) => {
     const userSubscription = true // TODO: Replace with actual subscription check logic
-    const { nextTraining, setSingleExercise, openEditExerciseModal } =
+    const { nextTraining, setSingleExercise, openEditExerciseModal, openSingleExerciseModal } =
         useTrainingCtx()
 
     if (!exercise) {
         return <div>No exercise for today!</div>
     }
     return (
+        <>
         <div className="font-Poppins flex w-[370px] shrink-0 flex-col gap-5 pb-4">
             <div>
                 {exercise?.imageHero ? (
@@ -112,11 +112,11 @@ const SingleExercise: React.FC<SingleEcerciseProp> = ({
                 )}
                 {userSubscription && trainingId && exercise?.id && (
                     <button className="flex flex-row items-center justify-center gap-2 text-xs leading-[150%] font-normal text-[#2D3748]">
-                        <Link
-                            href={`/training/${trainingId}/exercise/${exercise?.id}`}
+                        <div
+                        onClick={openSingleExerciseModal}
                         >
                             Read More
-                        </Link>
+                        </div>
                         <ArrowDown
                             color="black"
                             size="12"
@@ -126,6 +126,7 @@ const SingleExercise: React.FC<SingleEcerciseProp> = ({
                 )}
             </div>
         </div>
+        </>
     )
 }
 

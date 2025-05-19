@@ -4,7 +4,7 @@ import Image from "next/image"
 
 import { Exercise } from "@/app/api/mealsTest/route"
 import React from "react"
-import ExerciseDescriptionLoader from "../skeletonLoaders/exerciseDescriptionLoader"
+import ExerciseDescriptionLoader from "../../skeletonLoaders/exerciseDescriptionLoader"
 
 //import rdnImage from "../../../public/picture2.png"
 

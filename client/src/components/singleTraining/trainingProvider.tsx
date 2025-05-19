@@ -9,6 +9,10 @@ type TrainingCtxContextType = {
 
     isEditTrainingModalOpen: boolean
     isEditExerciseModalOpen: boolean
+    isSingleExerciseModalOpen: boolean
+
+    openSingleExerciseModal: () => void
+    closeSingleExerciseModal: () => void
 
     openEditTrainingModal: () => void
     closeEditTrainingModal: () => void
@@ -33,12 +37,19 @@ export const TrainingCtxProvider = ({ children }: { children: ReactNode }) => {
         time: string
     } | null>(null)
     const [singleExercise, setSingleExercise] = useState<Exercise | null>(null)
+    const [isSingleExerciseModalOpen, setIsSingleExerciseModalOpen] = useState(false)
     const [isEditTrainingModalOpen, setIsEditTrainingModalOpen] =
         useState(false)
     const [isEditExerciseModalOpen, setIsEditExerciseModalOpen] =
         useState(false)
 
-    console.log(singleExercise, isEditExerciseModalOpen, "singleExercise")
+
+    const openSingleExerciseModal = () => {
+        setIsSingleExerciseModalOpen(true)
+    }
+    const closeSingleExerciseModal = () => {
+        setIsSingleExerciseModalOpen(false)
+    }
 
     const openEditTrainingModal = () => {
         setIsEditTrainingModalOpen(true)
@@ -117,6 +128,10 @@ export const TrainingCtxProvider = ({ children }: { children: ReactNode }) => {
                 isEditExerciseModalOpen,
                 openEditExerciseModal,
                 closeEditExerciseModal,
+
+                isSingleExerciseModalOpen,
+                openSingleExerciseModal,
+                closeSingleExerciseModal,
 
                 updateTraining,
                 setNextTraining: setNextTrainingWrapper,

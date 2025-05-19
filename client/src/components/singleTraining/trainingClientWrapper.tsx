@@ -7,6 +7,8 @@ import TrainingEditModal from "./trainingEditModal"
 import SingleTraining from "./singleTraining"
 import EcerciseTimeline from "./exerciseTimeline"
 import ExerciseEditModal from "./exerciseEditModal"
+import SingeleExerciseModal from "./singleExerciseModal"
+
 
 interface TrainingClientWrapperProps {
     initialTraining: { training: Training; time: string }
@@ -17,7 +19,7 @@ export default function TrainingClientWrapper({
     initialTraining,
     userId,
 }: TrainingClientWrapperProps) {
-    const { setNextTraining, nextTraining, isEditTrainingModalOpen, isEditExerciseModalOpen} = useTrainingCtx()
+    const { setNextTraining, nextTraining, isEditTrainingModalOpen, isEditExerciseModalOpen, isSingleExerciseModalOpen} = useTrainingCtx()
 
     useEffect(() => {
         if (
@@ -38,6 +40,8 @@ export default function TrainingClientWrapper({
             </div>
             {isEditTrainingModalOpen && <TrainingEditModal />}
             {isEditExerciseModalOpen && <ExerciseEditModal />}
+            {isSingleExerciseModalOpen && <SingeleExerciseModal/>}
+
 
         </>
     )

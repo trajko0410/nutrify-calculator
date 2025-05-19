@@ -5,7 +5,7 @@ import Image from "next/image"
 import { Exercise } from "@/app/api/mealsTest/route"
 import React from "react"
 import { ArrowDown, Barbell } from "@phosphor-icons/react"
-import HeroExerciseLoader from "../skeletonLoaders/heroExerciseLoader"
+import HeroExerciseLoader from "../../skeletonLoaders/heroExerciseLoader"
 
 //import rdnImage from "../../../public/picture2.png"
 

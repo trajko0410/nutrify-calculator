@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react"
 import { Exercise } from "@/app/api/mealsTest/route"
 import React from "react"
-import ParametarsIcon from "../util/ParametarsIcon"
-import TodaysFoodInteakeLoader from "../skeletonLoaders/todaysFoodIntakeLoader"
+import ParametarsIcon from "../../util/ParametarsIcon"
+import TodaysFoodInteakeLoader from "../../skeletonLoaders/todaysFoodIntakeLoader"
 
 
 type ParametarsExerciseProps = {
