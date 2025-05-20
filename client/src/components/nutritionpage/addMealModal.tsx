@@ -1,16 +1,20 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useNutritionPageCtx } from "./nutritionPageProvider"
 import { Input, MenuItem, Select, TextField } from "@mui/material"
 import { Upload } from "@phosphor-icons/react"
 import Image from "next/image"
 import { ForkKnife } from "@phosphor-icons/react"
+import GeneralModalComponent from "../util/GeneralModalComponent"
 
 //import { Input } from "@mui/material"
 
 const AddMealModal = ({}) => {
-    const { setAddMealModalOpen, userSubscribed } = useNutritionPageCtx()
+    const { handleCloseCreateMealModal, userSubscribed } = useNutritionPageCtx()
+
+    const [closeModalFn, setCloseModalFn] = useState<() => void>(() => () => {})
+
 
     const [mealName, setMealName] = useState("")
     const [mealDescription, setMealDescription] = useState("")
@@ -22,33 +26,12 @@ const AddMealModal = ({}) => {
 
     const [mealImage, setMealImage] = useState("")
 
-    const [isOpening, setIsOpening] = useState(false)
-    const [isClosing, setIsClosing] = useState(false)
+ 
 
-    const handleCloseModal = () => {
-        setIsClosing(true)
-        setTimeout(() => {
-            setAddMealModalOpen(false)
-        }, 500)
-    }
 
-    useEffect(() => {
-        setIsOpening(true)
-    }, [])
 
-    useEffect(() => {
-        if (isClosing) {
-            setTimeout(() => {
-                setIsOpening(false)
-            }, 500)
-        }
-    }, [isClosing])
 
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            handleCloseModal()
-        }
-    }
+   
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files
@@ -71,7 +54,7 @@ const AddMealModal = ({}) => {
 
         console.log("Meal Data:", mealData)
 
-        handleCloseModal()
+        closeModalFn()
     }
 
     const handleIngredientChange = (
@@ -90,18 +73,7 @@ const AddMealModal = ({}) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div
-                onClick={handleBackdropClick}
-                className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
-            >
-                <div
-                    className={`font-Poppins scrollbar-thin-mobile relative z-50 flex h-[80vh] w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 ease-in-out md:w-[80vw] ${
-                        isClosing
-                            ? "translate-y-full opacity-0"
-                            : isOpening
-                              ? "translate-y-0 opacity-100"
-                              : "translate-y-full opacity-0"
-                    }`}
+                <GeneralModalComponent closeGeneralModal={handleCloseCreateMealModal}             onReady={(action) => setCloseModalFn(() => action)} // setujemo funkciju
                 >
                     <div className="flex flex-col gap-2">
                         <h3 className="text-DarkGreen text-xl font-medium">
@@ -275,8 +247,7 @@ const AddMealModal = ({}) => {
                     >
                         Save Changes
                     </button>
-                </div>
-            </div>
+         </GeneralModalComponent>
         </form>
     )
 }

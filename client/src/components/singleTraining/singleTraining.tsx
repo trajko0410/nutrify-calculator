@@ -147,7 +147,7 @@ const SingleTraining: React.FC<YourNextTrainingProps> = ({
                         </p>
                        
                         {
-                            userId === nextTraining.training?.authorUserId && (
+                            userId !== nextTraining.training?.authorUserId && (
                                 <button className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-sm leading-[140%] font-medium text-[#FFFFFF]" onClick={openEditTrainingModal}>
                                     <div 
                                     >

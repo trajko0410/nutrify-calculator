@@ -192,7 +192,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
                 <div className="h-[10px] w-full">
                     <ProgressBar value={procentage} />
                 </div>
-            </div>
+            </div><div className="absolute">
             {modalOpen && waterConsumption && waterConsumption[0] && (
                 <WaterConsumptionModal
                     planedWaterConsumption={
@@ -209,6 +209,7 @@ const WaterConsumption: React.FC<WaterConsumptionProps> = ({
                     }
                 />
             )}
+            </div>
         </div>
     )
 }

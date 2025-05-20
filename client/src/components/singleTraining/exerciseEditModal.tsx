@@ -5,11 +5,15 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Barbell, Upload } from "@phosphor-icons/react"
 import { useTrainingCtx } from "./trainingProvider"
+import GeneralModalComponent from "../util/GeneralModalComponent"
 
 
 
 const ExerciseEditModal= () => {
     const { singleExercise, closeEditExerciseModal } = useTrainingCtx()
+
+    const [closeModalFn, setCloseModalFn] = useState<() => void>(() => () => {})
+
 
     const exercise = singleExercise || {
     name: "",
@@ -37,10 +41,6 @@ const ExerciseEditModal= () => {
     const [exerciseImageHero, setExerciseImageHero] = useState(exercise.imageHero)
     
 
- 
-
-    const [isOpening, setIsOpening] = useState(false)
-    const [isClosing, setIsClosing] = useState(false)
 
     useEffect(() => {
         if (singleExercise) {
@@ -61,30 +61,9 @@ const ExerciseEditModal= () => {
         }
     }
 
-    const handleCloseModal = () => {
-        setIsClosing(true)
-        setTimeout(() => {
-            closeEditExerciseModal()
-        }, 500)
-    }
+   
 
-    useEffect(() => {
-        setIsOpening(true)
-    }, [])
 
-    useEffect(() => {
-        if (isClosing) {
-            setTimeout(() => {
-                setIsOpening(false)
-            }, 500)
-        }
-    }, [isClosing])
-
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            handleCloseModal()
-        }
-    }
 
 
 
@@ -118,25 +97,16 @@ const ExerciseEditModal= () => {
             imageHero: exerciseImageHero,
         };
 
-        handleCloseModal();
+        closeModalFn();
         console.log("Updated training:", updatedTraining); // Log updated training
         //updateExercise(updatedTraining);
     }
 
     return (
         <form onSubmit={submitHandler}>
-        <div
-            onClick={handleBackdropClick}
-            className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
-        >
-            <div
-                className={`relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] overflow-y-scroll rounded-b-none rounded-t-xl md:rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 md:h-[80vh] md:w-[80vw] ${isClosing
-                        ? "translate-y-full opacity-0"
-                        : isOpening
-                            ? "translate-y-0 opacity-100"
-                            : "translate-y-full opacity-0"
-                    }`}
+            <GeneralModalComponent closeGeneralModal={closeEditExerciseModal}             onReady={(action) => setCloseModalFn(() => action)} // setujemo funkciju
             >
+       
                 <div className="flex flex-col gap-2">
                     <h3 className="text-DarkGreen text-xl font-medium">
                         Edit Exercise
@@ -260,8 +230,8 @@ const ExerciseEditModal= () => {
                 >
                     Save Changes
                 </button>
-            </div>
-        </div>
+        
+            </GeneralModalComponent>
         </form>
     )
 }

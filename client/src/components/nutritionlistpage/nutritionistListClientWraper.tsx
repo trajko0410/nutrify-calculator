@@ -153,9 +153,11 @@ export default function NutritionListClientWrapper() {
                     </div>
                 )}
             </div>
+            <div className="absolute">
             {modalOpen && (
                 <FilterNutritionistModal closeModal={closeModalHandler} />
             )}
+            </div>
         </>
     )
 }

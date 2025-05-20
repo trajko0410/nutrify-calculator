@@ -12,7 +12,7 @@ import TodayTimelineLoader from "../skeletonLoaders/todayTimelineLoader"
 import { MealType } from "@/app/enum/enums"
 
 const MealTimeline = () => {
-    const { meals, setAddMealModalOpen, addMealModalOpen } =
+    const { meals, handleOpenCreateMealModal, addMealModalOpen } =
         useNutritionPageCtx()
     const [sortedMeals, setSortedMeals] = useState<
         { meal: Meal; mealType: MealType; time: string }[] | null
@@ -72,7 +72,7 @@ const MealTimeline = () => {
                             </h4>
                         </div>
                         <button
-                            onClick={() => setAddMealModalOpen(true)}
+                            onClick={handleOpenCreateMealModal}
                             className="bg-LightGreen flex flex-row items-center justify-center gap-4 rounded-lg p-3 text-lg font-medium text-[#FFFFFF]"
                         >
                             Add Meal

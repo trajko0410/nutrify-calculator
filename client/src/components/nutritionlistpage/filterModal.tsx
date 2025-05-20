@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Input } from "@mui/material"
+import GeneralModalComponent from "../util/GeneralModalComponent"
 
 type waterConsumptionModalProp = {
     closeModal?: () => void
@@ -13,6 +14,9 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
 }) => {
     const router = useRouter()
 
+    const [closeModalFn, setCloseModalFn] = useState<() => void>(() => () => {})
+
+
     const [nutritionistName, setNutritionistName] = useState<string>("")
     const [location, setLocation] = useState<string>("")
     const [ratingMinimum, setRatingMinimum] = useState<number | null>(0.1)
@@ -21,8 +25,7 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
 
     const [error, setError] = useState("")
 
-    const [isOpening, setIsOpening] = useState(false)
-    const [isClosing, setIsClosing] = useState(false)
+ 
 
     useEffect(() => {
         const min = ratingMinimum ?? 0
@@ -35,30 +38,10 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
         }
     }, [ratingMinimum, ratingMaximum])
 
-    const handleCloseModal = () => {
-        setIsClosing(true)
-        setTimeout(() => {
-            closeModal()
-        }, 500)
-    }
 
-    useEffect(() => {
-        setIsOpening(true)
-    }, [])
 
-    useEffect(() => {
-        if (isClosing) {
-            setTimeout(() => {
-                setIsOpening(false)
-            }, 500)
-        }
-    }, [isClosing])
+  
 
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            handleCloseModal()
-        }
-    }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -102,35 +85,24 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
             params.set("yearsOfExperience", yearsOfExperience)
 
         router.push(`?${params.toString()}`)
-        handleCloseModal()
+        closeModalFn()
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <div
-                onClick={handleBackdropClick}
-                className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-center"
-            >
-                <div
-                    className={`font-Poppins relative z-50 flex w-full max-w-[1000px] flex-col gap-[32px] rounded-xl bg-white px-[32px] py-[24px] transition-all duration-500 ease-in-out md:w-[40vw] ${
-                        isClosing
-                            ? "translate-y-full opacity-0"
-                            : isOpening
-                              ? "translate-y-0 opacity-100"
-                              : "translate-y-full opacity-0"
-                    }`}
-                >
+           <GeneralModalComponent closeGeneralModal={closeModal}             onReady={(action) => setCloseModalFn(() => action)} // setujemo funkciju
+>
                     <div className="flex flex-col gap-2">
                         <h3 className="text-DarkGreen text-xl font-medium">
                             Filter
                         </h3>
-                        <h4 className="text-lg font-normal text-[#757575]">
+                        <h4 className="text-sm font-normal text-[#757575]">
                             Lorem ipsum dolor sit amet
                         </h4>
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-DarkGreen text-2xl font-medium">
+                        <h3 className="text-DarkGreen text-base font-medium">
                             Search by name
                         </h3>
                         <Input
@@ -145,7 +117,7 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-DarkGreen text-2xl font-medium">
+                        <h3 className="text-DarkGreen text-base font-medium">
                             Search by Location
                         </h3>
                         <Input
@@ -158,7 +130,7 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-DarkGreen text-2xl font-medium">
+                        <h3 className="text-DarkGreen text-base font-medium">
                             Search by Career Experience
                         </h3>
                         <Input
@@ -172,11 +144,11 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
                         />
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 items-stretch">
                         <div className="flex flex-row gap-4">
                             <div className="w-1/2">
-                                <h3 className="text-DarkGreen text-2xl font-medium">
-                                    Search by Rating(Min)
+                                <h3 className="text-DarkGreen text-base font-medium">
+                                    Search by Rating (Min)
                                 </h3>
                                 <Input
                                     placeholder="Min Rating"
@@ -198,8 +170,8 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
                                 />
                             </div>
                             <div className="w-1/2">
-                                <h3 className="text-DarkGreen text-2xl font-medium">
-                                    Search by Rating(Max)
+                                <h3 className="text-DarkGreen text-base font-medium">
+                                    Search by Rating (Max)
                                 </h3>
                                 <Input
                                     placeholder="Max Rating"
@@ -235,8 +207,7 @@ const FilterNutritionistModal: React.FC<waterConsumptionModalProp> = ({
                     >
                         Filter
                     </button>
-                </div>
-            </div>
+                    </GeneralModalComponent>
         </form>
     )
 }

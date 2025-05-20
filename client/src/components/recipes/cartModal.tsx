@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useCartModal as useCartModalCtx } from "./cartModalCtx"
 
 import Image from "next/image"
 import { ForkKnife } from "@phosphor-icons/react"
 import ParametarsIcon from "../util/ParametarsIcon"
+import GeneralModalComponent from "../util/GeneralModalComponent"
 
 const CartModal = ({}) => {
     const {
@@ -16,67 +17,38 @@ const CartModal = ({}) => {
         resetCart,
     } = useCartModalCtx()
 
-    const [isOpening, setIsOpening] = useState(false)
-    const [isClosing, setIsClosing] = useState(false)
+    const [closeModalFn, setCloseModalFn] = useState<() => void>(() => () => {})
+
+
+
 
     console.log("mealsInPlan", mealsInPlan)
 
-    useEffect(() => {
-        setIsOpening(true)
-    }, [])
 
-    useEffect(() => {
-        if (isClosing) {
-            setTimeout(() => {
-                setIsOpening(false)
-            }, 500)
-        }
-    }, [isClosing])
 
-    const handleCloseModal = () => {
-        setIsClosing(true)
-        setTimeout(() => {
-            closeModal()
-        }, 500)
-    }
 
-    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            handleCloseModal()
-        }
-    }
+
 
     const handleSubmit = () => {
         // Add logic to send data, like an API request or anything else
         console.log("Submitting data", mealsInPlan)
         resetCart()
-        handleCloseModal()
+        closeModalFn() 
         // Example:
         // sendData(mealsInPlan);
     }
 
     return (
         <form>
-            <div
-                onClick={handleBackdropClick}
-                className="font-Poppins fixed inset-0 z-40 flex items-end justify-center bg-[#00000035] backdrop-blur-xs md:items-end"
+            <GeneralModalComponent closeGeneralModal={closeModal}     sideMenu={true}        onReady={(action) => setCloseModalFn(() => action)} // setujemo funkciju
             >
-                <div
-                    className={`relative z-50 flex max-h-screen w-full flex-col gap-[32px] overflow-y-scroll bg-white px-[32px] py-[24px] transition-all duration-500 md:fixed md:right-0 md:h-full md:w-[40vw] md:rounded-l-xl md:rounded-r-none ${
-                        isClosing
-                            ? "translate-y-full opacity-0 md:translate-x-full md:translate-y-0"
-                            : isOpening
-                              ? "translate-y-0 opacity-100 md:translate-x-0"
-                              : "translate-y-full opacity-0 md:translate-x-full md:translate-y-0"
-                    }`}
-                >
                     <div className="flex flex-row items-center justify-between">
                         <h2 className="text-DarkGreen text-2xl font-medium">
                             Selected Meals
                         </h2>
                         <button
                             type="button"
-                            onClick={handleCloseModal}
+                            onClick={closeModalFn}
                             className="text-xl font-bold text-gray-500 hover:text-red-600"
                             aria-label="Close modal"
                         >
@@ -204,9 +176,7 @@ const CartModal = ({}) => {
                         )}
                     </div>
 
-                    {/* Fixed Submit Button */}
-                </div>
-            </div>
+                    </GeneralModalComponent>
         </form>
     )
 }

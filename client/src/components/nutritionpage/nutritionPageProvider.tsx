@@ -13,7 +13,8 @@ type NutritionPageCtxType = {
     selectedDate: Date
     setSelectedDate: (date: Date) => void
     addMealModalOpen: boolean
-    setAddMealModalOpen: (open: boolean) => void
+    handleCloseCreateMealModal: () => void
+    handleOpenCreateMealModal: () => void
     userSubscribed: boolean
     setUserSubscribed: (subscribed: boolean) => void
 }
@@ -40,6 +41,14 @@ export const NutritionPageCtxProvider = ({
 
     const [userSubscribed, setUserSubscribed] = useState(false)
 
+    const handleCloseCreateMealModal = () => {  
+        setAddMealModalOpen(false)
+    }   
+
+    const handleOpenCreateMealModal = () => {
+        setAddMealModalOpen(true)
+    }
+
     console.log(meals, "meals")
     return (
         <NutritionPageContext.Provider
@@ -54,7 +63,8 @@ export const NutritionPageCtxProvider = ({
                 setSelectedDate,
 
                 addMealModalOpen,
-                setAddMealModalOpen,
+                handleCloseCreateMealModal,
+                handleOpenCreateMealModal,
 
                 userSubscribed,
                 setUserSubscribed,
